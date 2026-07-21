@@ -1,0 +1,191 @@
+<link rel="stylesheet"
+      href="../css/style1.css">
+<section>
+
+    <h2>API Design - Top 10 Interview FAQs</h2>
+
+    <article>
+
+        <details open>
+
+            <summary>1. What is Resource-Oriented API Design?</summary>
+
+            <dl>
+
+                <dt>Definition</dt>
+
+                <dd>Design APIs around business resources (nouns) instead of actions (verbs).</dd>
+
+                <dt>Real-Time</dt>
+
+                <dd>Use <code>/api/orders/101</code> instead of <code>/GetOrderById</code>.</dd>
+
+            </dl>
+
+        </details>
+
+        <details>
+
+            <summary>2. What are REST API Naming Conventions?</summary>
+
+            <dl>
+
+                <dt>Definition</dt>
+
+                <dd>Use plural nouns, lowercase URLs, and meaningful resource names.</dd>
+
+                <dt>Real-Time</dt>
+
+                <dd><code>/api/customers</code>, <code>/api/products</code></dd>
+
+            </dl>
+
+        </details>
+
+        <details>
+
+            <summary>3. Which HTTP Method should be used?</summary>
+
+            <dl>
+
+                <dt>Definition</dt>
+
+                <dd>GET for Read, POST for Create, PUT for Update, PATCH for Partial Update, DELETE for Remove.</dd>
+
+                <dt>Real-Time</dt>
+
+                <dd>Create Employee using <code>POST /api/employees</code>.</dd>
+
+            </dl>
+
+        </details>
+
+        <details>
+
+            <summary>4. Why are HTTP Status Codes important?</summary>
+
+            <dl>
+
+                <dt>Definition</dt>
+
+                <dd>Status codes indicate the result of an API request.</dd>
+
+                <dt>Real-Time</dt>
+
+                <dd>Return 201 after creating an order, 404 when employee not found.</dd>
+
+            </dl>
+
+        </details>
+
+        <details>
+
+            <summary>5. Why use JSON?</summary>
+
+            <dl>
+
+                <dt>Definition</dt>
+
+                <dd>JSON is lightweight, readable and platform independent.</dd>
+
+                <dt>Real-Time</dt>
+
+                <dd>Angular exchanges JSON with ASP.NET Core APIs.</dd>
+
+            </dl>
+
+        </details>
+
+        <details>
+
+            <summary>6. What is API Versioning?</summary>
+
+            <dl>
+
+                <dt>Definition</dt>
+
+                <dd>Allows multiple API versions without breaking existing clients.</dd>
+
+                <dt>Real-Time</dt>
+
+                <dd>/api/v1/products and /api/v2/products</dd>
+
+            </dl>
+
+        </details>
+
+        <details>
+
+            <summary>7. Why use DTO?</summary>
+
+            <dl>
+
+                <dt>Definition</dt>
+
+                <dd>Transfer only required data between client and server.</dd>
+
+                <dt>Real-Time</dt>
+
+                <dd>Hide Password and Salary fields.</dd>
+
+            </dl>
+
+        </details>
+
+        <details>
+
+            <summary>8. Why validate requests?</summary>
+
+            <dl>
+
+                <dt>Definition</dt>
+
+                <dd>Prevent invalid data from entering the application.</dd>
+
+                <dt>Real-Time</dt>
+
+                <dd>Reject registration if Email is invalid.</dd>
+
+            </dl>
+
+        </details>
+
+        <details>
+
+            <summary>9. Why use Pagination?</summary>
+
+            <dl>
+
+                <dt>Definition</dt>
+
+                <dd>Improve performance by returning smaller result sets.</dd>
+
+                <dt>Real-Time</dt>
+
+                <dd><code>/api/products?page=1&pageSize=20</code></dd>
+
+            </dl>
+
+        </details>
+
+        <details>
+
+            <summary>10. What is Idempotency?</summary>
+
+            <dl>
+
+                <dt>Definition</dt>
+
+                <dd>Executing the same request multiple times produces the same result.</dd>
+
+                <dt>Real-Time</dt>
+
+                <dd>Multiple PUT requests update the same employee without creating duplicates.</dd>
+
+            </dl>
+
+        </details>
+
+    </article>
+
+</section>
