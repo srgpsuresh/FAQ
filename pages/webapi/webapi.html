@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="ASP.NET Core Web API Top 10 Interview FAQs with one-line answers.">
-    <meta name="keywords" content=".NET Core, ASP.NET Core, Web API, REST API, Interview Questions">
-    <meta name="author" content="Suresh">
 
-    <title>ASP.NET Core Web API - Top 10 Interview FAQs</title>
+    <title>ASP.NET Core Web API</title>
+
     <link rel="stylesheet" href="../../css/style1.css">
+
 </head>
 
 <body>
@@ -17,59 +18,75 @@
 
         <h1>ASP.NET Core Web API</h1>
 
-        <p>Top 10 Interview FAQs (Quick Revision Sheet)</p>
+        <p>Enterprise Interview Knowledge Portal</p>
 
     </header>
 
-    <nav class="topic-nav">
+    <main class="layout">
 
-        <section>
+        <!-- LEFT MENU -->
 
-            <h2>ASP.NET Core Web API Topics</h2>
+        <aside class="sidebar">
 
-            <div class="topic-grid">
+            <h2>Web API Topics</h2>
 
-                <a href="api-design.html" class="card">API Design</a>
+            <nav>
 
-                <a href="routing.html" class="card">Routing</a>
+                <ul>
 
-                <a href="dependency-injection.html" class="card">Dependency Injection</a>
+                    <li><a href="index.html" target="contentFrame">► Web API</a></li>  
 
-                <a href="middleware.html" class="card">Middleware</a>
+                    <li><a href="api-design.html" target="contentFrame">► API Design</a></li>
 
-                <a href="validation.html" class="card">Model Validation</a>
+                    <li><a href="routing.html" target="contentFrame">► Routing</a></li>
 
-                <a href="authentication.html" class="card">JWT Authentication</a>
+                    <li><a href="middleware.html" target="contentFrame">► Middleware</a></li>
 
-                <a href="authorization.html" class="card">Authorization</a>
+                    <li><a href="dependency-injection.html" target="contentFrame">► Dependency Injection</a></li>
 
-                <a href="filters.html" class="card">Filters</a>
+                    <li><a href="validation.html" target="contentFrame">► Model Validation</a></li>
 
-                <a href="exception-handling.html" class="card">Exception Handling</a>
+                    <li><a href="security.html" target="contentFrame">► JWT Authentication</a></li>
 
-                <a href="swagger.html" class="card">Swagger</a>
+                    <li><a href="authorization.html" target="contentFrame">► Authorization</a></li>
 
-                <a href="versioning.html" class="card">API Versioning</a>
+                    <li><a href="filters.html" target="contentFrame">► Filters</a></li>
 
-                <a href="caching.html" class="card">Caching</a>
+                    <li><a href="exception-handling.html" target="contentFrame">► Exception Handling</a></li>
 
-                <a href="cors.html" class="card">CORS</a>
+                    <li><a href="swagger.html" target="contentFrame">► Swagger</a></li>
 
-                <a href="logging.html" class="card">Logging</a>
+                    <li><a href="versioning.html" target="contentFrame">► API Versioning</a></li>
 
-                <a href="performance.html" class="card">Performance</a>
+                    <li><a href="caching.html" target="contentFrame">► Caching</a></li>
 
-            </div>
+                    <li><a href="cors.html" target="contentFrame">► CORS</a></li>
+
+                    <li><a href="logging.html" target="contentFrame">► Logging</a></li>
+
+                    <li><a href="performance.html" target="contentFrame">► Performance</a></li>
+
+                </ul>
+
+            </nav>
+
+        </aside>
+
+        <section class="content">
+
+            <iframe name="contentFrame"
+                    src="api-design.html"
+                    width="100%"
+                    height="900"
+                    frameborder="0">
+            </iframe>
 
         </section>
 
-    </nav>
-
-    <main>
-
+        <!-- RIGHT CONTENT -->
         <section>
 
-            <h2>Interview Questions</h2>
+            <h2>ASP.NET Core Web API - Top 10 Interview FAQs</h2>
 
             <article>
 
@@ -77,10 +94,9 @@
 
                     <summary>1. What is Web API?</summary>
 
-                    <dl>
-                        <dt>Answer</dt>
-                        <dd>A RESTful service used to expose data and business functionality over HTTP.</dd>
-                    </dl>
+                    <p>
+                        A RESTful service used to expose data and business functionality over HTTP.
+                    </p>
 
                 </details>
 
@@ -88,10 +104,9 @@
 
                     <summary>2. What is REST?</summary>
 
-                    <dl>
-                        <dt>Answer</dt>
-                        <dd>REST is an architectural style that uses HTTP methods to perform CRUD operations on resources.</dd>
-                    </dl>
+                    <p>
+                        REST is an architectural style that uses HTTP methods to perform CRUD operations on resources.
+                    </p>
 
                 </details>
 
@@ -99,10 +114,9 @@
 
                     <summary>3. What is the difference between API and Web API?</summary>
 
-                    <dl>
-                        <dt>Answer</dt>
-                        <dd>API is any interface for communication, while Web API specifically communicates over HTTP.</dd>
-                    </dl>
+                    <p>
+                        API is any interface for communication, while Web API specifically communicates over HTTP.
+                    </p>
 
                 </details>
 
@@ -110,16 +124,13 @@
 
                     <summary>4. What are HTTP Methods?</summary>
 
-                    <dl>
-                        <dt>Answer</dt>
-                        <dd>
-                            <code>GET</code> = Read,
-                            <code>POST</code> = Create,
-                            <code>PUT</code> = Update,
-                            <code>PATCH</code> = Partial Update,
-                            <code>DELETE</code> = Remove.
-                        </dd>
-                    </dl>
+                    <p>
+                        <code>GET</code> = Read,
+                        <code>POST</code> = Create,
+                        <code>PUT</code> = Update,
+                        <code>PATCH</code> = Partial Update,
+                        <code>DELETE</code> = Remove.
+                    </p>
 
                 </details>
 
@@ -127,10 +138,9 @@
 
                     <summary>5. What is the difference between PUT and PATCH?</summary>
 
-                    <dl>
-                        <dt>Answer</dt>
-                        <dd>PUT replaces the entire resource, while PATCH updates only specific fields.</dd>
-                    </dl>
+                    <p>
+                        PUT replaces the entire resource, while PATCH updates only specific fields.
+                    </p>
 
                 </details>
 
@@ -138,10 +148,9 @@
 
                     <summary>6. What is Dependency Injection (DI)?</summary>
 
-                    <dl>
-                        <dt>Answer</dt>
-                        <dd>Dependency Injection automatically provides required services to classes, reducing tight coupling.</dd>
-                    </dl>
+                    <p>
+                        Dependency Injection automatically provides required services to classes, reducing tight coupling.
+                    </p>
 
                 </details>
 
@@ -149,10 +158,9 @@
 
                     <summary>7. What is Middleware?</summary>
 
-                    <dl>
-                        <dt>Answer</dt>
-                        <dd>Middleware is software that processes HTTP requests and responses in the ASP.NET Core request pipeline.</dd>
-                    </dl>
+                    <p>
+                        Middleware is software that processes HTTP requests and responses in the ASP.NET Core request pipeline.
+                    </p>
 
                 </details>
 
@@ -160,10 +168,9 @@
 
                     <summary>8. What is Attribute Routing?</summary>
 
-                    <dl>
-                        <dt>Answer</dt>
-                        <dd>Attribute Routing defines API endpoints using attributes like <code>[Route]</code> and <code>[HttpGet]</code>.</dd>
-                    </dl>
+                    <p>
+                        Attribute Routing defines API URLs using attributes such as <code>[Route]</code> and <code>[HttpGet]</code>.
+                    </p>
 
                 </details>
 
@@ -171,10 +178,9 @@
 
                     <summary>9. What is Model Validation?</summary>
 
-                    <dl>
-                        <dt>Answer</dt>
-                        <dd>Model Validation ensures incoming request data is valid using Data Annotations and <code>ModelState</code>.</dd>
-                    </dl>
+                    <p>
+                        Model Validation ensures incoming request data is valid using Data Annotations and <code>ModelState</code>.
+                    </p>
 
                 </details>
 
@@ -182,10 +188,9 @@
 
                     <summary>10. What is JWT Authentication?</summary>
 
-                    <dl>
-                        <dt>Answer</dt>
-                        <dd>JWT uses a signed token to securely authenticate and authorize users without server-side sessions.</dd>
-                    </dl>
+                    <p>
+                        JWT uses a signed token to securely authenticate and authorize users without maintaining server-side sessions.
+                    </p>
 
                 </details>
 
@@ -193,77 +198,15 @@
 
         </section>
 
-        <section>
 
-            <h2>Quick Memory Sheet</h2>
-
-            <blockquote>
-
-                Definition ? Example ? Real-Time Use ? Performance / Benefit
-
-            </blockquote>
-
-            <table border="1" cellpadding="8">
-
-                <thead>
-
-                    <tr>
-
-                        <th>Step</th>
-
-                        <th>Purpose</th>
-
-                    </tr>
-
-                </thead>
-
-                <tbody>
-
-                    <tr>
-
-                        <td>Definition</td>
-
-                        <td>What is it?</td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td>Example</td>
-
-                        <td>Simple code or API example.</td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td>Real-Time Use</td>
-
-                        <td>Explain where it is used in projects.</td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td>Performance / Benefit</td>
-
-                        <td>State scalability, security, maintainability, or performance advantages.</td>
-
-                    </tr>
-
-                </tbody>
-
-            </table>
-
-        </section>
-
-    </main>
-
+    </main> 
     <footer>
 
-        <p>ASP.NET Core Interview Preparation | Semantic HTML | GitHub Pages Ready</p>
+        Enterprise .NET Interview Portal
 
     </footer>
 
 </body>
-</html>
+
+</html> 
+
