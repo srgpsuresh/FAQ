@@ -1,0 +1,73 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Segoe UI;
+}
+
+body {
+    background: #f4f6f9;
+}
+
+header {
+    background: #003366;
+    color: white;
+    padding: 30px;
+    text-align: center;
+}
+
+nav {
+    background: #1565c0;
+    padding: 15px;
+    text-align: center;
+}
+
+    nav a {
+        color: white;
+        text-decoration: none;
+        margin: 15px;
+        font-weight: bold;
+    }
+
+main {
+    width: 90%;
+    margin: auto;
+    padding: 20px;
+}
+
+section {
+    margin-bottom: 40px;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+    gap: 20px;
+}
+
+article {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 8px gray;
+}
+
+    article h3 {
+        color: #1565c0;
+        margin-bottom: 10px;
+    }
+
+    article a {
+        display: inline-block;
+        margin-top: 15px;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+footer {
+    background: #003366;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 30px;
+}

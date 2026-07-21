@@ -1,0 +1,394 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>.NET Core FAQ</title>
+
+    <link rel="stylesheet"
+          href="../css/style.css">
+
+</head>
+
+<body>
+
+    <header>
+
+        <h1>.NET Core Interview Questions</h1>
+
+        <p>
+
+            Enterprise Architect Knowledge Portal
+
+        </p>
+
+    </header>
+
+    <nav>
+
+        <a href="../index.html">Home</a>
+
+        <a href="dotnet.html">.NET</a>
+
+        <a href="csharp.html">C#</a>
+
+        <a href="sql.html">SQL</a>
+
+        <a href="webapi.html">Web API</a>
+
+    </nav>
+
+    <main>
+
+        <section>
+
+            <h2>.NET Core</h2>
+
+            <p>
+
+                Most Frequently Asked Interview Questions
+
+            </p>
+
+        </section>
+
+        <!-- FAQ 1 -->
+        <!--<article>
+
+        <header>
+
+            <h2>1. What is .NET Core?</h2>
+
+        </header>
+
+        <section>
+
+            <h3>Definition</h3>
+
+            <p>
+
+                .NET Core is Microsoft's cross-platform,
+                high-performance framework used to build
+                Web APIs, Microservices, Cloud applications,
+                Desktop applications and more.
+
+            </p>
+
+        </section>
+
+        <section>
+
+            <h3>Real-Time Example</h3>
+
+            <p>
+
+                An Employee Management Web API running on
+                Linux Docker Container hosted in Azure.
+
+            </p>
+
+        </section>
+
+        <section>
+
+            <h3>Interview Answer</h3>
+
+            <details>
+
+                <summary>Click to Expand</summary>
+
+                <p>
+
+                    .NET Core is an open-source,
+                    cross-platform framework optimized for
+                    building scalable cloud applications.
+
+                </p>
+
+            </details>
+
+        </section>
+
+        <footer>
+
+            Difficulty :
+            Beginner
+
+        </footer>
+
+    </article>-->
+
+        <article>
+
+            <header>
+
+                <h2>1. What is Dependency Injection?</h2>
+
+                <p><strong>Category:</strong> .NET Core</p>
+
+                <p><strong>Difficulty:</strong> Beginner</p>
+
+            </header>
+
+            <section>
+
+                <h3>Definition</h3>
+
+                <p>
+
+                    Dependency Injection (DI) is a design pattern used
+                    to achieve loose coupling by injecting dependencies
+                    instead of creating them inside the class.
+
+                </p>
+
+            </section>
+
+            <section>
+
+                <h3>Why do we use it?</h3>
+
+                <ul>
+
+                    <li>Loose Coupling</li>
+
+                    <li>Easy Unit Testing</li>
+
+                    <li>Maintainability</li>
+
+                    <li>Scalability</li>
+
+                </ul>
+
+            </section>
+
+            <section>
+
+                <h3>Real-Time Example</h3>
+
+                <p>
+
+                    Employee Management System
+
+                    EmployeeController
+
+                    ↓
+
+                    EmployeeService
+
+                    ↓
+
+                    EmployeeRepository
+
+                    ↓
+
+                    SQL Server
+
+                </p>
+
+            </section>
+
+            <section>
+
+                <h3>Architecture</h3>
+
+                    <pre>
+
+                    Controller
+                          │
+                          ▼
+                    Service
+                          │
+                          ▼
+                    Repository
+                          │
+                          ▼
+                    Database
+
+                    </pre>
+
+            </section>
+
+            <section>
+
+                <h3>Execution Flow</h3>
+
+                <ol>
+
+                    <li>Client sends HTTP Request</li>
+
+                    <li>Controller receives request</li>
+
+                    <li>DI injects Service</li>
+
+                    <li>Service executes Business Logic</li>
+
+                    <li>Repository accesses Database</li>
+
+                    <li>Response returned to Client</li>
+
+                </ol>
+
+            </section>
+
+            <section>
+
+                <h3>C# Example</h3>
+
+<pre><code>
+
+public class EmployeeController
+{
+    private readonly IEmployeeService service;
+
+    public EmployeeController(
+        IEmployeeService service)
+    {
+        this.service = service;
+    }
+}
+
+</code></pre>
+
+            </section>
+
+            <section>
+
+                <h3>Advantages</h3>
+
+                <ul>
+
+                    <li>Reusable</li>
+
+                    <li>Testable</li>
+
+                    <li>Easy Maintenance</li>
+
+                    <li>Follows SOLID Principles</li>
+
+                </ul>
+
+            </section>
+
+            <section>
+
+                <h3>Disadvantages</h3>
+
+                <ul>
+
+                    <li>Learning Curve</li>
+
+                    <li>Extra Configuration</li>
+
+                </ul>
+
+            </section>
+
+            <section>
+
+                <h3>Performance</h3>
+
+                <p>
+
+                    Built-in DI container is optimized and suitable
+                    for enterprise applications.
+
+                </p>
+
+            </section>
+
+            <section>
+
+                <h3>Interview Answer (30 Seconds)</h3>
+
+                <details>
+
+                    <summary>Expand Answer</summary>
+
+                    <p>
+
+                        Dependency Injection is an IoC pattern used
+                        to inject dependencies through constructors,
+                        making applications loosely coupled,
+                        testable, and maintainable.
+
+                    </p>
+
+                </details>
+
+            </section>
+
+            <section>
+
+                <h3>Mini Project</h3>
+
+                <p>
+
+                    Employee Management Web API
+
+                    Controller
+
+                    ↓
+
+                    Service
+
+                    ↓
+
+                    Repository
+
+                    ↓
+
+                    SQL Server
+
+                </p>
+
+            </section>
+
+            <aside>
+
+                <h3>Related Topics</h3>
+
+                <ul>
+
+                    <li>IoC</li>
+
+                    <li>SOLID</li>
+
+                    <li>Repository Pattern</li>
+
+                    <li>Middleware</li>
+
+                    <li>Clean Architecture</li>
+
+                </ul>
+
+            </aside>
+
+            <footer>
+
+                Last Updated : July 2026
+
+            </footer>
+
+        </article>
+
+    </main>
+
+    <footer>
+
+        <p>
+
+            Enterprise Interview Portal
+
+        </p>
+
+    </footer>
+
+</body>
+
+</html>

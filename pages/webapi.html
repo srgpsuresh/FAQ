@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ASP.NET Core Web API Top 10 Interview FAQs with one-line answers.">
+    <meta name="keywords" content=".NET Core, ASP.NET Core, Web API, REST API, Interview Questions">
+    <meta name="author" content="Suresh">
+
+    <title>ASP.NET Core Web API - Top 10 Interview FAQs</title>
+
+    <style>
+        body {
+            font-family: Arial,Helvetica,sans-serif;
+            max-width: 1100px;
+            margin: auto;
+            line-height: 1.6;
+            padding: 20px;
+            background: #f4f4f4;
+        }
+
+        header, footer {
+            text-align: center;
+            padding: 15px;
+            background: #003366;
+            color: white;
+        }
+
+        section {
+            background: white;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        details {
+            margin-bottom: 12px;
+            border-left: 5px solid #0078D4;
+            padding-left: 12px;
+        }
+
+        summary {
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        dt {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        dd {
+            margin-left: 20px;
+            margin-bottom: 10px;
+        }
+
+        code {
+            background: #efefef;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <header>
+
+        <h1>ASP.NET Core Web API</h1>
+
+        <p>Top 10 Interview FAQs (Quick Revision Sheet)</p>
+
+    </header>
+
+    <main>
+
+        <section>
+
+            <h2>Interview Questions</h2>
+
+            <article>
+
+                <details open>
+
+                    <summary>1. What is Web API?</summary>
+
+                    <dl>
+                        <dt>Answer</dt>
+                        <dd>A RESTful service used to expose data and business functionality over HTTP.</dd>
+                    </dl>
+
+                </details>
+
+                <details>
+
+                    <summary>2. What is REST?</summary>
+
+                    <dl>
+                        <dt>Answer</dt>
+                        <dd>REST is an architectural style that uses HTTP methods to perform CRUD operations on resources.</dd>
+                    </dl>
+
+                </details>
+
+                <details>
+
+                    <summary>3. What is the difference between API and Web API?</summary>
+
+                    <dl>
+                        <dt>Answer</dt>
+                        <dd>API is any interface for communication, while Web API specifically communicates over HTTP.</dd>
+                    </dl>
+
+                </details>
+
+                <details>
+
+                    <summary>4. What are HTTP Methods?</summary>
+
+                    <dl>
+                        <dt>Answer</dt>
+                        <dd>
+                            <code>GET</code> = Read,
+                            <code>POST</code> = Create,
+                            <code>PUT</code> = Update,
+                            <code>PATCH</code> = Partial Update,
+                            <code>DELETE</code> = Remove.
+                        </dd>
+                    </dl>
+
+                </details>
+
+                <details>
+
+                    <summary>5. What is the difference between PUT and PATCH?</summary>
+
+                    <dl>
+                        <dt>Answer</dt>
+                        <dd>PUT replaces the entire resource, while PATCH updates only specific fields.</dd>
+                    </dl>
+
+                </details>
+
+                <details>
+
+                    <summary>6. What is Dependency Injection (DI)?</summary>
+
+                    <dl>
+                        <dt>Answer</dt>
+                        <dd>Dependency Injection automatically provides required services to classes, reducing tight coupling.</dd>
+                    </dl>
+
+                </details>
+
+                <details>
+
+                    <summary>7. What is Middleware?</summary>
+
+                    <dl>
+                        <dt>Answer</dt>
+                        <dd>Middleware is software that processes HTTP requests and responses in the ASP.NET Core request pipeline.</dd>
+                    </dl>
+
+                </details>
+
+                <details>
+
+                    <summary>8. What is Attribute Routing?</summary>
+
+                    <dl>
+                        <dt>Answer</dt>
+                        <dd>Attribute Routing defines API endpoints using attributes like <code>[Route]</code> and <code>[HttpGet]</code>.</dd>
+                    </dl>
+
+                </details>
+
+                <details>
+
+                    <summary>9. What is Model Validation?</summary>
+
+                    <dl>
+                        <dt>Answer</dt>
+                        <dd>Model Validation ensures incoming request data is valid using Data Annotations and <code>ModelState</code>.</dd>
+                    </dl>
+
+                </details>
+
+                <details>
+
+                    <summary>10. What is JWT Authentication?</summary>
+
+                    <dl>
+                        <dt>Answer</dt>
+                        <dd>JWT uses a signed token to securely authenticate and authorize users without server-side sessions.</dd>
+                    </dl>
+
+                </details>
+
+            </article>
+
+        </section>
+
+        <section>
+
+            <h2>Quick Memory Sheet</h2>
+
+            <blockquote>
+
+                Definition ? Example ? Real-Time Use ? Performance / Benefit
+
+            </blockquote>
+
+            <table border="1" cellpadding="8">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Step</th>
+
+                        <th>Purpose</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr>
+
+                        <td>Definition</td>
+
+                        <td>What is it?</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Example</td>
+
+                        <td>Simple code or API example.</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Real-Time Use</td>
+
+                        <td>Explain where it is used in projects.</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Performance / Benefit</td>
+
+                        <td>State scalability, security, maintainability, or performance advantages.</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+    </main>
+
+    <footer>
+
+        <p>ASP.NET Core Interview Preparation | Semantic HTML | GitHub Pages Ready</p>
+
+    </footer>
+
+</body>
+</html>
