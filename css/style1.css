@@ -149,10 +149,12 @@ details {
 /* Question */
 
 summary {
-    font-family: 'Poppins',sans-serif;
-    font-size: 22px;
+    cursor: pointer;
+    font-family: "Segoe UI",Arial,sans-serif;
+    font-size: 20px;
     font-weight: 600;
     color: #003366;
+    list-style: none;
 }
 
     summary::-webkit-details-marker {
@@ -190,6 +192,7 @@ code {
     font-family: Consolas,"Courier New",monospace;
     font-size: 15px;
 }
+
 /* Responsive */
 
 @media(max-width:768px) {
