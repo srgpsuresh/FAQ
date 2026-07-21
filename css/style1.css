@@ -7,24 +7,26 @@
 }
 
 body {
-    font-family: Segoe UI,Arial,sans-serif;
-    background: #f5f6fa;
-    color: #222;
+    font-family: 'Poppins','Segoe UI',Arial,sans-serif;
+    font-size: 17px;
+    color: #333;
+    line-height: 1.8;
 }
 
 /* ========= Header ========= */
 
-header {
-    background: #003366;
-    color: white;
-    padding: 30px;
-    text-align: center;
+header h1 {
+    font-family: 'Poppins',sans-serif;
+    font-size: 52px;
+    font-weight: 700;
+    letter-spacing: .5px;
 }
 
-    header h1 {
-        font-size: 42px;
-        margin-bottom: 10px;
-    }
+header p {
+    font-family: 'Poppins',sans-serif;
+    font-size: 22px;
+    font-weight: 400;
+}
 
 /* ========= Layout ========= */
 
@@ -149,12 +151,10 @@ details {
 /* Question */
 
 summary {
-    cursor: pointer;
-    font-family: "Segoe UI",Arial,sans-serif;
-    font-size: 20px;
+    font-family: 'Poppins',sans-serif;
+    font-size: 22px;
     font-weight: 600;
     color: #003366;
-    list-style: none;
 }
 
     summary::-webkit-details-marker {
@@ -185,14 +185,13 @@ details p {
 /* Code */
 
 code {
+    font-family: Consolas,"Courier New",monospace;
+    font-size: 16px;
     background: #eef3ff;
-    color: #c2185b;
+    color: #d63384;
     padding: 2px 6px;
     border-radius: 4px;
-    font-family: Consolas,"Courier New",monospace;
-    font-size: 15px;
 }
-
 /* Responsive */
 
 @media(max-width:768px) {
