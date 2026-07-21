@@ -1,279 +1,73 @@
-﻿/* ==========================================
-   Enterprise Interview Portal Styles
-   Author : Suresh
-   ========================================== */
-
-/* ---------- Reset ---------- */
-
-* {
+﻿* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: Segoe UI;
 }
-
-/* ---------- Body ---------- */
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 20px;
-    background: #f4f4f4;
-    color: #333;
-    line-height: 1.6;
+    background: #f4f6f9;
 }
 
-/* ---------- Header & Footer ---------- */
+header {
+    background: #003366;
+    color: white;
+    padding: 30px;
+    text-align: center;
+}
 
-header,
+nav {
+    background: #1565c0;
+    padding: 15px;
+    text-align: center;
+}
+
+    nav a {
+        color: white;
+        text-decoration: none;
+        margin: 15px;
+        font-weight: bold;
+    }
+
+main {
+    width: 90%;
+    margin: auto;
+    padding: 20px;
+}
+
+section {
+    margin-bottom: 40px;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+    gap: 20px;
+}
+
+article {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 8px gray;
+}
+
+    article h3 {
+        color: #1565c0;
+        margin-bottom: 10px;
+    }
+
+    article a {
+        display: inline-block;
+        margin-top: 15px;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
 footer {
     background: #003366;
     color: white;
     text-align: center;
     padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-}
-
-/* ---------- Navigation ---------- */
-
-nav {
-    background: #0078D4;
-    padding: 12px;
-    border-radius: 8px;
-    text-align: center;
-    margin: 20px 0;
-}
-
-    nav a {
-        color: white;
-        text-decoration: none;
-        margin: 0 12px;
-        font-weight: bold;
-    }
-
-        nav a:hover {
-            text-decoration: underline;
-        }
-
-/* ---------- Sections ---------- */
-
-section {
-    background: white;
-    margin: 20px 0;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,.08);
-}
-
-/* ---------- Articles ---------- */
-
-article {
-    margin-top: 15px;
-}
-
-/* ---------- FAQ Details ---------- */
-
-details {
-    margin-bottom: 15px;
-    padding: 15px;
-    border-left: 5px solid #0078D4;
-    background: #fafafa;
-    border-radius: 6px;
-}
-
-summary {
-    cursor: pointer;
-    font-size: 18px;
-    font-weight: bold;
-    color: #003366;
-}
-
-details[open] {
-    background: #eef6ff;
-}
-
-/* ---------- Definition List ---------- */
-
-dt {
-    font-weight: bold;
-    margin-top: 12px;
-}
-
-dd {
-    margin-left: 20px;
-    margin-bottom: 12px;
-}
-
-/* ---------- Lists ---------- */
-
-ul,
-ol {
-    margin-left: 25px;
-    margin-top: 10px;
-}
-
-li {
-    margin-bottom: 8px;
-}
-
-/* ---------- Tables ---------- */
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-    table th,
-    table td {
-        border: 1px solid #ddd;
-        padding: 10px;
-        text-align: left;
-    }
-
-    table th {
-        background: #1976d2;
-        color: white;
-    }
-
-/* ---------- Code ---------- */
-
-pre {
-    background: #272822;
-    color: white;
-    padding: 15px;
-    border-radius: 6px;
-    overflow-x: auto;
-    margin-top: 10px;
-}
-
-code {
-    background: #efefef;
-    color: #d63384;
-    padding: 2px 6px;
-    border-radius: 4px;
-}
-
-/* ---------- Block Quote ---------- */
-
-blockquote {
-    background: #eef6ff;
-    border-left: 5px solid #1976d2;
-    padding: 15px;
-    margin: 20px 0;
-    font-style: italic;
-}
-
-/* ---------- Images ---------- */
-
-img {
-    max-width: 100%;
-    border-radius: 8px;
-}
-
-/* ---------- Topic Navigation ---------- */
-
-.topic-nav {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 12px;
-    margin: 25px 0;
-}
-
-    .topic-nav a {
-        text-decoration: none;
-        background: #1976d2;
-        color: white;
-        padding: 10px 18px;
-        border-radius: 6px;
-        font-weight: bold;
-        transition: .3s;
-    }
-
-        .topic-nav a:hover {
-            background: #0d47a1;
-        }
-
-/* ---------- Technology Cards ---------- */
-
-.topic-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
-    gap: 20px;
-    margin-top: 20px;
-}
-
-.card {
-    display: block;
-    background: white;
-    border-left: 5px solid #1976d2;
-    padding: 20px;
-    text-decoration: none;
-    color: #222;
-    border-radius: 8px;
-    font-weight: bold;
-    box-shadow: 0 2px 6px rgba(0,0,0,.1);
-    transition: .3s;
-}
-
-    .card:hover {
-        background: #1976d2;
-        color: white;
-        transform: translateY(-4px);
-    }
-
-/* ---------- Headings ---------- */
-
-h1 {
-    margin-bottom: 10px;
-}
-
-h2 {
-    color: #003366;
-    margin-bottom: 15px;
-}
-
-h3 {
-    color: #1976d2;
-    margin-top: 15px;
-    margin-bottom: 10px;
-}
-
-/* ---------- Footer ---------- */
-
-footer p {
-    margin: 0;
-}
-
-/* ---------- Responsive ---------- */
-
-@media (max-width:768px) {
-
-    body {
-        padding: 10px;
-    }
-
-    nav a {
-        display: inline-block;
-        margin: 6px;
-    }
-
-    .topic-nav {
-        flex-direction: column;
-    }
-
-        .topic-nav a {
-            text-align: center;
-        }
-
-    summary {
-        font-size: 16px;
-    }
-
-    table {
-        display: block;
-        overflow-x: auto;
-    }
+    margin-top: 30px;
 }
