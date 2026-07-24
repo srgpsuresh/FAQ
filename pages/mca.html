@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Microservices Design Patterns - Clean Architecture</title>
+
+<style>
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    max-width:1400px;
+    margin:auto;
+    line-height:1.7;
+    background:#f4f7fa;
+    padding:20px;
+}
+
+header{
+    background:#003366;
+    color:#fff;
+    padding:20px;
+    text-align:center;
+    border-radius:8px;
+}
+
+section{
+    background:#fff;
+    margin-top:25px;
+    padding:20px;
+    border-radius:8px;
+    box-shadow:0 0 6px rgba(0,0,0,.1);
+}
+
+h2{
+    color:#003366;
+    border-bottom:3px solid #003366;
+    padding-bottom:8px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px;
+}
+
+th{
+    background:#003366;
+    color:white;
+    padding:12px;
+}
+
+td{
+    padding:10px;
+    border:1px solid #ddd;
+    vertical-align:top;
+}
+
+tr:nth-child(even){
+    background:#f9f9f9;
+}
+
+details{
+    margin-top:15px;
+    border:1px solid #ccc;
+    border-radius:6px;
+    padding:10px;
+    background:#fafafa;
+}
+
+summary{
+    font-weight:bold;
+    cursor:pointer;
+    color:#003366;
+}
+
+code{
+    background:#efefef;
+    padding:2px 5px;
+    border-radius:4px;
+}
+
+footer{
+    text-align:center;
+    margin-top:30px;
+    padding:15px;
+    background:#003366;
+    color:white;
+    border-radius:8px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+<h1>Microservices Design Patterns</h1>
+<h3>Clean Architecture (Order → Shipping Scenario)</h3>
+</header>
+
+<section>
+
+<h2>Layer-wise Design Patterns</h2>
+
+<table>
+
+<tr>
+<th>Layer</th>
+<th>Issue / Problem</th>
+<th>Design Pattern</th>
+<th>Purpose</th>
+<th>Order → Shipping Example</th>
+</tr>
+
+<tr>
+<td><b>Presentation (API)</b></td>
+<td>Different clients call API</td>
+<td>Facade</td>
+<td>Single entry point</td>
+<td>Customer calls <code>POST /orders</code></td>
+</tr>
+
+<tr>
+<td>Presentation</td>
+<td>Authentication, Logging, Validation</td>
+<td>Middleware</td>
+<td>Cross-cutting concerns</td>
+<td>JWT, Exception Handling, Logging</td>
+</tr>
+
+<tr>
+<td>Presentation</td>
+<td>Different request models</td>
+<td>Adapter</td>
+<td>Convert DTOs</td>
+<td>Mobile Order DTO → Application Command</td>
+</tr>
+
+<tr>
+<td>Presentation</td>
+<td>Different API versions</td>
+<td>Strategy</td>
+<td>Select processing logic</td>
+<td>v1 API / v2 API</td>
+</tr>
+
+<tr>
+<td><b>Application</b></td>
+<td>Create Order</td>
+<td>CQRS</td>
+<td>Separate Read & Write</td>
+<td>CreateOrderCommand / GetOrderQuery</td>
+</tr>
+
+<tr>
+<td>Application</td>
+<td>Controller tightly coupled</td>
+<td>Mediator (MediatR)</td>
+<td>Loose coupling</td>
+<td>Controller → MediatR → Handler</td>
+</tr>
+
+<tr>
+<td>Application</td>
+<td>Business action</td>
+<td>Command</td>
+<td>Encapsulate request</td>
+<td>CreateOrderCommand</td>
+</tr>
+
+<tr>
+<td>Application</td>
+<td>Validation & Logging</td>
+<td>Decorator / Pipeline</td>
+<td>Add behavior without changing code</td>
+<td>ValidationBehavior, LoggingBehavior</td>
+</tr>
+
+<tr>
+<td>Application</td>
+<td>Multiple services transaction</td>
+<td>Saga</td>
+<td>Distributed transaction</td>
+<td>Order → Payment → Inventory → Shipping</td>
+</tr>
+
+<tr>
+<td>Application</td>
+<td>Multiple validations</td>
+<td>Chain of Responsibility</td>
+<td>Sequential processing</td>
+<td>Customer → Credit → Stock Check</td>
+</tr>
+
+<tr>
+<td><b>Domain</b></td>
+<td>Order lifecycle changes</td>
+<td>State</td>
+<td>Manage state transitions</td>
+<td>Pending → Paid → Packed → Shipped</td>
+</tr>
+
+<tr>
+<td>Domain</td>
+<td>Shipping calculation</td>
+<td>Strategy</td>
+<td>Select algorithm</td>
+<td>Standard / Express / Overnight</td>
+</tr>
+
+<tr>
+<td>Domain</td>
+<td>Create complex objects</td>
+<td>Factory</td>
+<td>Centralized object creation</td>
+<td>OrderFactory.Create()</td>
+</tr>
+
+<tr>
+<td>Domain</td>
+<td>Business validation</td>
+<td>Specification</td>
+<td>Reusable rules</td>
+<td>Customer Eligible?</td>
+</tr>
+
+<tr>
+<td>Domain</td>
+<td>Maintain consistency</td>
+<td>Aggregate (DDD)</td>
+<td>Protect business rules</td>
+<td>Order Aggregate owns OrderItems</td>
+</tr>
+
+<tr>
+<td>Domain</td>
+<td>Notify other services</td>
+<td>Domain Event / Observer</td>
+<td>Raise business events</td>
+<td>OrderCreated Event</td>
+</tr>
+
+<tr>
+<td><b>Infrastructure</b></td>
+<td>Database abstraction</td>
+<td>Repository</td>
+<td>Hide EF Core/SQL</td>
+<td>OrderRepository</td>
+</tr>
+
+<tr>
+<td>Infrastructure</td>
+<td>Save multiple entities</td>
+<td>Unit of Work</td>
+<td>Single transaction</td>
+<td>Order + OrderItems Commit</td>
+</tr>
+
+<tr>
+<td>Infrastructure</td>
+<td>External Shipping API</td>
+<td>Adapter</td>
+<td>Convert external models</td>
+<td>FedEx Adapter</td>
+</tr>
+
+<tr>
+<td>Infrastructure</td>
+<td>Choose provider</td>
+<td>Factory</td>
+<td>Create provider object</td>
+<td>DHL / BlueDart / UPS</td>
+</tr>
+
+<tr>
+<td>Infrastructure</td>
+<td>Temporary API failure</td>
+<td>Retry</td>
+<td>Retry failed request</td>
+<td>Retry Shipping API 3 times</td>
+</tr>
+
+<tr>
+<td>Infrastructure</td>
+<td>Service unavailable</td>
+<td>Circuit Breaker</td>
+<td>Prevent cascading failures</td>
+<td>Stop calling Shipping API</td>
+</tr>
+
+<tr>
+<td>Infrastructure</td>
+<td>Improve performance</td>
+<td>Cache Aside</td>
+<td>Cache frequently used data</td>
+<td>Redis Product Cache</td>
+</tr>
+
+<tr>
+<td>Infrastructure</td>
+<td>Reliable event publishing</td>
+<td>Outbox</td>
+<td>DB + Event consistency</td>
+<td>Save Order then Publish Event</td>
+</tr>
+
+<tr>
+<td><b>Messaging</b></td>
+<td>Notify other services</td>
+<td>Publish / Subscribe</td>
+<td>Asynchronous communication</td>
+<td>Kafka OrderCreated Event</td>
+</tr>
+
+<tr>
+<td>Messaging</td>
+<td>Microservice communication</td>
+<td>Event-Driven Architecture</td>
+<td>Loose coupling</td>
+<td>Inventory, Shipping, Billing consume event</td>
+</tr>
+
+<tr>
+<td>Messaging</td>
+<td>Duplicate events</td>
+<td>Idempotency</td>
+<td>Safe processing</td>
+<td>Ignore duplicate OrderCreated</td>
+</tr>
+
+<tr>
+<td>Messaging</td>
+<td>Failed messages</td>
+<td>Dead Letter Queue</td>
+<td>Store failed events</td>
+<td>Move invalid message to DLQ</td>
+</tr>
+
+<tr>
+<td><b>Cross Cutting</b></td>
+<td>Dependency management</td>
+<td>Dependency Injection</td>
+<td>Loose coupling</td>
+<td>Inject Repository, Services</td>
+</tr>
+
+<tr>
+<td>Cross Cutting</td>
+<td>Configuration</td>
+<td>Options Pattern</td>
+<td>Strongly typed settings</td>
+<td>ShippingSettings</td>
+</tr>
+
+<tr>
+<td>Cross Cutting</td>
+<td>DTO Mapping</td>
+<td>Mapper</td>
+<td>Entity ↔ DTO</td>
+<td>AutoMapper</td>
+</tr>
+
+</table>
+
+</section>
+
+<section>
+
+<h2>Complete Order → Shipping Flow</h2>
+
+<table>
+
+<tr>
+<th>Step</th>
+<th>Microservice</th>
+<th>Pattern Used</th>
+<th>Purpose</th>
+</tr>
+
+<tr>
+<td>1</td>
+<td>Order API</td>
+<td>Facade + Middleware</td>
+<td>Receive Request</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>Application</td>
+<td>Mediator + CQRS</td>
+<td>Execute CreateOrderCommand</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td>Domain</td>
+<td>Factory</td>
+<td>Create Order Aggregate</td>
+</tr>
+
+<tr>
+<td>4</td>
+<td>Domain</td>
+<td>Specification</td>
+<td>Validate Customer & Stock</td>
+</tr>
+
+<tr>
+<td>5</td>
+<td>Infrastructure</td>
+<td>Repository + Unit of Work</td>
+<td>Persist Order</td>
+</tr>
+
+<tr>
+<td>6</td>
+<td>Infrastructure</td>
+<td>Outbox</td>
+<td>Store Event</td>
+</tr>
+
+<tr>
+<td>7</td>
+<td>Kafka</td>
+<td>Publish-Subscribe</td>
+<td>Publish OrderCreated</td>
+</tr>
+
+<tr>
+<td>8</td>
+<td>Inventory Service</td>
+<td>Event Consumer</td>
+<td>Reserve Stock</td>
+</tr>
+
+<tr>
+<td>9</td>
+<td>Payment Service</td>
+<td>Saga</td>
+<td>Complete Payment</td>
+</tr>
+
+<tr>
+<td>10</td>
+<td>Shipping Service</td>
+<td>Strategy + Factory</td>
+<td>Select Courier</td>
+</tr>
+
+<tr>
+<td>11</td>
+<td>External Courier API</td>
+<td>Adapter + Retry + Circuit Breaker</td>
+<td>Create Shipment</td>
+</tr>
+
+<tr>
+<td>12</td>
+<td>Notification Service</td>
+<td>Observer</td>
+<td>Email & SMS</td>
+</tr>
+
+<tr>
+<td>13</td>
+<td>Order Service</td>
+<td>State Pattern</td>
+<td>Update Status → Shipped</td>
+</tr>
+
+</table>
+
+</section>
+
+<section>
+
+<details open>
+<summary>⭐ Most Frequently Used Enterprise Patterns</summary>
+
+<ul>
+<li>CQRS</li>
+<li>Mediator (MediatR)</li>
+<li>Repository</li>
+<li>Dependency Injection</li>
+<li>Saga</li>
+<li>Outbox Pattern</li>
+<li>Publish-Subscribe</li>
+<li>Event-Driven Architecture</li>
+<li>Strategy</li>
+<li>Factory</li>
+<li>Specification</li>
+<li>State Pattern</li>
+<li>Adapter</li>
+<li>Retry</li>
+<li>Circuit Breaker</li>
+<li>Decorator</li>
+<li>Observer</li>
+<li>Cache Aside</li>
+<li>Dead Letter Queue (DLQ)</li>
+</ul>
+
+</details>
+
+</section>
+
+<footer>
+
+<h3>Enterprise .NET Microservices + Clean Architecture + DDD + Event-Driven Design Patterns</h3>
+
+</footer>
+
+</body>
+</html>
