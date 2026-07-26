@@ -3,12 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Top 5 C# Coding Interview Problems</title>
+
+<title>C# Core Revision - Tech Lead Interview Guide</title>
 
 <style>
+
 body{
     font-family:Arial,Helvetica,sans-serif;
-    max-width:1200px;
+    max-width:1300px;
     margin:auto;
     background:#f4f6f9;
     line-height:1.7;
@@ -18,36 +20,32 @@ body{
 header{
     background:#003366;
     color:white;
-    text-align:center;
     padding:20px;
-    border-radius:8px;
+    text-align:center;
+    border-radius:10px;
 }
 
 section{
     background:white;
     margin:20px 0;
     padding:20px;
-    border-radius:8px;
-    box-shadow:0 2px 6px rgba(0,0,0,.1);
+    border-radius:10px;
+    box-shadow:0 2px 6px rgba(0,0,0,.15);
+}
+
+summary{
+    font-size:20px;
+    font-weight:bold;
+    cursor:pointer;
+    color:#003366;
 }
 
 h2{
     color:#003366;
 }
 
-summary{
-    font-size:18px;
-    font-weight:bold;
-    cursor:pointer;
-    color:#00509E;
-}
-
-pre{
-    background:#272822;
-    color:#f8f8f2;
-    padding:15px;
-    overflow:auto;
-    border-radius:6px;
+h3{
+    color:#0B5394;
 }
 
 table{
@@ -67,378 +65,210 @@ th,td{
     text-align:left;
 }
 
-.highlight{
+pre{
+    background:#272822;
+    color:#f8f8f2;
+    padding:15px;
+    overflow:auto;
+    border-radius:8px;
+}
+
+.note{
     background:#E8F5E9;
     border-left:5px solid green;
-    padding:10px;
+    padding:12px;
+    margin-top:10px;
+}
+
+.warning{
+    background:#FFF3CD;
+    border-left:5px solid orange;
+    padding:12px;
     margin-top:10px;
 }
 
 .tip{
-    background:#FFF3CD;
-    border-left:5px solid orange;
-    padding:10px;
+    background:#E3F2FD;
+    border-left:5px solid #1565C0;
+    padding:12px;
     margin-top:10px;
 }
+
 </style>
 
 </head>
+
 <body>
 
 <header>
 
-<h1>Top 5 Most Important C# Coding Interview Problems</h1>
+<h1>C# Core Revision (1 Hour)</h1>
 
 <p>
-Definition → Problem → Approach → Code → Real Project → Benefit → Complexity
+
+Tech Lead / Solution Architect Interview
+
+<br>
+
+Definition → Example → Real-Time Use Case → Performance Impact
+
 </p>
 
 </header>
 
 <section>
 
-<h2>1. Reverse a String</h2>
+<h2>1. Object Oriented Programming (OOP)</h2>
 
 <details open>
 
-<summary>Interview Explanation</summary>
+<summary>Encapsulation</summary>
 
 <h3>Definition</h3>
 
 <p>
-Reverse the characters of a string without changing the original meaning.
+Wrapping data and methods into one class while hiding internal details.
 </p>
 
-<h3>Problem</h3>
-
-<p>
-Input:
-<strong>CSharp</strong>
-
-<br>
-
-Output:
-<strong>prahSC</strong>
-</p>
-
-<h3>Approach</h3>
-
-<ul>
-<li>Convert string to character array.</li>
-<li>Use two pointers.</li>
-<li>Swap first and last characters.</li>
-<li>Repeat until middle.</li>
-</ul>
-
-<h3>Code</h3>
+<h3>Example</h3>
 
 <pre>
-public static string ReverseString(string input)
+public class Employee
 {
-    char[] arr = input.ToCharArray();
+    private decimal salary;
 
-    int left=0;
-    int right=arr.Length-1;
-
-    while(left&lt;right)
+    public void SetSalary(decimal amount)
     {
-        char temp=arr[left];
-        arr[left]=arr[right];
-        arr[right]=temp;
-
-        left++;
-        right--;
+        if(amount > 0)
+            salary = amount;
     }
 
-    return new string(arr);
+    public decimal GetSalary()
+    {
+        return salary;
+    }
 }
 </pre>
 
-<div class="highlight">
-
-<b>Real Project Use</b>
+<h3>Real Project</h3>
 
 <ul>
-<li>Encryption</li>
-<li>Data Formatting</li>
-<li>Text Processing</li>
+<li>Employee Salary</li>
+<li>Bank Account</li>
+<li>User Profile</li>
 </ul>
 
-</div>
+<div class="note">
 
-<div class="tip">
+<b>Performance Impact</b>
 
-<b>Time Complexity</b>
-
-O(n)
+Improves security and maintainability.
 
 </div>
 
 </details>
-
-</section>
-
-<section>
-
-<h2>2. Palindrome</h2>
 
 <details>
 
-<summary>Interview Explanation</summary>
+<summary>Inheritance</summary>
 
-<h3>Definition</h3>
+<p><b>Definition</b></p>
 
-<p>
-A palindrome reads the same from left to right and right to left.
-</p>
-
-<h3>Problem</h3>
-
-<p>
-MADAM → True
-
-<br>
-
-HELLO → False
-</p>
-
-<h3>Approach</h3>
-
-<ul>
-<li>Compare first and last characters.</li>
-<li>Move towards center.</li>
-</ul>
-
-<h3>Code</h3>
+<p>Acquire properties and methods from parent class.</p>
 
 <pre>
-public static bool IsPalindrome(string input)
+public class Vehicle
 {
-    int left=0;
-    int right=input.Length-1;
+    public void Start(){}
+}
 
-    while(left&lt;right)
-    {
-        if(input[left]!=input[right])
-            return false;
-
-        left++;
-        right--;
-    }
-
-    return true;
+public class Car : Vehicle
+{
 }
 </pre>
 
-<div class="highlight">
-
-<b>Real Project Use</b>
+<p><b>Real Project</b></p>
 
 <ul>
-<li>Password Validation</li>
-<li>Pattern Recognition</li>
-<li>Search Algorithms</li>
+
+<li>BaseEntity</li>
+
+<li>Vehicle Management</li>
+
+<li>Employee Hierarchy</li>
+
 </ul>
 
-</div>
+<div class="note">
 
-<div class="tip">
-
-<b>Time Complexity</b>
-
-O(n)
+Reusable code.
 
 </div>
 
 </details>
-
-</section>
-
-<section>
-
-<h2>3. First Non-Repeating Character</h2>
 
 <details>
 
-<summary>Interview Explanation</summary>
+<summary>Polymorphism</summary>
 
-<h3>Definition</h3>
+<p><b>Definition</b></p>
 
-<p>
-Find the first character appearing only once.
-</p>
-
-<h3>Problem</h3>
-
-<p>
-
-Input:
-
-aabbcde
-
-<br>
-
-Output:
-
-c
-
-</p>
-
-<h3>Approach</h3>
-
-<ul>
-
-<li>Count frequency using Dictionary.</li>
-
-<li>Return first character having count = 1.</li>
-
-</ul>
-
-<h3>Code</h3>
+<p>One interface, multiple implementations.</p>
 
 <pre>
-public static char FindFirstNonRepeating(string input)
+public interface IPayment
 {
-    Dictionary&lt;char,int&gt; map=new();
+    void Pay();
+}
 
-    foreach(char c in input)
-    {
-        if(map.ContainsKey(c))
-            map[c]++;
-        else
-            map[c]=1;
-    }
-
-    foreach(char c in input)
-    {
-        if(map[c]==1)
-            return c;
-    }
-
-    return '_';
+public class CardPayment : IPayment
+{
+    public void Pay(){}
 }
 </pre>
 
-<div class="highlight">
-
-<b>Real Project Use</b>
+<p><b>Real Project</b></p>
 
 <ul>
 
-<li>Log Analysis</li>
+<li>Payment Gateway</li>
 
-<li>Fraud Detection</li>
-
-<li>Unique Data Validation</li>
+<li>Notification Services</li>
 
 </ul>
 
-</div>
+<div class="note">
 
-<div class="tip">
-
-<b>Time Complexity</b>
-
-O(n)
+Easy to extend features.
 
 </div>
 
 </details>
-
-</section>
-
-<section>
-
-<h2>4. Two Sum Problem</h2>
 
 <details>
 
-<summary>Interview Explanation</summary>
+<summary>Abstraction</summary>
 
-<h3>Definition</h3>
+<p><b>Definition</b></p>
 
-<p>
-
-Find two numbers whose sum equals the target.
-
-</p>
-
-<h3>Problem</h3>
-
-<p>
-
-Array:
-
-2 7 11 15
-
-<br>
-
-Target:
-
-9
-
-<br>
-
-Output:
-
-2 + 7
-
-</p>
-
-<h3>Approach</h3>
-
-<ul>
-
-<li>Store visited numbers in Dictionary.</li>
-
-<li>Search target-currentValue.</li>
-
-</ul>
-
-<h3>Code</h3>
+<p>Hide implementation and expose only required functionality.</p>
 
 <pre>
-public static int[] TwoSum(int[] nums,int target)
+public interface IOrderService
 {
-    Dictionary&lt;int,int&gt; map=new();
-
-    for(int i=0;i&lt;nums.Length;i++)
-    {
-        int diff=target-nums[i];
-
-        if(map.ContainsKey(diff))
-            return new[]{map[diff],i};
-
-        map[nums[i]]=i;
-    }
-
-    return new[]{-1,-1};
+    void PlaceOrder();
 }
 </pre>
 
-<div class="highlight">
-
-<b>Real Project Use</b>
+<p><b>Real Project</b></p>
 
 <ul>
 
-<li>Payment Matching</li>
+<li>Repository Pattern</li>
 
-<li>Budget Allocation</li>
-
-<li>Financial Systems</li>
+<li>Service Layer</li>
 
 </ul>
-
-</div>
-
-<div class="tip">
-
-<b>Time Complexity</b>
-
-O(n)
-
-</div>
 
 </details>
 
@@ -446,147 +276,79 @@ O(n)
 
 <section>
 
-<h2>5. Remove Duplicate Elements</h2>
-
-<details>
-
-<summary>Interview Explanation</summary>
-
-<h3>Definition</h3>
-
-<p>
-
-Remove duplicate values from an array.
-
-</p>
-
-<h3>Approach</h3>
-
-<ul>
-
-<li>Store values in HashSet.</li>
-
-<li>Convert back to array.</li>
-
-</ul>
-
-<h3>Code</h3>
-
-<pre>
-public static int[] RemoveDuplicates(int[] nums)
-{
-    HashSet&lt;int&gt; set=new();
-
-    foreach(int num in nums)
-        set.Add(num);
-
-    return set.ToArray();
-}
-</pre>
-
-<div class="highlight">
-
-<b>Real Project Use</b>
-
-<ul>
-
-<li>Customer Master Cleanup</li>
-
-<li>ETL Processing</li>
-
-<li>Duplicate API Requests</li>
-
-</ul>
-
-</div>
-
-<div class="tip">
-
-<b>Time Complexity</b>
-
-O(n)
-
-</div>
-
-</details>
-
-</section>
-
-<section>
-
-<h2>Interview Summary</h2>
+<h2>2. SOLID Principles</h2>
 
 <table>
 
 <tr>
 
-<th>Problem</th>
+<th>Principle</th>
 
-<th>Data Structure</th>
+<th>Definition</th>
 
-<th>Complexity</th>
+<th>Real Project</th>
 
-<th>Real-Time Use</th>
-
-</tr>
-
-<tr>
-
-<td>Reverse String</td>
-
-<td>Character Array</td>
-
-<td>O(n)</td>
-
-<td>Encryption, Formatting</td>
+<th>Benefit</th>
 
 </tr>
 
 <tr>
 
-<td>Palindrome</td>
+<td>SRP</td>
 
-<td>Two Pointer</td>
+<td>One responsibility</td>
 
-<td>O(n)</td>
+<td>InvoiceService</td>
 
-<td>Validation</td>
-
-</tr>
-
-<tr>
-
-<td>First Non-Repeating Character</td>
-
-<td>Dictionary</td>
-
-<td>O(n)</td>
-
-<td>Logs, Fraud Detection</td>
+<td>Easy maintenance</td>
 
 </tr>
 
 <tr>
 
-<td>Two Sum</td>
+<td>OCP</td>
 
-<td>Dictionary</td>
+<td>Open for extension</td>
 
-<td>O(n)</td>
+<td>Discount Engine</td>
 
-<td>Payments, Finance</td>
+<td>No code modification</td>
 
 </tr>
 
 <tr>
 
-<td>Remove Duplicates</td>
+<td>LSP</td>
 
-<td>HashSet</td>
+<td>Derived class replace base class</td>
 
-<td>O(n)</td>
+<td>Payment Providers</td>
 
-<td>ETL, Data Cleanup</td>
+<td>Reliable design</td>
+
+</tr>
+
+<tr>
+
+<td>ISP</td>
+
+<td>Small focused interfaces</td>
+
+<td>Printer Scanner</td>
+
+<td>Less dependency</td>
+
+</tr>
+
+<tr>
+
+<td>DIP</td>
+
+<td>Depend on abstraction</td>
+
+<td>Dependency Injection</td>
+
+<td>Loose coupling</td>
 
 </tr>
 
@@ -596,21 +358,509 @@ O(n)
 
 <section>
 
-<h2>Tech Lead Interview Tips</h2>
+<h2>3. Interface vs Abstract Class</h2>
+
+<table>
+
+<tr>
+
+<th>Feature</th>
+
+<th>Interface</th>
+
+<th>Abstract Class</th>
+
+</tr>
+
+<tr>
+
+<td>Multiple Inheritance</td>
+
+<td>Yes</td>
+
+<td>No</td>
+
+</tr>
+
+<tr>
+
+<td>Constructor</td>
+
+<td>No</td>
+
+<td>Yes</td>
+
+</tr>
+
+<tr>
+
+<td>Fields</td>
+
+<td>No</td>
+
+<td>Yes</td>
+
+</tr>
+
+<tr>
+
+<td>Implementation</td>
+
+<td>Partial / Full</td>
+
+<td>Partial / Full</td>
+
+</tr>
+
+</table>
+
+<div class="tip">
+
+<b>Interview Answer</b>
+
+Use Interface for contracts.
+
+Use Abstract Class for common implementation.
+
+</div>
+
+</section>
+
+<section>
+
+<h2>4. Delegate, Event, Action, Func</h2>
+
+<table>
+
+<tr>
+
+<th>Concept</th>
+
+<th>Definition</th>
+
+<th>Real Project</th>
+
+</tr>
+
+<tr>
+
+<td>Delegate</td>
+
+<td>Function Pointer</td>
+
+<td>Callback Methods</td>
+
+</tr>
+
+<tr>
+
+<td>Event</td>
+
+<td>Publisher Subscriber</td>
+
+<td>Email Notification</td>
+
+</tr>
+
+<tr>
+
+<td>Action</td>
+
+<td>Returns Void</td>
+
+<td>Logging</td>
+
+</tr>
+
+<tr>
+
+<td>Func</td>
+
+<td>Returns Value</td>
+
+<td>LINQ Queries</td>
+
+</tr>
+
+</table>
+
+<pre>
+Action&lt;string&gt; log = Console.WriteLine;
+
+Func&lt;int,int,int&gt; add = (a,b) => a+b;
+</pre>
+
+</section>
+
+<section>
+
+<h2>5. async / await</h2>
+
+<h3>Definition</h3>
+
+<p>
+
+Asynchronous programming without blocking the current thread.
+
+</p>
+
+<pre>
+public async Task&lt;string&gt; GetDataAsync()
+{
+    await Task.Delay(1000);
+    return "Success";
+}
+</pre>
+
+<h3>Real Project</h3>
 
 <ul>
 
-<li>Explain the brute-force solution first, then optimize it.</li>
+<li>Database Calls</li>
 
-<li>Discuss Time Complexity and Space Complexity.</li>
+<li>API Calls</li>
 
-<li>Prefer Dictionary and HashSet when optimizing lookups.</li>
-
-<li>Mention edge cases such as null, empty arrays, duplicates, and large inputs.</li>
-
-<li>Relate the solution to real enterprise scenarios like Banking, E-Commerce, Healthcare, or Microservices.</li>
+<li>Azure Blob Storage</li>
 
 </ul>
+
+<div class="warning">
+
+<b>Interview Tip</b>
+
+Async does not create a new thread.
+
+It releases the current thread while waiting.
+
+</div>
+
+</section>
+
+<section>
+
+<h2>6. Task Parallel Library (TPL)</h2>
+
+<pre>
+Parallel.For(0,100,i =>
+{
+    Console.WriteLine(i);
+});
+</pre>
+
+<table>
+
+<tr>
+
+<th>async/await</th>
+
+<th>Parallel</th>
+
+</tr>
+
+<tr>
+
+<td>I/O Bound</td>
+
+<td>CPU Bound</td>
+
+</tr>
+
+<tr>
+
+<td>API Calls</td>
+
+<td>Image Processing</td>
+
+</tr>
+
+<tr>
+
+<td>Database</td>
+
+<td>Report Generation</td>
+
+</tr>
+
+</table>
+
+</section>
+
+<section>
+
+<h2>7. IDisposable</h2>
+
+<p>
+
+Release unmanaged resources.
+
+</p>
+
+<pre>
+using(SqlConnection con =
+new SqlConnection(connectionString))
+{
+
+}
+</pre>
+
+<h3>Real Project</h3>
+
+<ul>
+
+<li>Database Connections</li>
+
+<li>File Streams</li>
+
+<li>Network Sockets</li>
+
+</ul>
+
+<div class="note">
+
+Prevents resource leaks.
+
+</div>
+
+</section>
+
+<section>
+
+<h2>8. Garbage Collection</h2>
+
+<p>
+
+Automatic memory management by CLR.
+
+</p>
+
+<table>
+
+<tr>
+
+<th>Generation</th>
+
+<th>Description</th>
+
+</tr>
+
+<tr>
+
+<td>Gen0</td>
+
+<td>Short-lived Objects</td>
+
+</tr>
+
+<tr>
+
+<td>Gen1</td>
+
+<td>Medium-lived Objects</td>
+
+</tr>
+
+<tr>
+
+<td>Gen2</td>
+
+<td>Long-lived Objects</td>
+
+</tr>
+
+</table>
+
+<div class="warning">
+
+Large object allocations increase GC pressure.
+
+</div>
+
+</section>
+
+<section>
+
+<h2>9. Exception Handling</h2>
+
+<pre>
+try
+{
+    // Code
+}
+catch(Exception ex)
+{
+    Console.WriteLine(ex.Message);
+}
+finally
+{
+    // Cleanup
+}
+</pre>
+
+<h3>Real Project</h3>
+
+<ul>
+
+<li>Database Failure</li>
+
+<li>API Timeout</li>
+
+<li>Payment Failure</li>
+
+</ul>
+
+<div class="tip">
+
+Exceptions should be used for exceptional situations, not business validation.
+
+</div>
+
+</section>
+
+<section>
+
+<h2>Top 10 C# Core Interview Questions</h2>
+
+<ol>
+
+<li>Explain all OOP principles with real examples.</li>
+
+<li>Explain all SOLID principles.</li>
+
+<li>Interface vs Abstract Class?</li>
+
+<li>What happens internally in async/await?</li>
+
+<li>Difference between Task, Thread and Parallel?</li>
+
+<li>What is Dependency Injection?</li>
+
+<li>Why IDisposable when Garbage Collector exists?</li>
+
+<li>Explain Garbage Collection generations.</li>
+
+<li>Delegate vs Event?</li>
+
+<li>Common API performance bottlenecks?</li>
+
+</ol>
+
+</section>
+
+<section>
+
+<h2>1-Hour Revision Plan</h2>
+
+<table>
+
+<tr>
+
+<th>Time</th>
+
+<th>Topic</th>
+
+</tr>
+
+<tr>
+
+<td>00-10 min</td>
+
+<td>OOP Principles</td>
+
+</tr>
+
+<tr>
+
+<td>10-20 min</td>
+
+<td>SOLID Principles</td>
+
+</tr>
+
+<tr>
+
+<td>20-25 min</td>
+
+<td>Interface vs Abstract Class</td>
+
+</tr>
+
+<tr>
+
+<td>25-35 min</td>
+
+<td>Delegate, Event, Action, Func</td>
+
+</tr>
+
+<tr>
+
+<td>35-40 min</td>
+
+<td>async / await</td>
+
+</tr>
+
+<tr>
+
+<td>40-45 min</td>
+
+<td>Task Parallel Library</td>
+
+</tr>
+
+<tr>
+
+<td>45-50 min</td>
+
+<td>IDisposable</td>
+
+</tr>
+
+<tr>
+
+<td>50-55 min</td>
+
+<td>Garbage Collection</td>
+
+</tr>
+
+<tr>
+
+<td>55-60 min</td>
+
+<td>Exception Handling</td>
+
+</tr>
+
+</table>
+
+</section>
+
+<section>
+
+<h2>Tech Lead Interview Formula</h2>
+
+<div class="note">
+
+<strong>Answer Every Question Using:</strong>
+
+<ol>
+
+<li>Definition</li>
+
+<li>Simple Example</li>
+
+<li>Real-Time Project Use</li>
+
+<li>Benefits</li>
+
+<li>Performance Impact</li>
+
+<li>Common Interview Follow-up Question</li>
+
+</ol>
+
+</div>
 
 </section>
 
