@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C# OOP using Clean Architecture & Microservices - Interview Handbook</title>
+</head>
+
+<body>
+
+<header>
+    <h1>C# OOP Explained Using Clean Architecture & Microservices</h1>
+    <p>
+        ASP.NET Core • .NET 8 • Clean Architecture • CQRS • MediatR • DDD • Microservices
+    </p>
+</header>
+
+<nav>
+    <h2>Contents</h2>
+    <ul>
+        <li>Project Architecture</li>
+        <li>1. What is OOP?</li>
+        <li>2. Class</li>
+        <li>3. Object</li>
+        <li>4. Encapsulation</li>
+        <li>5. Abstraction</li>
+        <li>6. Inheritance</li>
+        <li>7. Polymorphism</li>
+        <li>8. OOP inside Clean Architecture</li>
+        <li>9. OOP inside Microservices</li>
+        <li>10. End-to-End Order Flow</li>
+        <li>11. Interview Questions</li>
+        <li>12. Interview Cheat Sheet</li>
+    </ul>
+</nav>
+
+<main>
+
+<section>
+
+<h2>Project Used Throughout</h2>
+
+<article>
+
+<h3>E-Commerce Order Management System</h3>
+
+<pre>
+Angular
+   │
+API Gateway
+   │
+──────────────────────────────
+Order Service
+Payment Service
+Inventory Service
+Notification Service
+──────────────────────────────
+Application Layer
+Domain Layer
+Infrastructure Layer
+Persistence
+</pre>
+
+<p>
+Every OOP concept below is explained using this real-time enterprise project.
+</p>
+
+</article>
+
+</section>
+
+<section>
+
+<h2>1. What is OOP?</h2>
+
+<article>
+
+<details open>
+
+<summary>Definition</summary>
+
+<p>
+Object-Oriented Programming is a programming methodology that models software
+using objects containing data and behavior.
+</p>
+
+</details>
+
+<details>
+
+<summary>Real-Time Example</summary>
+
+<p>
+Instead of creating hundreds of independent functions, we create business
+objects like Order, Customer, Product, Invoice and Payment.
+</p>
+
+</details>
+
+<details>
+
+<summary>Clean Architecture Usage</summary>
+
+<p>
+Domain Layer contains all business entities.
+
+Order
+
+Customer
+
+Invoice
+
+Product
+</p>
+
+</details>
+
+<details>
+
+<summary>Microservice Usage</summary>
+
+<p>
+Every microservice owns its own business objects.
+
+Order Service → Order
+
+Payment Service → Payment
+
+Inventory Service → Product
+</p>
+
+</details>
+
+<details>
+
+<summary>Benefits</summary>
+
+<ul>
+
+<li>Reusable</li>
+
+<li>Maintainable</li>
+
+<li>Scalable</li>
+
+<li>Easy Testing</li>
+
+<li>Loose Coupling</li>
+
+</ul>
+
+</details>
+
+</article>
+
+</section>
+
+<section>
+
+<h2>2. What is Class?</h2>
+
+<article>
+
+<details>
+
+<summary>Definition</summary>
+
+<p>
+A class is a blueprint used to create objects.
+</p>
+
+</details>
+
+<details>
+
+<summary>Project Example</summary>
+
+<pre>
+
+Order
+
+Customer
+
+Product
+
+Payment
+
+</pre>
+
+</details>
+
+<details>
+
+<summary>Real Project Usage</summary>
+
+<p>
+
+Every API request creates an Order object from the Order class.
+
+</p>
+
+</details>
+
+<details>
+
+<summary>Interview Answer</summary>
+
+<p>
+
+Class defines properties, methods and business behavior.
+
+</p>
+
+</details>
+
+</article>
+
+</section>
+
+<section>
+
+<h2>3. What is Object?</h2>
+
+<article>
+
+<details>
+
+<summary>Definition</summary>
+
+<p>
+
+An object is an instance of a class.
+
+</p>
+
+</details>
+
+<details>
+
+<summary>Runtime Flow</summary>
+
+<pre>
+
+POST /orders
+
+↓
+
+Order object created
+
+↓
+
+Validation
+
+↓
+
+Database
+
+</pre>
+
+</details>
+
+<details>
+
+<summary>Real-Time Usage</summary>
+
+<p>
+
+Every HTTP request creates new business objects inside the service.
+
+</p>
+
+</details>
+
+</article>
+
+</section>
+
+<section>
+
+<h2>4. What is Encapsulation?</h2>
+
+<article>
+
+<details>
+
+<summary>Definition</summary>
+
+<p>
+
+Encapsulation hides internal data and exposes only controlled behavior.
+
+</p>
+
+</details>
+
+<details>
+
+<summary>Wrong Design</summary>
+
+<pre>
+
+order.TotalAmount = -500;
+
+</pre>
+
+</details>
+
+<details>
+
+<summary>Correct Design</summary>
+
+<pre>
+
+Order
+
+AddItem()
+
+RemoveItem()
+
+ApplyCoupon()
+
+CalculateTotal()
+
+</pre>
+
+</details>
+
+<details>
+
+<summary>Clean Architecture Usage</summary>
+
+<p>
+
+Only Domain Entity modifies business rules.
+
+No external layer updates TotalAmount directly.
+
+</p>
+
+</details>
+
+<details>
+
+<summary>Enterprise Benefit</summary>
+
+<ul>
+
+<li>Protects Business Rules</li>
+
+<li>No Invalid State</li>
+
+<li>Centralized Validation</li>
+
+</ul>
+
+</details>
+
+</article>
+
+</section>
+
+<section>
+
+<h2>5. What is Abstraction?</h2>
+
+<article>
+
+<details>
+
+<summary>Definition</summary>
+
+<p>
+
+Expose only required functionality while hiding implementation.
+
+</p>
+
+</details>
+
+<details>
+
+<summary>Example</summary>
+
+<pre>
+
+IOrderRepository
+
+↓
+
+SqlOrderRepository
+
+</pre>
+
+</details>
+
+<details>
+
+<summary>Microservice Usage</summary>
+
+<p>
+
+Application Layer never knows SQL Server implementation.
+
+</p>
+
+</details>
+
+<details>
+
+<summary>Benefits</summary>
+
+<ul>
+
+<li>Database Independent</li>
+
+<li>Easy Mocking</li>
+
+<li>Easy Unit Testing</li>
+
+</ul>
+
+</details>
+
+</article>
+
+</section>
+
+<section>
+
+<h2>6. What is Inheritance?</h2>
+
+<article>
+
+<details>
+
+<summary>Definition</summary>
+
+<p>
+
+Inheritance allows one class to reuse another class.
+
+</p>
+
+</details>
+
+<details>
+
+<summary>Enterprise Example</summary>
+
+<pre>
+
+BaseEntity
+
+↓
+
+Order
+
+↓
+
+Invoice
+
+↓
+
+Customer
+
+</pre>
+
+</details>
+
+<details>
+
+<summary>Shared Properties</summary>
+
+<ul>
+
+<li>Id</li>
+
+<li>CreatedDate</li>
+
+<li>UpdatedDate</li>
+
+<li>CreatedBy</li>
+
+</ul>
+
+</details>
+
+</article>
+
+</section>
+
+<section>
+
+<h2>7. What is Polymorphism?</h2>
+
+<article>
+
+<details>
+
+<summary>Definition</summary>
+
+<p>
+
+Same method behaves differently for different objects.
+
+</p>
+
+</details>
+
+<details>
+
+<summary>Project Example</summary>
+
+<pre>
+
+CalculateShipping()
+
+↓
+
+Domestic Order
+
+↓
+
+₹100
+
+------------------
+
+CalculateShipping()
+
+↓
+
+International Order
+
+↓
+
+₹1000
+
+</pre>
+
+</details>
+
+<details>
+
+<summary>Benefit</summary>
+
+<p>
+
+Business logic becomes extensible without modifying existing code.
+
+</p>
+
+</details>
+
+</article>
+
+</section>
+
+<section>
+
+<h2>OOP Inside Clean Architecture</h2>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Layer</th>
+
+<th>OOP Usage</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td>Presentation</td>
+
+<td>Controllers</td>
+
+</tr>
+
+<tr>
+
+<td>Application</td>
+
+<td>Interfaces, DTOs</td>
+
+</tr>
+
+<tr>
+
+<td>Domain</td>
+
+<td>Entities, Encapsulation</td>
+
+</tr>
+
+<tr>
+
+<td>Infrastructure</td>
+
+<td>Repository Implementation</td>
+
+</tr>
+
+<tr>
+
+<td>Persistence</td>
+
+<td>EF Core</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</section>
+
+<section>
+
+<h2>Order Creation Flow</h2>
+
+<pre>
+
+Client
+
+↓
+
+OrdersController
+
+↓
+
+PlaceOrderCommand
+
+↓
+
+PlaceOrderHandler
+
+↓
+
+Order Entity
+
+↓
+
+Validate()
+
+↓
+
+CalculateTotal()
+
+↓
+
+Repository
+
+↓
+
+SQL Server
+
+</pre>
+
+</section>
+
+<section>
+
+<h2>Top Interview Questions</h2>
+
+<article>
+
+<details>
+
+<summary>Why Encapsulation?</summary>
+
+<p>
+
+To protect business rules and avoid invalid data.
+
+</p>
+
+</details>
+
+<details>
+
+<summary>Why Interfaces?</summary>
+
+<p>
+
+To achieve abstraction and loose coupling.
+
+</p>
+
+</details>
+
+<details>
+
+<summary>Where is Inheritance used?</summary>
+
+<p>
+
+BaseEntity shared by all domain entities.
+
+</p>
+
+</details>
+
+<details>
+
+<summary>Where is Polymorphism used?</summary>
+
+<p>
+
+Shipping calculation, payment gateways, notification providers.
+
+</p>
+
+</details>
+
+</article>
+
+</section>
+
+<section>
+
+<h2>Interview Cheat Sheet</h2>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Concept</th>
+
+<th>Enterprise Example</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td>Class</td>
+
+<td>Order</td>
+
+</tr>
+
+<tr>
+
+<td>Object</td>
+
+<td>New Order</td>
+
+</tr>
+
+<tr>
+
+<td>Encapsulation</td>
+
+<td>Private TotalAmount</td>
+
+</tr>
+
+<tr>
+
+<td>Abstraction</td>
+
+<td>IOrderRepository</td>
+
+</tr>
+
+<tr>
+
+<td>Inheritance</td>
+
+<td>BaseEntity</td>
+
+</tr>
+
+<tr>
+
+<td>Polymorphism</td>
+
+<td>Shipping Strategy</td>
+
+</tr>
+
+<tr>
+
+<td>Composition</td>
+
+<td>Order contains OrderItems</td>
+
+</tr>
+
+<tr>
+
+<td>Interface</td>
+
+<td>IPaymentGateway</td>
+
+</tr>
+
+<tr>
+
+<td>Dependency Injection</td>
+
+<td>Constructor Injection</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</section>
+
+</main>
+
+<footer>
+
+<p>
+
+C# OOP Interview Handbook • ASP.NET Core • Clean Architecture • CQRS • Microservices
+
+</p>
+
+</footer>
+
+</body>
+
+</html>
