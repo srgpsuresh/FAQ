@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        C# SOLID Principles using Clean Architecture &
+        Microservices Interview Handbook
+    </title>
+</head>
+
+<body>
+
+<header>
+
+<h1>
+C# SOLID Principles
+Using Clean Architecture & Microservices
+</h1>
+
+<p>
+.NET 8 • ASP.NET Core • Clean Architecture • CQRS • MediatR • DDD • Microservices
+</p>
+
+</header>
+
+
+<nav>
+
+<h2>Contents</h2>
+
+<ul>
+
+<li>Enterprise Project</li>
+
+<li>What is SOLID?</li>
+
+<li>Single Responsibility Principle</li>
+
+<li>Open Closed Principle</li>
+
+<li>Liskov Substitution Principle</li>
+
+<li>Interface Segregation Principle</li>
+
+<li>Dependency Inversion Principle</li>
+
+<li>SOLID in Clean Architecture</li>
+
+<li>SOLID in Microservices</li>
+
+<li>Real-Time Order Flow</li>
+
+<li>Interview Questions</li>
+
+<li>Architect Summary</li>
+
+</ul>
+
+</nav>
+
+
+<main>
+
+<!-- ================================================= -->
+
+<section>
+
+<h2>Enterprise Project Used Throughout</h2>
+
+<article>
+
+<h3>
+Order Management System
+</h3>
+
+<pre>
+
+Client (Angular)
+
+        │
+
+API Gateway
+
+        │
+
+────────────────────────────────────
+
+Order API
+
+Payment API
+
+Inventory API
+
+Notification API
+
+────────────────────────────────────
+
+Application Layer
+
+Domain Layer
+
+Infrastructure Layer
+
+SQL Server
+
+</pre>
+
+<p>
+
+All SOLID principles below are explained
+using this enterprise project.
+
+</p>
+
+</article>
+
+</section>
+
+<!-- ================================================= -->
+
+<section>
+
+<h2>FAQ 1 - What are SOLID Principles?</h2>
+
+<article>
+
+<details open>
+
+<summary>Definition</summary>
+
+<p>
+
+SOLID is a collection of five object-oriented
+design principles that help build software
+that is maintainable, scalable, loosely coupled
+and easy to test.
+
+</p>
+
+</details>
+
+<details>
+
+<summary>Five Principles</summary>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Letter</th>
+
+<th>Principle</th>
+
+<th>Goal</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td>S</td>
+
+<td>Single Responsibility</td>
+
+<td>One reason to change</td>
+
+</tr>
+
+<tr>
+
+<td>O</td>
+
+<td>Open Closed</td>
+
+<td>Extend without modification</td>
+
+</tr>
+
+<tr>
+
+<td>L</td>
+
+<td>Liskov Substitution</td>
+
+<td>Replace child safely</td>
+
+</tr>
+
+<tr>
+
+<td>I</td>
+
+<td>Interface Segregation</td>
+
+<td>Small interfaces</td>
+
+</tr>
+
+<tr>
+
+<td>D</td>
+
+<td>Dependency Inversion</td>
+
+<td>Depend on abstractions</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</details>
+
+<details>
+
+<summary>Real-Time Example</summary>
+
+<pre>
+
+Create Order
+
+↓
+
+Reserve Inventory
+
+↓
+
+Payment
+
+↓
+
+Invoice
+
+↓
+
+Notification
+
+</pre>
+
+<p>
+
+Every responsibility belongs
+to a different class.
+
+</p>
+
+</details>
+
+<details>
+
+<summary>Benefits</summary>
+
+<ul>
+
+<li>Maintainable</li>
+
+<li>Scalable</li>
+
+<li>Testable</li>
+
+<li>Loose Coupling</li>
+
+<li>Reusable</li>
+
+</ul>
+
+</details>
+
+</article>
+
+</section>
+
+<!-- ================================================= -->
+
+<section>
+
+<h2>FAQ 2 - Single Responsibility Principle (SRP)</h2>
+
+<article>
+
+<details>
+
+<summary>Definition</summary>
+
+<p>
+
+A class should have only one responsibility
+and therefore only one reason to change.
+
+</p>
+
+</details>
+
+<details>
+
+<summary>Wrong Design</summary>
+
+<pre>
+
+OrderService
+
+Create Order
+
+Validate
+
+Save Database
+
+Generate Invoice
+
+Send Email
+
+Publish Kafka
+
+Write Logs
+
+</pre>
+
+</details>
+
+<details>
+
+<summary>Correct Design</summary>
+
+<pre>
+
+OrderValidator
+
+↓
+
+TaxCalculator
+
+↓
+
+OrderRepository
+
+↓
+
+InvoiceService
+
+↓
+
+NotificationService
+
+↓
+
+KafkaProducer
+
+</pre>
+
+</details>
+
+<details>
+
+<summary>Clean Architecture Usage</summary>
+
+<ul>
+
+<li>Controller → Receives Request</li>
+
+<li>Handler → Coordinates Workflow</li>
+
+<li>Entity → Business Rules</li>
+
+<li>Repository → Database</li>
+
+<li>Email Service → Notification</li>
+
+</ul>
+
+</details>
+
+<details>
+
+<summary>Enterprise Benefit</summary>
+
+<p>
+
+Small classes are easier to maintain,
+test and extend.
+
+</p>
+
+</details>
+
+<details>
+
+<summary>Interview Answer</summary>
+
+<p>
+
+Every class should perform only one business
+responsibility.
+
+</p>
+
+</details>
+
+</article>
+
+</section>
+
+<!-- ================================================= -->
+
+<section>
+
+<h2>FAQ 3 - Open Closed Principle (OCP)</h2>
+
+<article>
+
+<details>
+
+<summary>Definition</summary>
+
+<p>
+
+Software should be open for extension
+but closed for modification.
+
+</p>
+
+</details>
+
+<details>
+
+<summary>Enterprise Example</summary>
+
+<pre>
+
+IPaymentGateway
+
+↓
+
+Stripe
+
+↓
+
+Razorpay
+
+↓
+
+PayPal
+
+</pre>
+
+</details>
+
+<details>
+
+<summary>Microservice Usage</summary>
+
+<p>
+
+Adding a new payment provider
+never changes existing code.
+
+</p>
+
+</details>
+
+<details>
+
+<summary>Benefits</summary>
+
+<ul>
+
+<li>No code modification</li>
+
+<li>Easy extension</li>
+
+<li>Plugin Architecture</li>
+
+</ul>
+
+</details>
+
+</article>
+
+</section>
+
+<!-- ================================================= -->
+
+<section>
+
+<h2>FAQ 4 - Liskov Substitution Principle (LSP)</h2>
+
+<article>
+
+<details>
+
+<summary>Definition</summary>
+
+<p>
+
+Derived classes should replace
+their parent without affecting
+application behavior.
+
+</p>
+
+</details>
+
+<details>
+
+<summary>Enterprise Example</summary>
+
+<pre>
+
+IPaymentGateway
+
+↓
+
+StripeGateway
+
+↓
+
+FakeGateway
+
+↓
+
+PayPalGateway
+
+</pre>
+
+</details>
+
+<details>
+
+<summary>Testing Scenario</summary>
+
+<p>
+
+Production uses Stripe.
+
+Unit Tests use FakePaymentGateway.
+
+Business code never changes.
+
+</p>
+
+</details>
+
+</article>
+
+</section>
+
+<!-- ================================================= -->
+
+<section>
+
+<h2>FAQ 5 - Interface Segregation Principle (ISP)</h2>
+
+<article>
+
+<details>
+
+<summary>Definition</summary>
+
+<p>
+
+Clients should never depend on
+methods they don't need.
+
+</p>
+
+</details>
+
+<details>
+
+<summary>Good Design</summary>
+
+<pre>
+
+IOrderReader
+
+IOrderWriter
+
+IEmailService
+
+ISmsService
+
+</pre>
+
+</details>
+
+<details>
+
+<summary>Benefit</summary>
+
+<ul>
+
+<li>Small Interfaces</li>
+
+<li>Loose Coupling</li>
+
+<li>Easy Mocking</li>
+
+</ul>
+
+</details>
+
+</article>
+
+</section>
+
+<!-- ================================================= -->
+
+<section>
+
+<h2>FAQ 6 - Dependency Inversion Principle (DIP)</h2>
+
+<article>
+
+<details>
+
+<summary>Definition</summary>
+
+<p>
+
+Depend upon abstractions,
+not concrete implementations.
+
+</p>
+
+</details>
+
+<details>
+
+<summary>Architecture</summary>
+
+<pre>
+
+Application Layer
+
+↓
+
+IOrderRepository
+
+↓
+
+Infrastructure
+
+↓
+
+SqlOrderRepository
+
+</pre>
+
+</details>
+
+<details>
+
+<summary>Dependency Injection</summary>
+
+<p>
+
+.NET Dependency Injection
+provides repository implementation
+during runtime.
+
+</p>
+
+</details>
+
+</article>
+
+</section>
+
+<!-- ================================================= -->
+
+<section>
+
+<h2>SOLID Principles Inside Clean Architecture</h2>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Layer</th>
+
+<th>SOLID Principle</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td>API</td>
+
+<td>SRP</td>
+
+</tr>
+
+<tr>
+
+<td>Application</td>
+
+<td>SRP + DIP</td>
+
+</tr>
+
+<tr>
+
+<td>Domain</td>
+
+<td>SRP + OCP</td>
+
+</tr>
+
+<tr>
+
+<td>Infrastructure</td>
+
+<td>DIP</td>
+
+</tr>
+
+<tr>
+
+<td>Repositories</td>
+
+<td>ISP</td>
+
+</tr>
+
+<tr>
+
+<td>Payment</td>
+
+<td>LSP</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</section>
+
+<!-- ================================================= -->
+
+<section>
+
+<h2>Order Processing Flow</h2>
+
+<pre>
+
+Client
+
+↓
+
+OrdersController
+
+↓
+
+PlaceOrderCommand
+
+↓
+
+PlaceOrderHandler
+
+↓
+
+Order Entity
+
+↓
+
+IOrderRepository
+
+↓
+
+SQL Server
+
+↓
+
+IPaymentGateway
+
+↓
+
+Stripe
+
+↓
+
+Notification
+
+</pre>
+
+</section>
+
+<!-- ================================================= -->
+
+<section>
+
+<h2>Top Interview Questions</h2>
+
+<article>
+
+<details>
+
+<summary>Why SRP?</summary>
+
+<p>
+
+Keeps classes small and maintainable.
+
+</p>
+
+</details>
+
+<details>
+
+<summary>Why OCP?</summary>
+
+<p>
+
+Allows new features without changing existing code.
+
+</p>
+
+</details>
+
+<details>
+
+<summary>Why LSP?</summary>
+
+<p>
+
+Supports interchangeable implementations.
+
+</p>
+
+</details>
+
+<details>
+
+<summary>Why ISP?</summary>
+
+<p>
+
+Avoids unnecessary dependencies.
+
+</p>
+
+</details>
+
+<details>
+
+<summary>Why DIP?</summary>
+
+<p>
+
+Provides loose coupling using interfaces
+and Dependency Injection.
+
+</p>
+
+</details>
+
+</article>
+
+</section>
+
+<!-- ================================================= -->
+
+<section>
+
+<h2>Architect Cheat Sheet</h2>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Principle</th>
+
+<th>Enterprise Example</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td>SRP</td>
+
+<td>PlaceOrderHandler</td>
+
+</tr>
+
+<tr>
+
+<td>OCP</td>
+
+<td>Payment Gateway</td>
+
+</tr>
+
+<tr>
+
+<td>LSP</td>
+
+<td>Fake Payment Gateway</td>
+
+</tr>
+
+<tr>
+
+<td>ISP</td>
+
+<td>IEmailService</td>
+
+</tr>
+
+<tr>
+
+<td>DIP</td>
+
+<td>IOrderRepository</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</section>
+
+</main>
+
+<footer>
+
+<p>
+
+C# SOLID Principles Interview Handbook
+
+ASP.NET Core • .NET 8 • Clean Architecture • CQRS • Microservices
+
+</p>
+
+</footer>
+
+</body>
+
+</html>
