@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Top 5 C# Coding Interview Problems</title>
+
+<style>
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    max-width:1200px;
+    margin:auto;
+    background:#f4f6f9;
+    line-height:1.7;
+    padding:20px;
+}
+
+header{
+    background:#003366;
+    color:white;
+    text-align:center;
+    padding:20px;
+    border-radius:8px;
+}
+
+section{
+    background:white;
+    margin:20px 0;
+    padding:20px;
+    border-radius:8px;
+    box-shadow:0 2px 6px rgba(0,0,0,.1);
+}
+
+h2{
+    color:#003366;
+}
+
+summary{
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+    color:#00509E;
+}
+
+pre{
+    background:#272822;
+    color:#f8f8f2;
+    padding:15px;
+    overflow:auto;
+    border-radius:6px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px;
+}
+
+th{
+    background:#003366;
+    color:white;
+}
+
+th,td{
+    border:1px solid #ccc;
+    padding:10px;
+    text-align:left;
+}
+
+.highlight{
+    background:#E8F5E9;
+    border-left:5px solid green;
+    padding:10px;
+    margin-top:10px;
+}
+
+.tip{
+    background:#FFF3CD;
+    border-left:5px solid orange;
+    padding:10px;
+    margin-top:10px;
+}
+</style>
+
+</head>
+<body>
+
+<header>
+
+<h1>Top 5 Most Important C# Coding Interview Problems</h1>
+
+<p>
+Definition → Problem → Approach → Code → Real Project → Benefit → Complexity
+</p>
+
+</header>
+
+<section>
+
+<h2>1. Reverse a String</h2>
+
+<details open>
+
+<summary>Interview Explanation</summary>
+
+<h3>Definition</h3>
+
+<p>
+Reverse the characters of a string without changing the original meaning.
+</p>
+
+<h3>Problem</h3>
+
+<p>
+Input:
+<strong>CSharp</strong>
+
+<br>
+
+Output:
+<strong>prahSC</strong>
+</p>
+
+<h3>Approach</h3>
+
+<ul>
+<li>Convert string to character array.</li>
+<li>Use two pointers.</li>
+<li>Swap first and last characters.</li>
+<li>Repeat until middle.</li>
+</ul>
+
+<h3>Code</h3>
+
+<pre>
+public static string ReverseString(string input)
+{
+    char[] arr = input.ToCharArray();
+
+    int left=0;
+    int right=arr.Length-1;
+
+    while(left&lt;right)
+    {
+        char temp=arr[left];
+        arr[left]=arr[right];
+        arr[right]=temp;
+
+        left++;
+        right--;
+    }
+
+    return new string(arr);
+}
+</pre>
+
+<div class="highlight">
+
+<b>Real Project Use</b>
+
+<ul>
+<li>Encryption</li>
+<li>Data Formatting</li>
+<li>Text Processing</li>
+</ul>
+
+</div>
+
+<div class="tip">
+
+<b>Time Complexity</b>
+
+O(n)
+
+</div>
+
+</details>
+
+</section>
+
+<section>
+
+<h2>2. Palindrome</h2>
+
+<details>
+
+<summary>Interview Explanation</summary>
+
+<h3>Definition</h3>
+
+<p>
+A palindrome reads the same from left to right and right to left.
+</p>
+
+<h3>Problem</h3>
+
+<p>
+MADAM → True
+
+<br>
+
+HELLO → False
+</p>
+
+<h3>Approach</h3>
+
+<ul>
+<li>Compare first and last characters.</li>
+<li>Move towards center.</li>
+</ul>
+
+<h3>Code</h3>
+
+<pre>
+public static bool IsPalindrome(string input)
+{
+    int left=0;
+    int right=input.Length-1;
+
+    while(left&lt;right)
+    {
+        if(input[left]!=input[right])
+            return false;
+
+        left++;
+        right--;
+    }
+
+    return true;
+}
+</pre>
+
+<div class="highlight">
+
+<b>Real Project Use</b>
+
+<ul>
+<li>Password Validation</li>
+<li>Pattern Recognition</li>
+<li>Search Algorithms</li>
+</ul>
+
+</div>
+
+<div class="tip">
+
+<b>Time Complexity</b>
+
+O(n)
+
+</div>
+
+</details>
+
+</section>
+
+<section>
+
+<h2>3. First Non-Repeating Character</h2>
+
+<details>
+
+<summary>Interview Explanation</summary>
+
+<h3>Definition</h3>
+
+<p>
+Find the first character appearing only once.
+</p>
+
+<h3>Problem</h3>
+
+<p>
+
+Input:
+
+aabbcde
+
+<br>
+
+Output:
+
+c
+
+</p>
+
+<h3>Approach</h3>
+
+<ul>
+
+<li>Count frequency using Dictionary.</li>
+
+<li>Return first character having count = 1.</li>
+
+</ul>
+
+<h3>Code</h3>
+
+<pre>
+public static char FindFirstNonRepeating(string input)
+{
+    Dictionary&lt;char,int&gt; map=new();
+
+    foreach(char c in input)
+    {
+        if(map.ContainsKey(c))
+            map[c]++;
+        else
+            map[c]=1;
+    }
+
+    foreach(char c in input)
+    {
+        if(map[c]==1)
+            return c;
+    }
+
+    return '_';
+}
+</pre>
+
+<div class="highlight">
+
+<b>Real Project Use</b>
+
+<ul>
+
+<li>Log Analysis</li>
+
+<li>Fraud Detection</li>
+
+<li>Unique Data Validation</li>
+
+</ul>
+
+</div>
+
+<div class="tip">
+
+<b>Time Complexity</b>
+
+O(n)
+
+</div>
+
+</details>
+
+</section>
+
+<section>
+
+<h2>4. Two Sum Problem</h2>
+
+<details>
+
+<summary>Interview Explanation</summary>
+
+<h3>Definition</h3>
+
+<p>
+
+Find two numbers whose sum equals the target.
+
+</p>
+
+<h3>Problem</h3>
+
+<p>
+
+Array:
+
+2 7 11 15
+
+<br>
+
+Target:
+
+9
+
+<br>
+
+Output:
+
+2 + 7
+
+</p>
+
+<h3>Approach</h3>
+
+<ul>
+
+<li>Store visited numbers in Dictionary.</li>
+
+<li>Search target-currentValue.</li>
+
+</ul>
+
+<h3>Code</h3>
+
+<pre>
+public static int[] TwoSum(int[] nums,int target)
+{
+    Dictionary&lt;int,int&gt; map=new();
+
+    for(int i=0;i&lt;nums.Length;i++)
+    {
+        int diff=target-nums[i];
+
+        if(map.ContainsKey(diff))
+            return new[]{map[diff],i};
+
+        map[nums[i]]=i;
+    }
+
+    return new[]{-1,-1};
+}
+</pre>
+
+<div class="highlight">
+
+<b>Real Project Use</b>
+
+<ul>
+
+<li>Payment Matching</li>
+
+<li>Budget Allocation</li>
+
+<li>Financial Systems</li>
+
+</ul>
+
+</div>
+
+<div class="tip">
+
+<b>Time Complexity</b>
+
+O(n)
+
+</div>
+
+</details>
+
+</section>
+
+<section>
+
+<h2>5. Remove Duplicate Elements</h2>
+
+<details>
+
+<summary>Interview Explanation</summary>
+
+<h3>Definition</h3>
+
+<p>
+
+Remove duplicate values from an array.
+
+</p>
+
+<h3>Approach</h3>
+
+<ul>
+
+<li>Store values in HashSet.</li>
+
+<li>Convert back to array.</li>
+
+</ul>
+
+<h3>Code</h3>
+
+<pre>
+public static int[] RemoveDuplicates(int[] nums)
+{
+    HashSet&lt;int&gt; set=new();
+
+    foreach(int num in nums)
+        set.Add(num);
+
+    return set.ToArray();
+}
+</pre>
+
+<div class="highlight">
+
+<b>Real Project Use</b>
+
+<ul>
+
+<li>Customer Master Cleanup</li>
+
+<li>ETL Processing</li>
+
+<li>Duplicate API Requests</li>
+
+</ul>
+
+</div>
+
+<div class="tip">
+
+<b>Time Complexity</b>
+
+O(n)
+
+</div>
+
+</details>
+
+</section>
+
+<section>
+
+<h2>Interview Summary</h2>
+
+<table>
+
+<tr>
+
+<th>Problem</th>
+
+<th>Data Structure</th>
+
+<th>Complexity</th>
+
+<th>Real-Time Use</th>
+
+</tr>
+
+<tr>
+
+<td>Reverse String</td>
+
+<td>Character Array</td>
+
+<td>O(n)</td>
+
+<td>Encryption, Formatting</td>
+
+</tr>
+
+<tr>
+
+<td>Palindrome</td>
+
+<td>Two Pointer</td>
+
+<td>O(n)</td>
+
+<td>Validation</td>
+
+</tr>
+
+<tr>
+
+<td>First Non-Repeating Character</td>
+
+<td>Dictionary</td>
+
+<td>O(n)</td>
+
+<td>Logs, Fraud Detection</td>
+
+</tr>
+
+<tr>
+
+<td>Two Sum</td>
+
+<td>Dictionary</td>
+
+<td>O(n)</td>
+
+<td>Payments, Finance</td>
+
+</tr>
+
+<tr>
+
+<td>Remove Duplicates</td>
+
+<td>HashSet</td>
+
+<td>O(n)</td>
+
+<td>ETL, Data Cleanup</td>
+
+</tr>
+
+</table>
+
+</section>
+
+<section>
+
+<h2>Tech Lead Interview Tips</h2>
+
+<ul>
+
+<li>Explain the brute-force solution first, then optimize it.</li>
+
+<li>Discuss Time Complexity and Space Complexity.</li>
+
+<li>Prefer Dictionary and HashSet when optimizing lookups.</li>
+
+<li>Mention edge cases such as null, empty arrays, duplicates, and large inputs.</li>
+
+<li>Relate the solution to real enterprise scenarios like Banking, E-Commerce, Healthcare, or Microservices.</li>
+
+</ul>
+
+</section>
+
+</body>
+</html>
