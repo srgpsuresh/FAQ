@@ -1,0 +1,196 @@
+<section>
+
+    <h2>PART 1 – Exception Handling Fundamentals</h2>
+
+    <article>
+
+        <details open>
+            <summary>FAQ 1 – What is an Exception?</summary>
+            <p><strong>Definition:</strong> An exception is a runtime error that interrupts the normal execution flow of a program.</p>
+            <p><strong>Real-Time Example:</strong> An Order API attempts to retrieve a customer record that does not exist, causing an exception.</p>
+            <p><strong>.NET Core Usage:</strong> Exceptions are represented by classes derived from <code>System.Exception</code> and are handled using <code>try</code>, <code>catch</code>, and <code>finally</code>.</p>
+            <p><strong>Clean Architecture Usage:</strong> Exceptions are caught in Global Exception Middleware instead of individual controllers.</p>
+            <p><strong>Microservice Usage:</strong> Order Service returns standardized ProblemDetails responses to API Gateway instead of crashing.</p>
+            <p><strong>Benefit:</strong> Prevents application crashes and improves reliability.</p>
+        </details>
+
+        <details>
+            <summary>FAQ 2 – Why do exceptions occur?</summary>
+            <p><strong>Definition:</strong> Exceptions occur when unexpected runtime conditions prevent successful execution.</p>
+            <p><strong>Real-Time Example:</strong> Database connection failure while creating an order.</p>
+            <p><strong>.NET Core Usage:</strong> Common causes include null values, invalid arguments, file access failures, network issues, and SQL errors.</p>
+            <p><strong>Clean Architecture Usage:</strong> Infrastructure layer exceptions are translated into business-friendly responses.</p>
+            <p><strong>Microservice Usage:</strong> Network failures between Order Service and Payment Service generate handled exceptions.</p>
+            <p><strong>Benefit:</strong> Helps identify and recover from runtime failures.</p>
+        </details>
+
+        <details>
+            <summary>FAQ 3 – What is Exception Handling?</summary>
+            <p><strong>Definition:</strong> Exception handling is the process of detecting, catching, logging, and responding to runtime errors gracefully.</p>
+            <p><strong>Real-Time Example:</strong> Payment API timeout returns a friendly error instead of crashing the application.</p>
+            <p><strong>.NET Core Usage:</strong> Uses <code>try</code>, <code>catch</code>, <code>finally</code>, and middleware.</p>
+            <p><strong>Clean Architecture Usage:</strong> Centralized exception handling through middleware keeps controllers clean.</p>
+            <p><strong>Microservice Usage:</strong> Returns standardized HTTP status codes and ProblemDetails objects.</p>
+            <p><strong>Benefit:</strong> Improves application stability and user experience.</p>
+        </details>
+
+        <details>
+            <summary>FAQ 4 – Why should we handle exceptions?</summary>
+            <p><strong>Definition:</strong> Exception handling prevents unexpected crashes and allows applications to recover gracefully.</p>
+            <p><strong>Real-Time Example:</strong> Inventory Service temporarily unavailable while placing an order.</p>
+            <p><strong>.NET Core Usage:</strong> Log errors and return meaningful responses.</p>
+            <p><strong>Clean Architecture Usage:</strong> Business logic remains isolated from technical failures.</p>
+            <p><strong>Microservice Usage:</strong> API Gateway receives consistent error responses.</p>
+            <p><strong>Benefit:</strong> Improves reliability, maintainability, and customer satisfaction.</p>
+        </details>
+
+        <details>
+            <summary>FAQ 5 – What happens if exceptions are not handled?</summary>
+            <p><strong>Definition:</strong> Unhandled exceptions terminate request execution and may crash the application.</p>
+            <p><strong>Real-Time Example:</strong> NullReferenceException causes Order API to return HTTP 500.</p>
+            <p><strong>.NET Core Usage:</strong> ASP.NET Core middleware catches unhandled exceptions and returns HTTP 500 responses.</p>
+            <p><strong>Clean Architecture Usage:</strong> Global exception middleware prevents exception leakage.</p>
+            <p><strong>Microservice Usage:</strong> Prevents cascading failures across distributed services.</p>
+            <p><strong>Benefit:</strong> Keeps services available and protects sensitive information.</p>
+        </details>
+
+        <details>
+            <summary>FAQ 6 – Difference between Error and Exception</summary>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Error</th>
+                        <th>Exception</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Nature</td>
+                        <td>Serious system problem</td>
+                        <td>Recoverable runtime problem</td>
+                    </tr>
+                    <tr>
+                        <td>Handling</td>
+                        <td>Usually not handled</td>
+                        <td>Can be handled</td>
+                    </tr>
+                    <tr>
+                        <td>Example</td>
+                        <td>Out of Memory</td>
+                        <td>DivideByZeroException</td>
+                    </tr>
+                </tbody>
+            </table>
+        </details>
+
+        <details>
+            <summary>FAQ 7 – Compile-time vs Runtime Exceptions</summary>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Compile-Time</th>
+                        <th>Runtime</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Detected during compilation</td>
+                        <td>Occurs while executing</td>
+                    </tr>
+                    <tr>
+                        <td>Syntax or type errors</td>
+                        <td>Null references, SQL failures</td>
+                    </tr>
+                    <tr>
+                        <td>Compiler prevents execution</td>
+                        <td>Requires exception handling</td>
+                    </tr>
+                </tbody>
+            </table>
+        </details>
+
+        <details>
+            <summary>FAQ 8 – Checked vs Unchecked Exceptions (Java Comparison)</summary>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Java Checked</th>
+                        <th>Java Unchecked</th>
+                        <th>.NET</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Must be handled</td>
+                        <td>Optional</td>
+                        <td>No checked exceptions</td>
+                    </tr>
+                    <tr>
+                        <td>Compile-time enforcement</td>
+                        <td>Runtime only</td>
+                        <td>All exceptions are unchecked</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p><strong>Interview Tip:</strong> C# does not support checked exceptions like Java.</p>
+        </details>
+
+        <details>
+            <summary>FAQ 9 – System.Exception Hierarchy</summary>
+
+<pre>
+System.Object
+      │
+System.Exception
+      │
+────────────────────────────────
+ApplicationException
+SystemException
+      │
+ArgumentException
+NullReferenceException
+InvalidOperationException
+FormatException
+IOException
+SqlException
+HttpRequestException
+TimeoutException
+</pre>
+
+            <p><strong>Clean Architecture Usage:</strong> Custom business exceptions typically inherit from <code>Exception</code>.</p>
+        </details>
+
+        <details>
+            <summary>FAQ 10 – Common .NET Exceptions</summary>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Exception</th>
+                        <th>Real-Time Scenario</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>NullReferenceException</td><td>Accessing an uninitialized Order object.</td></tr>
+                    <tr><td>InvalidOperationException</td><td>Invalid order state transition.</td></tr>
+                    <tr><td>ArgumentNullException</td><td>CustomerId parameter is null.</td></tr>
+                    <tr><td>ArgumentException</td><td>Invalid coupon code supplied.</td></tr>
+                    <tr><td>DivideByZeroException</td><td>Incorrect discount calculation.</td></tr>
+                    <tr><td>IndexOutOfRangeException</td><td>Accessing a collection with an invalid index.</td></tr>
+                    <tr><td>FormatException</td><td>Invalid date or GUID format received.</td></tr>
+                    <tr><td>TimeoutException</td><td>External payment gateway timed out.</td></tr>
+                    <tr><td>SqlException</td><td>Database connection or query failure.</td></tr>
+                    <tr><td>HttpRequestException</td><td>Calling another microservice failed.</td></tr>
+                    <tr><td>TaskCanceledException</td><td>HTTP request cancelled due to timeout.</td></tr>
+                    <tr><td>UnauthorizedAccessException</td><td>User lacks permission to access a secured resource.</td></tr>
+                </tbody>
+            </table>
+
+            <p><strong>Microservice Best Practice:</strong> Log the exception, return standardized <code>ProblemDetails</code>, avoid exposing stack traces, and use correlation IDs for distributed tracing.</p>
+
+        </details>
+
+    </article>
+
+</section>
