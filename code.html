@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>C# String Programs - Interview Notes</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Segoe UI,Arial,sans-serif;
+}
+
+body{
+    background:#f4f7fb;
+    color:#222;
+    line-height:1.6;
+}
+
+header{
+    background:#003366;
+    color:white;
+    padding:20px;
+    text-align:center;
+}
+
+nav{
+    background:#0b4d91;
+    padding:12px;
+}
+
+nav ul{
+    display:flex;
+    list-style:none;
+    gap:20px;
+    justify-content:center;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+main{
+    display:grid;
+    grid-template-columns:3fr 1fr;
+    gap:20px;
+    padding:20px;
+}
+
+section{
+    background:white;
+    padding:20px;
+    border-radius:8px;
+    box-shadow:0 2px 6px rgba(0,0,0,.1);
+    margin-bottom:20px;
+}
+
+article{
+    margin-top:20px;
+}
+
+pre{
+    background:#1e1e1e;
+    color:#00ff7f;
+    padding:15px;
+    overflow:auto;
+    border-radius:6px;
+}
+
+code{
+    font-size:15px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px;
+}
+
+table,th,td{
+    border:1px solid #ddd;
+}
+
+th{
+    background:#003366;
+    color:white;
+}
+
+th,td{
+    padding:10px;
+    text-align:left;
+}
+
+aside{
+    background:#fff8dc;
+    padding:20px;
+    border-radius:8px;
+    height:fit-content;
+}
+
+details{
+    margin-top:15px;
+}
+
+summary{
+    cursor:pointer;
+    font-weight:bold;
+}
+
+footer{
+    background:#003366;
+    color:white;
+    text-align:center;
+    padding:15px;
+    margin-top:20px;
+}
+
+.highlight{
+    color:#d63384;
+    font-weight:bold;
+}
+</style>
+
+</head>
+<body>
+
+<header>
+<h1>C# Interview Programs</h1>
+<p>String Reverse • Character Count • LINQ GroupBy</p>
+</header>
+
+<nav>
+<ul>
+<li><a href="#reverse">Reverse String</a></li>
+<li><a href="#dictionary">Dictionary Count</a></li>
+<li><a href="#linq">LINQ Count</a></li>
+</ul>
+</nav>
+
+<main>
+
+<section>
+
+<article id="reverse">
+
+<h2>1. Reverse a String</h2>
+
+<p>
+This program reverses a string by iterating from the last character to the first.
+</p>
+
+<figure>
+
+<pre><code>
+string str = "Hello";
+string rev = "";
+
+for (int i = str.Length - 1; i >= 0; i--)
+{
+    rev += str[i];
+}
+
+Console.WriteLine("Original: " + str);
+Console.WriteLine("Reverse : " + rev);
+</code></pre>
+
+<figcaption>
+Reverse string using a <strong>for loop</strong>.
+</figcaption>
+
+</figure>
+
+<h3>Execution Flow</h3>
+
+<table>
+
+<tr>
+<th>Iteration</th>
+<th>Character</th>
+<th>Reverse Value</th>
+</tr>
+
+<tr>
+<td>4</td>
+<td>o</td>
+<td>o</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td>l</td>
+<td>ol</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>l</td>
+<td>oll</td>
+</tr>
+
+<tr>
+<td>1</td>
+<td>e</td>
+<td>olle</td>
+</tr>
+
+<tr>
+<td>0</td>
+<td>H</td>
+<td>olleH</td>
+</tr>
+
+</table>
+
+<details>
+<summary>Time Complexity</summary>
+
+<ul>
+<li>Time : O(n)</li>
+<li>Space : O(n)</li>
+</ul>
+
+</details>
+
+</article>
+
+<hr>
+
+<article id="dictionary">
+
+<h2>2. Count Characters Using Dictionary</h2>
+
+<p>
+Each character is stored as a key and its occurrences are stored as the value.
+</p>
+
+<pre><code>
+string message = "hello world";
+
+Dictionary&lt;char,int&gt; count =
+new Dictionary&lt;char,int&gt;();
+
+foreach(char ch in message)
+{
+    if(count.ContainsKey(ch))
+        count[ch]++;
+    else
+        count[ch]=1;
+}
+
+foreach(var item in count)
+{
+    Console.WriteLine($"{item.Key}:{item.Value}");
+}
+</code></pre>
+
+<h3>Output</h3>
+
+<table>
+
+<tr>
+<th>Character</th>
+<th>Count</th>
+</tr>
+
+<tr><td>h</td><td>1</td></tr>
+<tr><td>e</td><td>1</td></tr>
+<tr><td>l</td><td>3</td></tr>
+<tr><td>o</td><td>2</td></tr>
+<tr><td>(space)</td><td>1</td></tr>
+<tr><td>w</td><td>1</td></tr>
+<tr><td>r</td><td>1</td></tr>
+<tr><td>d</td><td>1</td></tr>
+
+</table>
+
+<details>
+
+<summary>How Dictionary Works</summary>
+
+<ul>
+<li>ContainsKey() checks whether the character already exists.</li>
+<li>If yes → Increment count.</li>
+<li>If no → Add new key with value 1.</li>
+</ul>
+
+</details>
+
+</article>
+
+<hr>
+
+<article id="linq">
+
+<h2>3. Count Characters Using LINQ</h2>
+
+<p>
+LINQ provides a concise way to group characters and count their occurrences.
+</p>
+
+<pre><code>
+var result = message
+            .GroupBy(c => c)
+            .Select(g => new
+            {
+                Character = g.Key,
+                Count = g.Count()
+            });
+
+foreach(var item in result)
+{
+    Console.WriteLine(
+        $"{item.Character}:{item.Count}");
+}
+</code></pre>
+
+<h3>LINQ Breakdown</h3>
+
+<table>
+
+<tr>
+<th>Method</th>
+<th>Purpose</th>
+</tr>
+
+<tr>
+<td>GroupBy()</td>
+<td>Groups identical characters</td>
+</tr>
+
+<tr>
+<td>Select()</td>
+<td>Creates anonymous object</td>
+</tr>
+
+<tr>
+<td>Count()</td>
+<td>Counts grouped items</td>
+</tr>
+
+</table>
+
+<details>
+
+<summary>Advantages of LINQ</summary>
+
+<ul>
+<li>Readable</li>
+<li>Less Code</li>
+<li>Functional Programming Style</li>
+<li>Easy to maintain</li>
+
+</ul>
+
+</details>
+
+</article>
+
+</section>
+
+<aside>
+
+<h2>Interview Tips</h2>
+
+<ul>
+
+<li>✔ Explain Time Complexity.</li>
+
+<li>✔ Mention String is Immutable.</li>
+
+<li>✔ Prefer <span class="highlight">StringBuilder</span> for large strings.</li>
+
+<li>✔ Dictionary lookup is O(1).</li>
+
+<li>✔ LINQ internally uses IEnumerable.</li>
+
+<li>✔ GroupBy returns IGrouping.</li>
+
+<li>✔ Count() is an Extension Method.</li>
+
+</ul>
+
+<hr>
+
+<h3>Frequently Asked Questions</h3>
+
+<ol>
+
+<li>How do you reverse a string?</li>
+
+<li>Why StringBuilder is faster?</li>
+
+<li>Difference between Dictionary and Hashtable?</li>
+
+<li>What is GroupBy?</li>
+
+<li>When to use LINQ?</li>
+
+<li>What is deferred execution?</li>
+
+</ol>
+
+</aside>
+
+</main>
+
+<footer>
+
+<p>
+C# Interview Preparation | String Programs | Dictionary | LINQ | Semantic HTML5
+</p>
+
+</footer>
+
+</body>
+</html>
