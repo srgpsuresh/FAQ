@@ -1,11 +1,521 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Interview - Performance & Optimization Cheat Sheet</title>
 </head>
+
 <body>
+
+<header>
+    <h1>SQL Server Interview Cheat Sheet</h1>
+    <p>Important Differences • Performance & Optimization • Execution Plan</p>
+</header>
+
+<main>
+
+```
+<!-- ===================================================== -->
+<!-- SECTION 1 : IMPORTANT SQL DIFFERENCES -->
+<!-- ===================================================== -->
+
+<section>
+    <header>
+        <h2>1. Important SQL Differences – FAQ</h2>
+    </header>
+
+    <article>
+        <h3>DELETE vs TRUNCATE vs DROP</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Question</th>
+                    <th>One-Line Interview Answer</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>DELETE vs TRUNCATE</td>
+                    <td>DELETE removes selected rows; TRUNCATE removes all rows faster and resets identity.</td>
+                </tr>
+
+                <tr>
+                    <td>DELETE vs DROP</td>
+                    <td>DELETE removes data; DROP removes the entire table including its structure.</td>
+                </tr>
+
+                <tr>
+                    <td>TRUNCATE vs DROP</td>
+                    <td>TRUNCATE keeps the table structure; DROP removes the table completely.</td>
+                </tr>
+
+                <tr>
+                    <td>WHERE vs HAVING</td>
+                    <td>WHERE filters rows before grouping; HAVING filters groups after aggregation.</td>
+                </tr>
+
+                <tr>
+                    <td>GROUP BY vs DISTINCT</td>
+                    <td>GROUP BY groups rows for aggregation; DISTINCT removes duplicate results.</td>
+                </tr>
+
+                <tr>
+                    <td>INNER JOIN vs LEFT JOIN</td>
+                    <td>INNER JOIN returns matching rows; LEFT JOIN returns all left rows plus matching right rows.</td>
+                </tr>
+
+                <tr>
+                    <td>UNION vs UNION ALL</td>
+                    <td>UNION removes duplicates; UNION ALL keeps duplicates and is generally faster.</td>
+                </tr>
+
+                <tr>
+                    <td>EXISTS vs IN</td>
+                    <td>EXISTS checks whether a matching row exists; IN compares against a set of values.</td>
+                </tr>
+
+                <tr>
+                    <td>ROW_NUMBER vs RANK</td>
+                    <td>ROW_NUMBER gives unique numbers; RANK gives the same rank to ties and skips numbers.</td>
+                </tr>
+
+                <tr>
+                    <td>RANK vs DENSE_RANK</td>
+                    <td>RANK skips numbers after ties; DENSE_RANK does not skip numbers.</td>
+                </tr>
+
+                <tr>
+                    <td>CTE vs Temp Table</td>
+                    <td>CTE is a query expression for a statement; a temp table stores reusable intermediate data.</td>
+                </tr>
+
+                <tr>
+                    <td>Clustered vs Nonclustered Index</td>
+                    <td>Clustered index determines the table's row storage order; nonclustered index is a separate structure pointing to rows.</td>
+                </tr>
+
+                <tr>
+                    <td>CHAR vs VARCHAR</td>
+                    <td>CHAR has fixed length; VARCHAR has variable length.</td>
+                </tr>
+
+                <tr>
+                    <td>ISNULL vs COALESCE</td>
+                    <td>ISNULL accepts two expressions; COALESCE can evaluate multiple expressions and returns the first non-NULL value.</td>
+                </tr>
+            </tbody>
+        </table>
+    </article>
+</section>
+
+
+<!-- ===================================================== -->
+<!-- SECTION 2 : PERFORMANCE OPTIMIZATION -->
+<!-- ===================================================== -->
+
+<section>
+    <header>
+        <h2>2. SQL Performance & Optimization Techniques</h2>
+    </header>
+
+    <article>
+        <h3>Top Performance Best Practices</h3>
+
+        <ol>
+            <li>
+                <strong>Avoid SELECT *</strong>
+                <p>Select only the required columns to reduce I/O and network traffic.</p>
+            </li>
+
+            <li>
+                <strong>Use Proper Indexes</strong>
+                <p>Create appropriate indexes on frequently filtered, joined and sorted columns.</p>
+            </li>
+
+            <li>
+                <strong>Make Queries SARGable</strong>
+                <p>Avoid applying functions to indexed columns inside WHERE conditions.</p>
+            </li>
+
+            <li>
+                <strong>Filter Early</strong>
+                <p>Use WHERE conditions to reduce the number of rows processed as early as possible.</p>
+            </li>
+
+            <li>
+                <strong>Use UNION ALL When Appropriate</strong>
+                <p>Use UNION ALL when duplicate removal is not required because UNION performs duplicate elimination.</p>
+            </li>
+
+            <li>
+                <strong>Use Appropriate JOINs</strong>
+                <p>Join only the required tables and ensure appropriate indexes exist on join columns.</p>
+            </li>
+
+            <li>
+                <strong>Avoid Unnecessary DISTINCT</strong>
+                <p>DISTINCT can introduce additional sorting or hashing; use it only when duplicate removal is required.</p>
+            </li>
+
+            <li>
+                <strong>Return Only Required Rows</strong>
+                <p>Use appropriate filtering and pagination instead of returning large datasets.</p>
+            </li>
+
+            <li>
+                <strong>Keep Transactions Short</strong>
+                <p>Short transactions reduce locking, blocking and deadlock risks.</p>
+            </li>
+
+            <li>
+                <strong>Update Statistics</strong>
+                <p>Accurate statistics help the optimizer choose better execution plans.</p>
+            </li>
+
+            <li>
+                <strong>Check Missing Index Suggestions Carefully</strong>
+                <p>Validate index recommendations against workload and existing indexes before creating them.</p>
+            </li>
+
+            <li>
+                <strong>Avoid Over-Indexing</strong>
+                <p>Too many indexes increase storage requirements and slow INSERT, UPDATE and DELETE operations.</p>
+            </li>
+        </ol>
+    </article>
+</section>
+
+
+<!-- ===================================================== -->
+<!-- SECTION 3 : SARGABILITY -->
+<!-- ===================================================== -->
+
+<section>
+    <header>
+        <h2>3. SARGability – Important Interview Topic</h2>
+    </header>
+
+    <article>
+        <h3>What is SARGable?</h3>
+
+        <p>
+            A SARGable predicate allows SQL Server to efficiently use an index
+            to locate required rows.
+        </p>
+
+        <h4>Bad Example</h4>
+
+        <pre><code>
+```
+
+SELECT *
+FROM Employee
+WHERE YEAR(JoiningDate) = 2026; </code></pre>
+
+```
+        <h4>Better Example</h4>
+
+        <pre><code>
+```
+
+SELECT *
+FROM Employee
+WHERE JoiningDate >= '20260101'
+AND JoiningDate <  '20270101'; </code></pre>
+
+```
+        <p>
+            <strong>Interview Point:</strong>
+            Avoid wrapping indexed columns inside functions when possible.
+        </p>
+    </article>
+</section>
+
+
+<!-- ===================================================== -->
+<!-- SECTION 4 : EXECUTION PLAN -->
+<!-- ===================================================== -->
+
+<section>
+    <header>
+        <h2>4. SQL Server Execution Plan</h2>
+    </header>
+
+    <article>
+        <h3>What is an Execution Plan?</h3>
+
+        <p>
+            An execution plan shows how SQL Server's optimizer intends to
+            retrieve and process data for a query.
+        </p>
+
+        <h3>Simple Flow</h3>
+
+        <ol>
+            <li>SQL query is submitted.</li>
+            <li>SQL Server parses and validates the query.</li>
+            <li>Query Optimizer evaluates possible execution strategies.</li>
+            <li>Optimizer chooses an execution plan based on estimated cost.</li>
+            <li>SQL Server executes the selected plan.</li>
+            <li>Actual execution statistics can be compared with estimates.</li>
+        </ol>
+    </article>
+
+    <article>
+        <h3>Important Execution Plan Operators</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Operator</th>
+                    <th>Interview Meaning</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>Index Seek</td>
+                    <td>Efficiently finds qualifying rows through an index.</td>
+                </tr>
+
+                <tr>
+                    <td>Index Scan</td>
+                    <td>Reads many or all index rows; may be appropriate depending on selectivity.</td>
+                </tr>
+
+                <tr>
+                    <td>Table Scan</td>
+                    <td>Reads the table without using an index.</td>
+                </tr>
+
+                <tr>
+                    <td>Key Lookup</td>
+                    <td>Uses a nonclustered index and then looks up additional columns in the base table.</td>
+                </tr>
+
+                <tr>
+                    <td>Nested Loops</td>
+                    <td>Often effective when one input is small and the other input has a useful index.</td>
+                </tr>
+
+                <tr>
+                    <td>Hash Match</td>
+                    <td>Commonly used for larger joins or aggregations when suitable indexes are unavailable.</td>
+                </tr>
+
+                <tr>
+                    <td>Sort</td>
+                    <td>Sorts rows for ORDER BY, grouping, ranking or other operations.</td>
+                </tr>
+
+                <tr>
+                    <td>Filter</td>
+                    <td>Removes rows that do not satisfy a predicate.</td>
+                </tr>
+            </tbody>
+        </table>
+    </article>
+</section>
+
+
+<!-- ===================================================== -->
+<!-- SECTION 5 : HOW TO READ EXECUTION PLAN -->
+<!-- ===================================================== -->
+
+<section>
+    <header>
+        <h2>5. How to Analyze an Execution Plan</h2>
+    </header>
+
+    <ol>
+        <li>
+            <strong>Check Actual vs Estimated Rows</strong>
+            <p>
+                Large differences can indicate stale statistics,
+                parameter sensitivity or incorrect cardinality estimates.
+            </p>
+        </li>
+
+        <li>
+            <strong>Look for Table Scans</strong>
+            <p>
+                Determine whether a scan is expected or whether a suitable
+                index could reduce unnecessary reads.
+            </p>
+        </li>
+
+        <li>
+            <strong>Look for Expensive Operators</strong>
+            <p>
+                Investigate operators with high cost, CPU, I/O or row counts.
+            </p>
+        </li>
+
+        <li>
+            <strong>Check Key Lookups</strong>
+            <p>
+                Many repeated lookups may indicate that a covering index
+                could be useful.
+            </p>
+        </li>
+
+        <li>
+            <strong>Check Sort Operations</strong>
+            <p>
+                Large sorts can consume CPU and memory and may sometimes
+                be reduced through appropriate indexing or query design.
+            </p>
+        </li>
+
+        <li>
+            <strong>Check Warnings</strong>
+            <p>
+                Review spills, implicit conversions and other execution-plan
+                warnings.
+            </p>
+        </li>
+
+        <li>
+            <strong>Check Logical Reads</strong>
+            <p>
+                Use SET STATISTICS IO to understand how much data SQL Server
+                reads.
+            </p>
+        </li>
+
+        <li>
+            <strong>Check CPU and Duration</strong>
+            <p>
+                Use SET STATISTICS TIME and monitoring tools to identify
+                CPU-intensive or long-running queries.
+            </p>
+        </li>
+    </ol>
+</section>
+
+
+<!-- ===================================================== -->
+<!-- SECTION 6 : PRACTICAL OPTIMIZATION FLOW -->
+<!-- ===================================================== -->
+
+<section>
+    <header>
+        <h2>6. Real-Time SQL Optimization Flow</h2>
+    </header>
+
+    <ol>
+        <li>Identify the slow query.</li>
+        <li>Capture the actual execution plan.</li>
+        <li>Check logical reads, CPU time and duration.</li>
+        <li>Compare estimated rows with actual rows.</li>
+        <li>Check scans, seeks, lookups, joins and sorts.</li>
+        <li>Check indexes and statistics.</li>
+        <li>Check for non-SARGable predicates.</li>
+        <li>Rewrite the query if necessary.</li>
+        <li>Add or modify indexes only after analysis.</li>
+        <li>Test again and compare before/after performance.</li>
+    </ol>
+</section>
+
+
+<!-- ===================================================== -->
+<!-- SECTION 7 : INTERVIEW ANSWERS -->
+<!-- ===================================================== -->
+
+<section>
+    <header>
+        <h2>7. Top Interview One-Line Answers</h2>
+    </header>
+
+    <dl>
+
+        <dt><strong>Q: How do you optimize a slow SQL query?</strong></dt>
+        <dd>
+            I check the actual execution plan, logical reads, CPU,
+            statistics, indexes, joins and SARGability, then test
+            query/index improvements and compare the results.
+        </dd>
+
+        <dt><strong>Q: Index Seek vs Index Scan?</strong></dt>
+        <dd>
+            Index Seek retrieves qualifying rows efficiently; Index Scan
+            reads many or all index rows.
+        </dd>
+
+        <dt><strong>Q: What is a covering index?</strong></dt>
+        <dd>
+            A covering index contains all columns required by a query,
+            potentially avoiding additional lookups.
+        </dd>
+
+        <dt><strong>Q: Why can SELECT * hurt performance?</strong></dt>
+        <dd>
+            It can read and return unnecessary columns, increasing I/O,
+            memory usage and network traffic.
+        </dd>
+
+        <dt><strong>Q: What is SARGability?</strong></dt>
+        <dd>
+            SARGability means writing predicates so SQL Server can
+            efficiently use indexes to locate qualifying rows.
+        </dd>
+
+        <dt><strong>Q: Why are statistics important?</strong></dt>
+        <dd>
+            Statistics help the optimizer estimate row counts and choose
+            an efficient execution plan.
+        </dd>
+
+        <dt><strong>Q: Why avoid too many indexes?</strong></dt>
+        <dd>
+            Extra indexes consume storage and increase the cost of
+            INSERT, UPDATE and DELETE operations.
+        </dd>
+
+        <dt><strong>Q: Actual vs Estimated Execution Plan?</strong></dt>
+        <dd>
+            Estimated shows what the optimizer expected; Actual shows
+            what happened during execution and includes runtime information.
+        </dd>
+
+    </dl>
+</section>
+
+
+<!-- ===================================================== -->
+<!-- SECTION 8 : MEMORY CHEAT SHEET -->
+<!-- ===================================================== -->
+
+<aside>
+    <h2>8. Quick Memory Sheet</h2>
+
+    <p><strong>Slow Query → Execution Plan → Analyze → Optimize → Test Again</strong></p>
+
+    <ul>
+        <li><strong>Seek</strong> → Find required rows</li>
+        <li><strong>Scan</strong> → Read many/all rows</li>
+        <li><strong>Lookup</strong> → Fetch missing columns</li>
+        <li><strong>Statistics</strong> → Help optimizer estimate rows</li>
+        <li><strong>Index</strong> → Faster data access</li>
+        <li><strong>SARGable</strong> → Index-friendly predicate</li>
+        <li><strong>Short Transaction</strong> → Less blocking</li>
+        <li><strong>Actual Plan</strong> → See what really happened</li>
+    </ul>
+</aside>
+```
+
+</main>
+
+<footer>
+    <p>
+        SQL Server Interview Preparation –
+        Differences, Optimization and Execution Plan
+    </p>
+</footer>
 
 </body>
 </html>
