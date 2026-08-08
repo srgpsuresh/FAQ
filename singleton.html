@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="Singleton Design Pattern in C# with simple explanation, code, real-time example and interview questions">
+
+    <title>Singleton Design Pattern - C# Interview Notes</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background: #f5f7fa;
+            color: #222;
+        }
+
+        header {
+            background: #1f3c88;
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin-bottom: 10px;
+        }
+
+        nav {
+            background: #162d59;
+            padding: 12px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        section,
+        article,
+        aside {
+            background: white;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+        }
+
+        h2 {
+            color: #1f3c88;
+            margin-bottom: 15px;
+        }
+
+        h3 {
+            margin: 20px 0 10px;
+            color: #333;
+        }
+
+        p {
+            margin-bottom: 15px;
+        }
+
+        pre {
+            background: #1e1e1e;
+            color: #00ff88;
+            padding: 20px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+
+        code {
+            font-family: Consolas, monospace;
+        }
+
+        .highlight {
+            background: #eef4ff;
+            border-left: 5px solid #1f3c88;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #1f3c88;
+            color: white;
+        }
+
+        aside {
+            background: #fff8dc;
+            border-left: 5px solid #e0a800;
+        }
+
+        details {
+            margin-top: 15px;
+            padding: 10px;
+            background: #f5f5f5;
+            border-radius: 5px;
+        }
+
+        summary {
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        footer {
+            background: #162d59;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        .flow {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 20px;
+        }
+
+        @media (max-width: 700px) {
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+
+    <header>
+        <h1>Singleton Design Pattern</h1>
+        <p>C# Interview Preparation</p>
+    </header>
+
+
+    <!-- ================= NAVIGATION ================= -->
+
+    <nav aria-label="Main Navigation">
+        <ul>
+            <li><a href="#definition">Definition</a></li>
+            <li><a href="#code">C# Code</a></li>
+            <li><a href="#realtime">Real-Time Example</a></li>
+            <li><a href="#dotnet">ASP.NET Core</a></li>
+            <li><a href="#interview">Interview Questions</a></li>
+        </ul>
+    </nav>
+
+
+    <!-- ================= MAIN CONTENT ================= -->
+
+    <main>
+
+        <!-- ================= DEFINITION ================= -->
+
+        <section id="definition">
+
+            <header>
+                <h2>1. What is Singleton?</h2>
+            </header>
+
+            <p>
+                <strong>Singleton Design Pattern</strong> ensures that only
+                <strong>one instance</strong> of a class is created throughout
+                the application and provides a common access point to that instance.
+            </p>
+
+            <div class="highlight">
+
+                <h3>Interview Answer - 30 Seconds</h3>
+
+                <p>
+                    Singleton is a <strong>creational design pattern</strong>.
+                    We use it when we need exactly one instance of a class
+                    throughout the application.
+                </p>
+
+                <p>
+                    We make the constructor private, keep a static instance,
+                    and expose that instance through a static property or method.
+                </p>
+
+                <p>
+                    In modern .NET applications, we generally prefer using
+                    <strong>Dependency Injection with AddSingleton()</strong>.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= SIMPLE CODE ================= -->
+
+        <section id="code">
+
+            <header>
+                <h2>2. Simple C# Singleton Code</h2>
+            </header>
+
+            <pre>
+<code>
+public sealed class AppConfiguration
+{
+    private static readonly AppConfiguration _instance =
+        new AppConfiguration();
+
+    private AppConfiguration()
+    {
+    }
+
+    public static AppConfiguration Instance
+    {
+        get { return _instance; }
+    }
+
+    public string ConnectionString { get; set; }
+}
+</code>
+            </pre>
+
+            <h3>Usage</h3>
+
+            <pre>
+<code>
+var config1 = AppConfiguration.Instance;
+var config2 = AppConfiguration.Instance;
+
+Console.WriteLine(config1 == config2);
+</code>
+            </pre>
+
+            <h3>Output</h3>
+
+            <pre>
+<code>
+True
+</code>
+            </pre>
+
+            <p>
+                Both <strong>config1</strong> and <strong>config2</strong>
+                point to the same object.
+            </p>
+
+        </section>
+
+
+        <!-- ================= KEYWORDS ================= -->
+
+        <section id="keywords">
+
+            <header>
+                <h2>3. Why These Keywords?</h2>
+            </header>
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Keyword</th>
+                        <th>Purpose</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td><code>private constructor</code></td>
+                        <td>
+                            Prevents external code from creating an object
+                            using <code>new</code>.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><code>static</code></td>
+                        <td>
+                            Makes the instance belong to the class.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><code>sealed</code></td>
+                        <td>
+                            Prevents inheritance.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><code>Instance</code></td>
+                        <td>
+                            Provides access to the single instance.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><code>readonly</code></td>
+                        <td>
+                            Prevents replacing the instance after initialization.
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+
+        <!-- ================= FLOW ================= -->
+
+        <section>
+
+            <header>
+                <h2>4. Singleton Flow</h2>
+            </header>
+
+            <div class="flow">
+
+                Application
+                <br>
+                ↓
+                <br>
+                AppConfiguration.Instance
+                <br>
+                ↓
+                <br>
+                ┌──────────────────────────┐
+                <br>
+                │ One AppConfiguration     │
+                │ Instance                 │
+                └──────────────────────────┘
+                <br>
+                ↑
+                <br>
+                ├── Controller
+                <br>
+                ├── Service
+                <br>
+                └── Background Worker
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= REAL TIME ================= -->
+
+        <section id="realtime">
+
+            <header>
+                <h2>5. Real-Time Example</h2>
+            </header>
+
+            <p>
+                Imagine an application configuration component that should
+                have one shared instance.
+            </p>
+
+            <article>
+
+                <h3>Example Use Cases</h3>
+
+                <ul>
+                    <li>Application configuration</li>
+                    <li>Shared in-memory cache</li>
+                    <li>Metrics collector</li>
+                    <li>Stateless shared services</li>
+                    <li>Application-wide coordination components</li>
+                </ul>
+
+            </article>
+
+            <aside>
+
+                <h3>Important Interview Point</h3>
+
+                <p>
+                    Singleton does not mean that every shared object should
+                    be global.
+                </p>
+
+                <p>
+                    Shared mutable state can create
+                    <strong>concurrency</strong> and
+                    <strong>testing</strong> problems.
+                </p>
+
+            </aside>
+
+        </section>
+
+
+        <!-- ================= ASP.NET CORE ================= -->
+
+        <section id="dotnet">
+
+            <header>
+                <h2>6. Singleton in ASP.NET Core</h2>
+            </header>
+
+            <p>
+                In modern ASP.NET Core applications, we normally don't need
+                to manually implement the Singleton pattern.
+            </p>
+
+            <p>
+                Instead, use the built-in
+                <strong>Dependency Injection container</strong>.
+            </p>
+
+            <pre>
+<code>
+builder.Services.AddSingleton&lt;IAppConfiguration,
+                             AppConfiguration&gt;();
+</code>
+            </pre>
+
+            <h3>Inject the Service</h3>
+
+            <pre>
+<code>
+public class EmployeeService
+{
+    private readonly IAppConfiguration _config;
+
+    public EmployeeService(IAppConfiguration config)
+    {
+        _config = config;
+    }
+}
+</code>
+            </pre>
+
+            <p>
+                The DI container manages the lifetime of the service.
+            </p>
+
+        </section>
+
+
+        <!-- ================= DI LIFETIMES ================= -->
+
+        <section>
+
+            <header>
+                <h2>7. Dependency Injection Lifetimes</h2>
+            </header>
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Lifetime</th>
+                        <th>Instance Behavior</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td><code>AddTransient()</code></td>
+                        <td>
+                            New instance every time it is requested.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><code>AddScoped()</code></td>
+                        <td>
+                            One instance per request/scope.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><code>AddSingleton()</code></td>
+                        <td>
+                            One instance for the DI container lifetime.
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+
+        <!-- ================= INTERVIEW QUESTIONS ================= -->
+
+        <section id="interview">
+
+            <header>
+                <h2>8. Singleton Interview Questions</h2>
+            </header>
+
+
+            <article>
+
+                <details>
+                    <summary>Q1. Why private constructor?</summary>
+
+                    <p>
+                        To prevent external code from creating objects
+                        using <code>new</code>.
+                    </p>
+
+                </details>
+
+
+                <details>
+                    <summary>Q2. Why static instance?</summary>
+
+                    <p>
+                        So that the instance belongs to the class rather
+                        than a particular object.
+                    </p>
+
+                </details>
+
+
+                <details>
+                    <summary>Q3. Why sealed?</summary>
+
+                    <p>
+                        To prevent inheritance and avoid subclasses creating
+                        additional instances.
+                    </p>
+
+                </details>
+
+
+                <details>
+                    <summary>Q4. Is Singleton thread-safe?</summary>
+
+                    <p>
+                        It depends on the implementation. The initialization
+                        approach must be thread-safe when multiple threads
+                        can access the Singleton concurrently.
+                    </p>
+
+                </details>
+
+
+                <details>
+                    <summary>Q5. Singleton vs Static Class?</summary>
+
+                    <p>
+                        A Singleton is an actual object/instance. It can
+                        implement interfaces and participate in Dependency
+                        Injection.
+                    </p>
+
+                    <p>
+                        A static class cannot be instantiated and is generally
+                        less flexible for abstraction and testing.
+                    </p>
+
+                </details>
+
+
+                <details>
+                    <summary>Q6. What would you use in ASP.NET Core?</summary>
+
+                    <p>
+                        Prefer the built-in Dependency Injection container
+                        with <code>AddSingleton&lt;T&gt;()</code> instead of
+                        manually implementing Singleton in most application code.
+                    </p>
+
+                </details>
+
+            </article>
+
+        </section>
+
+
+        <!-- ================= MEMORY TRICK ================= -->
+
+        <section>
+
+            <header>
+                <h2>9. Interview Memory Trick</h2>
+            </header>
+
+            <div class="highlight">
+
+                <p>
+                    <strong>
+                        Singleton = One Object + Controlled Creation + Shared Access
+                    </strong>
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= FINAL ANSWER ================= -->
+
+        <aside>
+
+            <h2>⭐ Best Interview Answer</h2>
+
+            <p>
+                “Singleton is a creational design pattern that ensures only
+                one instance of a class exists and provides a common access
+                point to it. In C#, this can be implemented using a private
+                constructor and a static instance. However, in ASP.NET Core,
+                I generally prefer the built-in Dependency Injection container
+                and register the service using <code>AddSingleton()</code>.”
+            </p>
+
+        </aside>
+
+    </main>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <p>
+            C# Interview Preparation |
+            Design Patterns |
+            Singleton Pattern
+        </p>
+
+    </footer>
+
+</body>
+</html>
