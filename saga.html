@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="Simple explanation of Saga Pattern, Choreography and Orchestration in Microservices">
+
+    <title>Saga Pattern - Choreography vs Orchestration</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            background: #f5f5f5;
+            color: #222;
+        }
+
+        header {
+            background: #1f4e79;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+        nav {
+            background: #163a5c;
+            padding: 12px;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+        }
+
+        main {
+            max-width: 1000px;
+            margin: 25px auto;
+            padding: 0 20px;
+        }
+
+        section,
+        article,
+        aside {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+
+        h2 {
+            color: #1f4e79;
+        }
+
+        pre {
+            background: #222;
+            color: #00ff88;
+            padding: 15px;
+            overflow-x: auto;
+            border-radius: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        th {
+            background: #1f4e79;
+            color: white;
+        }
+
+        aside {
+            background: #fff8dc;
+            border-left: 5px solid #e0a800;
+        }
+
+        details {
+            margin-top: 15px;
+            padding: 10px;
+            background: #f2f2f2;
+        }
+
+        footer {
+            background: #163a5c;
+            color: white;
+            text-align: center;
+            padding: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+
+    <header>
+        <h1>Saga Pattern</h1>
+        <p>Choreography vs Orchestration</p>
+    </header>
+
+
+    <!-- NAVIGATION -->
+
+    <nav>
+        <ul>
+            <li><a href="#saga">Saga</a></li>
+            <li><a href="#choreography">Choreography</a></li>
+            <li><a href="#orchestration">Orchestration</a></li>
+            <li><a href="#compare">Comparison</a></li>
+            <li><a href="#interview">Interview</a></li>
+        </ul>
+    </nav>
+
+
+    <!-- MAIN -->
+
+    <main>
+
+        <!-- SAGA -->
+
+        <section id="saga">
+
+            <header>
+                <h2>1. What is Saga Pattern?</h2>
+            </header>
+
+            <p>
+                Saga is a design pattern used to manage a
+                <strong>business transaction across multiple microservices</strong>.
+            </p>
+
+            <p>
+                Each microservice performs its own local transaction.
+                If something fails, we perform a
+                <strong>compensating action</strong>.
+            </p>
+
+            <h3>Example</h3>
+
+            <pre>
+Order
+  ↓
+Payment
+  ↓
+Inventory
+  ↓
+Shipping
+            </pre>
+
+            <h3>If Shipping Fails</h3>
+
+            <pre>
+Shipping Failed
+      ↓
+Release Inventory
+      ↓
+Refund Payment
+      ↓
+Cancel Order
+            </pre>
+
+        </section>
+
+
+        <!-- CHOREOGRAPHY -->
+
+        <section id="choreography">
+
+            <header>
+                <h2>2. Choreography</h2>
+            </header>
+
+            <p>
+                In <strong>Choreography</strong>, there is
+                <strong>no central coordinator</strong>.
+            </p>
+
+            <p>
+                Each service performs its work and publishes an event.
+                Another service listens to that event and performs its work.
+            </p>
+
+            <h3>Simple Flow</h3>
+
+            <pre>
+Order Service
+     |
+     | OrderCreated
+     ↓
+Payment Service
+     |
+     | PaymentCompleted
+     ↓
+Inventory Service
+     |
+     | InventoryReserved
+     ↓
+Shipping Service
+            </pre>
+
+            <h3>Failure Flow</h3>
+
+            <pre>
+ShippingFailed
+      ↓
+Inventory Service
+      ↓
+Release Inventory
+      ↓
+Payment Service
+      ↓
+Refund Payment
+      ↓
+Order Service
+      ↓
+Cancel Order
+            </pre>
+
+            <h3>Key Point</h3>
+
+            <aside>
+                <p>
+                    <strong>Choreography = No central controller.</strong>
+                </p>
+
+                <p>
+                    Services communicate using events.
+                </p>
+            </aside>
+
+        </section>
+
+
+        <!-- ORCHESTRATION -->
+
+        <section id="orchestration">
+
+            <header>
+                <h2>3. Orchestration</h2>
+            </header>
+
+            <p>
+                In <strong>Orchestration</strong>, a central
+                <strong>Saga Orchestrator</strong> controls the workflow.
+            </p>
+
+            <h3>Simple Flow</h3>
+
+            <pre>
+              Saga Orchestrator
+                      |
+          ┌───────────┼───────────┐
+          ↓           ↓           ↓
+        Order       Payment    Inventory
+                                  |
+                                  ↓
+                              Shipping
+            </pre>
+
+            <h3>Normal Flow</h3>
+
+            <pre>
+Orchestrator
+     ↓
+Create Order
+     ↓
+Process Payment
+     ↓
+Reserve Inventory
+     ↓
+Create Shipment
+            </pre>
+
+            <h3>Failure Flow</h3>
+
+            <pre>
+Shipping Failed
+      ↓
+Orchestrator
+      ↓
+Release Inventory
+      ↓
+Refund Payment
+      ↓
+Cancel Order
+            </pre>
+
+            <aside>
+                <p>
+                    <strong>
+                        Orchestration = Central controller manages the workflow.
+                    </strong>
+                </p>
+            </aside>
+
+        </section>
+
+
+        <!-- COMPARISON -->
+
+        <section id="compare">
+
+            <header>
+                <h2>4. Choreography vs Orchestration</h2>
+            </header>
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Choreography</th>
+                        <th>Orchestration</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td>Coordinator</td>
+                        <td>No</td>
+                        <td>Yes</td>
+                    </tr>
+
+                    <tr>
+                        <td>Communication</td>
+                        <td>Events</td>
+                        <td>Commands / Events</td>
+                    </tr>
+
+                    <tr>
+                        <td>Workflow</td>
+                        <td>Distributed</td>
+                        <td>Centralized</td>
+                    </tr>
+
+                    <tr>
+                        <td>Simple workflow</td>
+                        <td>Good</td>
+                        <td>Good</td>
+                    </tr>
+
+                    <tr>
+                        <td>Complex workflow</td>
+                        <td>Difficult</td>
+                        <td>Better</td>
+                    </tr>
+
+                    <tr>
+                        <td>Debugging</td>
+                        <td>More difficult</td>
+                        <td>Easier</td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+
+        <!-- REAL TIME -->
+
+        <section>
+
+            <header>
+                <h2>5. Real-Time E-Commerce Example</h2>
+            </header>
+
+            <article>
+
+                <h3>Choreography</h3>
+
+                <pre>
+Order
+ ↓
+OrderCreated Event
+ ↓
+Payment
+ ↓
+PaymentCompleted Event
+ ↓
+Inventory
+ ↓
+InventoryReserved Event
+ ↓
+Shipping
+                </pre>
+
+            </article>
+
+            <article>
+
+                <h3>Orchestration</h3>
+
+                <pre>
+          Saga Orchestrator
+                  |
+                  ↓
+            Create Order
+                  |
+                  ↓
+           Process Payment
+                  |
+                  ↓
+          Reserve Inventory
+                  |
+                  ↓
+           Create Shipment
+                </pre>
+
+            </article>
+
+        </section>
+
+
+        <!-- INTERVIEW -->
+
+        <section id="interview">
+
+            <header>
+                <h2>6. Interview Answer</h2>
+            </header>
+
+            <article>
+
+                <details open>
+
+                    <summary>
+                        How do you explain Saga Pattern?
+                    </summary>
+
+                    <p>
+                        Saga manages a transaction that spans multiple
+                        microservices. Each service performs a local
+                        transaction. If a step fails, compensating
+                        transactions are executed.
+                    </p>
+
+                </details>
+
+
+                <details>
+
+                    <summary>
+                        What is Choreography?
+                    </summary>
+
+                    <p>
+                        Choreography has no central coordinator.
+                        Services communicate through events.
+                    </p>
+
+                </details>
+
+
+                <details>
+
+                    <summary>
+                        What is Orchestration?
+                    </summary>
+
+                    <p>
+                        Orchestration uses a central Saga Orchestrator
+                        to control the workflow and compensation actions.
+                    </p>
+
+                </details>
+
+
+                <details>
+
+                    <summary>
+                        When would you use each?
+                    </summary>
+
+                    <p>
+                        Use <strong>Choreography</strong> for simple,
+                        event-driven workflows.
+                    </p>
+
+                    <p>
+                        Use <strong>Orchestration</strong> for complex
+                        workflows where centralized control and visibility
+                        are important.
+                    </p>
+
+                </details>
+
+            </article>
+
+        </section>
+
+
+        <!-- MEMORY TRICK -->
+
+        <aside>
+
+            <h2>⭐ Easy Memory Trick</h2>
+
+            <p>
+                <strong>Choreography</strong>
+                = Service → Event → Service → Event
+            </p>
+
+            <p>
+                <strong>Orchestration</strong>
+                = Orchestrator → Service → Service → Service
+            </p>
+
+            <p>
+                <strong>Saga</strong>
+                = Local Transactions + Compensation
+            </p>
+
+        </aside>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+        <p>
+            C# / .NET Microservices Interview Preparation
+        </p>
+    </footer>
+
+</body>
+
+</html>
