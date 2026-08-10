@@ -1,538 +1,1681 @@
-<section>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<h2>Microservices Design Patterns using Clean Architecture - Top Interview FAQs</h2>
+    <meta name="description"
+          content="Microservices Design Patterns using Clean Architecture - Top Interview FAQs for .NET Architects">
 
-<article>
+    <title>Microservices Design Patterns - Interview FAQs</title>
 
-<details open>
-<summary>1. Why do we need Design Patterns in Microservices?</summary>
+    <style>
+        /* ==============================
+           GLOBAL
+        ============================== */
 
-<p><strong>Answer:</strong></p>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --secondary: #0f172a;
+            --background: #f8fafc;
+            --surface: #ffffff;
+            --border: #e2e8f0;
+            --text: #334155;
+            --muted: #64748b;
+            --success: #15803d;
+            --warning: #b45309;
+            --code-bg: #0f172a;
+            --shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
+            --radius: 12px;
+        }
 
-<ul>
-<li>Reduce code duplication.</li>
-<li>Solve recurring software problems.</li>
-<li>Improve maintainability.</li>
-<li>Increase scalability.</li>
-<li>Promote loose coupling.</li>
-<li>Improve testability.</li>
-</ul>
+        * {
+            box-sizing: border-box;
+        }
 
-<p><strong>Example:</strong> Order Service communicates with Shipping Service using Publish-Subscribe instead of direct API calls.</p>
+        html {
+            scroll-behavior: smooth;
+        }
 
-</details>
+        body {
+            margin: 0;
+            font-family:
+                Inter,
+                system-ui,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
 
-<details>
-<summary>2. Which design patterns are most commonly used in Enterprise Microservices?</summary>
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--background);
+        }
 
-<table border="1">
+        /* ==============================
+           HEADER
+        ============================== */
 
-<tr>
-<th>Pattern</th>
-<th>Purpose</th>
-</tr>
+        .site-header {
+            background: linear-gradient(
+                135deg,
+                #0f172a,
+                #1e3a8a
+            );
 
-<tr><td>CQRS</td><td>Separate Read and Write operations</td></tr>
-<tr><td>Mediator</td><td>Loose coupling between Controller and Handler</td></tr>
-<tr><td>Repository</td><td>Database abstraction</td></tr>
-<tr><td>Saga</td><td>Distributed transaction</td></tr>
-<tr><td>Outbox</td><td>Reliable event publishing</td></tr>
-<tr><td>Strategy</td><td>Dynamic business algorithms</td></tr>
-<tr><td>Factory</td><td>Create complex objects</td></tr>
-<tr><td>State</td><td>Manage object state</td></tr>
-<tr><td>Specification</td><td>Business rule validation</td></tr>
+            color: white;
+            padding: 3rem 1rem;
+            text-align: center;
+        }
 
-</table>
+        .site-header h1 {
+            margin: 0 0 0.75rem;
+            font-size: clamp(1.8rem, 4vw, 3rem);
+        }
 
-</details>
+        .site-header p {
+            max-width: 800px;
+            margin: auto;
+            color: #cbd5e1;
+            font-size: 1.05rem;
+        }
 
-<details>
+        /* ==============================
+           LAYOUT
+        ============================== */
 
-<summary>3. Why is CQRS used?</summary>
+        .container {
+            width: min(1200px, 92%);
+            margin: 2rem auto;
+        }
 
-<p><strong>Issue:</strong> Read and Write operations have different performance requirements.</p>
+        .content-layout {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
 
-<p><strong>Solution:</strong></p>
+        /* ==============================
+           SIDEBAR
+        ============================== */
 
-<ul>
-<li>CreateOrderCommand</li>
-<li>UpdateOrderCommand</li>
-<li>GetOrderQuery</li>
-<li>GetOrderHistoryQuery</li>
-</ul>
+        .toc {
+            position: sticky;
+            top: 1rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.25rem;
+            box-shadow: var(--shadow);
+        }
 
-<p><strong>Benefit:</strong> Better scalability and optimized queries.</p>
+        .toc h2 {
+            font-size: 1rem;
+            margin-top: 0;
+            color: var(--secondary);
+        }
 
-</details>
+        .toc ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
 
-<details>
+        .toc li {
+            margin-bottom: 0.45rem;
+        }
 
-<summary>4. Why do we use MediatR (Mediator Pattern)?</summary>
+        .toc a {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
 
-<p><strong>Without MediatR</strong></p>
+        .toc a:hover {
+            color: var(--primary);
+        }
+
+        /* ==============================
+           FAQ SECTION
+        ============================== */
+
+        .faq-section {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .faq-section > header {
+            padding: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .faq-section > header h2 {
+            margin-top: 0;
+            color: var(--secondary);
+        }
+
+        /* ==============================
+           FAQ ARTICLE
+        ============================== */
+
+        .faq {
+            border-bottom: 1px solid var(--border);
+        }
+
+        .faq:last-child {
+            border-bottom: none;
+        }
+
+        .faq details {
+            padding: 0;
+        }
+
+        .faq summary {
+            position: relative;
+            cursor: pointer;
+            list-style: none;
+
+            padding: 1.25rem 3.5rem 1.25rem 1.5rem;
+
+            font-weight: 700;
+            font-size: 1rem;
+
+            color: var(--secondary);
+
+            transition:
+                background 0.2s ease,
+                color 0.2s ease;
+        }
+
+        .faq summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .faq summary::after {
+            content: "+";
+
+            position: absolute;
+            right: 1.5rem;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            font-size: 1.5rem;
+            font-weight: 400;
+
+            color: var(--primary);
+        }
+
+        .faq details[open] summary::after {
+            content: "−";
+        }
+
+        .faq summary:hover {
+            background: #eff6ff;
+            color: var(--primary-dark);
+        }
+
+        .faq details[open] summary {
+            background: #eff6ff;
+            color: var(--primary-dark);
+        }
+
+        .faq-content {
+            padding: 0 1.5rem 1.5rem;
+        }
+
+        .faq-content p {
+            margin-top: 0.5rem;
+        }
+
+        /* ==============================
+           ANSWER HIGHLIGHTS
+        ============================== */
+
+        .answer-label {
+            display: inline-block;
+
+            margin-bottom: 0.5rem;
+            padding: 0.25rem 0.7rem;
+
+            border-radius: 999px;
+
+            background: #dcfce7;
+            color: var(--success);
+
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .issue {
+            padding: 1rem;
+
+            border-left: 4px solid var(--warning);
+
+            background: #fffbeb;
+
+            border-radius: 6px;
+        }
+
+        .solution {
+            padding: 1rem;
+
+            border-left: 4px solid var(--primary);
+
+            background: #eff6ff;
+
+            border-radius: 6px;
+        }
+
+        /* ==============================
+           LISTS
+        ============================== */
+
+        .faq-content ul,
+        .faq-content ol {
+            padding-left: 1.5rem;
+        }
+
+        .faq-content li {
+            margin-bottom: 0.4rem;
+        }
+
+        /* ==============================
+           TABLE
+        ============================== */
+
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 500px;
+        }
+
+        caption {
+            text-align: left;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: var(--secondary);
+        }
+
+        th,
+        td {
+            padding: 0.85rem 1rem;
+            border: 1px solid var(--border);
+            text-align: left;
+        }
+
+        th {
+            background: #f1f5f9;
+            color: var(--secondary);
+            font-weight: 700;
+        }
+
+        tbody tr:nth-child(even) {
+            background: #f8fafc;
+        }
+
+        tbody tr:hover {
+            background: #eff6ff;
+        }
+
+        /* ==============================
+           CODE / FLOW
+        ============================== */
+
+        pre {
+            margin: 1rem 0;
+
+            padding: 1rem;
+
+            overflow-x: auto;
+
+            border-radius: 8px;
+
+            background: var(--code-bg);
+            color: #e2e8f0;
+
+            font-family:
+                "Cascadia Code",
+                "Consolas",
+                monospace;
+
+            font-size: 0.9rem;
+        }
+
+        code {
+            font-family:
+                "Cascadia Code",
+                "Consolas",
+                monospace;
+        }
+
+        /* ==============================
+           FLOW STEPS
+        ============================== */
+
+        .flow {
+            display: grid;
+            gap: 0.6rem;
+            margin: 1rem 0;
+        }
+
+        .flow-step {
+            padding: 0.75rem 1rem;
+
+            background: #f8fafc;
+
+            border: 1px solid var(--border);
+            border-radius: 8px;
+
+            font-weight: 600;
+        }
+
+        .flow-step::before {
+            content: "→";
+            color: var(--primary);
+            margin-right: 0.5rem;
+        }
+
+        /* ==============================
+           ARCHITECTURE LAYERS
+        ============================== */
+
+        .architecture {
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(200px, 1fr));
+
+            gap: 1rem;
+        }
+
+        .architecture-card {
+            padding: 1rem;
+
+            border: 1px solid var(--border);
+            border-radius: 10px;
+
+            background: #f8fafc;
+        }
+
+        .architecture-card h3 {
+            margin-top: 0;
+            color: var(--primary-dark);
+        }
+
+        /* ==============================
+           INTERVIEW TIP
+        ============================== */
+
+        .interview-tip {
+            margin: 1.5rem;
+
+            padding: 1.25rem;
+
+            border-left: 5px solid var(--primary);
+
+            background: #eff6ff;
+
+            border-radius: 8px;
+        }
+
+        .interview-tip strong {
+            color: var(--primary-dark);
+        }
+
+        /* ==============================
+           FOOTER
+        ============================== */
+
+        .site-footer {
+            margin-top: 3rem;
+
+            padding: 2rem 1rem;
+
+            text-align: center;
+
+            background: var(--secondary);
+            color: #cbd5e1;
+        }
+
+        /* ==============================
+           RESPONSIVE
+        ============================== */
+
+        @media (max-width: 900px) {
+
+            .content-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .toc {
+                position: static;
+            }
+
+            .toc ul {
+                display: grid;
+
+                grid-template-columns:
+                    repeat(auto-fit, minmax(180px, 1fr));
+
+                gap: 0.4rem 1rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .container {
+                width: 95%;
+            }
+
+            .faq-section > header {
+                padding: 1.25rem;
+            }
+
+            .faq-content {
+                padding: 0 1rem 1.25rem;
+            }
+
+            .faq summary {
+                padding-left: 1rem;
+                padding-right: 3rem;
+            }
+
+            .table-wrapper {
+                margin-left: -0.25rem;
+                margin-right: -0.25rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="site-header">
+
+    <h1>Microservices Design Patterns</h1>
+
+    <p>
+        Clean Architecture + .NET Microservices
+        <br>
+        Top Interview FAQs & Real-Time Enterprise Scenarios
+    </p>
+
+</header>
+
+
+<main class="container">
+
+    <div class="content-layout">
+
+
+        <!-- =========================
+             TABLE OF CONTENTS
+        ========================== -->
+
+        <nav class="toc" aria-label="FAQ navigation">
+
+            <h2>Quick Navigation</h2>
+
+            <ul>
+
+                <li><a href="#faq-1">Why Design Patterns?</a></li>
+
+                <li><a href="#faq-2">Enterprise Patterns</a></li>
+
+                <li><a href="#faq-3">CQRS</a></li>
+
+                <li><a href="#faq-4">Mediator</a></li>
+
+                <li><a href="#faq-5">Repository</a></li>
+
+                <li><a href="#faq-6">Saga</a></li>
+
+                <li><a href="#faq-7">Outbox</a></li>
+
+                <li><a href="#faq-8">Event Driven</a></li>
+
+                <li><a href="#faq-9">Strategy</a></li>
+
+                <li><a href="#faq-10">Factory</a></li>
+
+                <li><a href="#faq-11">State</a></li>
+
+                <li><a href="#faq-12">Specification</a></li>
+
+                <li><a href="#faq-13">Adapter</a></li>
+
+                <li><a href="#faq-14">Circuit Breaker</a></li>
+
+                <li><a href="#faq-15">Retry</a></li>
+
+                <li><a href="#faq-16">Cache Aside</a></li>
+
+                <li><a href="#faq-17">Dependency Injection</a></li>
+
+                <li><a href="#faq-18">Complete Flow</a></li>
+
+                <li><a href="#faq-19">Clean Architecture</a></li>
+
+                <li><a href="#faq-20">Top 10 Patterns</a></li>
+
+            </ul>
+
+        </nav>
+
+
+        <!-- =========================
+             FAQ CONTENT
+        ========================== -->
+
+        <section class="faq-section"
+                 aria-labelledby="faq-title">
+
+            <header>
+
+                <h2 id="faq-title">
+                    Top Interview FAQs
+                </h2>
+
+                <p>
+                    Use the following questions to prepare for
+                    .NET Microservices Architect and Senior Developer
+                    interviews.
+                </p>
+
+            </header>
+
+
+            <!-- FAQ 1 -->
+
+            <article class="faq" id="faq-1">
+
+                <details open>
+
+                    <summary>
+                        1. Why do we need Design Patterns in Microservices?
+                    </summary>
+
+                    <div class="faq-content">
+
+                        <span class="answer-label">
+                            Interview Answer
+                        </span>
+
+                        <ul>
+
+                            <li>Reduce code duplication.</li>
+
+                            <li>Solve recurring software problems.</li>
+
+                            <li>Improve maintainability.</li>
+
+                            <li>Increase scalability.</li>
+
+                            <li>Promote loose coupling.</li>
+
+                            <li>Improve testability.</li>
+
+                        </ul>
+
+                        <p>
+                            <strong>Real-Time Example:</strong>
+                            Order Service communicates with Shipping Service
+                            using Publish-Subscribe instead of direct API calls.
+                        </p>
+
+                    </div>
+
+                </details>
+
+            </article>
+
+
+            <!-- FAQ 2 -->
+
+            <article class="faq" id="faq-2">
+
+                <details>
+
+                    <summary>
+                        2. Which design patterns are commonly used in Enterprise Microservices?
+                    </summary>
+
+                    <div class="faq-content">
+
+                        <div class="table-wrapper">
+
+                            <table>
+
+                                <caption>
+                                    Common Enterprise Microservices Patterns
+                                </caption>
+
+                                <thead>
+
+                                    <tr>
+                                        <th>Pattern</th>
+                                        <th>Purpose</th>
+                                    </tr>
+
+                                </thead>
+
+                                <tbody>
+
+                                    <tr>
+                                        <td>CQRS</td>
+                                        <td>Separate Read and Write operations</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Mediator</td>
+                                        <td>Loose coupling between Controller and Handler</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Repository</td>
+                                        <td>Database abstraction</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Saga</td>
+                                        <td>Distributed transaction management</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Outbox</td>
+                                        <td>Reliable event publishing</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Strategy</td>
+                                        <td>Dynamic business algorithms</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Factory</td>
+                                        <td>Object creation</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>State</td>
+                                        <td>Manage object lifecycle/state</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Specification</td>
+                                        <td>Reusable business rules</td>
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                </details>
+
+            </article>
+
+
+            <!-- FAQ 3 -->
+
+            <article class="faq" id="faq-3">
+
+                <details>
+
+                    <summary>
+                        3. Why is CQRS used?
+                    </summary>
+
+                    <div class="faq-content">
+
+                        <div class="issue">
+
+                            <strong>Problem:</strong>
+
+                            <p>
+                                Read and Write operations often have
+                                different performance and scalability
+                                requirements.
+                            </p>
+
+                        </div>
+
+                        <div class="solution">
+
+                            <strong>Solution:</strong>
+
+                            <ul>
+
+                                <li>CreateOrderCommand</li>
+
+                                <li>UpdateOrderCommand</li>
+
+                                <li>GetOrderQuery</li>
+
+                                <li>GetOrderHistoryQuery</li>
+
+                            </ul>
+
+                        </div>
+
+                        <p>
+                            <strong>Benefit:</strong>
+                            Independent scaling and optimized read/write models.
+                        </p>
+
+                    </div>
+
+                </details>
+
+            </article>
+
+
+            <!-- FAQ 4 -->
+
+            <article class="faq" id="faq-4">
+
+                <details>
+
+                    <summary>
+                        4. Why do we use MediatR / Mediator Pattern?
+                    </summary>
+
+                    <div class="faq-content">
+
+                        <p><strong>Without Mediator</strong></p>
 
 <pre>
 Controller
-      |
+    |
 Service
-      |
+    |
 Repository
 </pre>
 
-<p><strong>With MediatR</strong></p>
+                        <p><strong>With Mediator</strong></p>
 
 <pre>
 Controller
-      |
+    |
 Mediator
-      |
+    |
 Handler
-      |
+    |
 Repository
 </pre>
 
-<p><strong>Purpose:</strong> Loose coupling and cleaner architecture.</p>
+                        <p>
+                            <strong>Purpose:</strong>
+                            Reduce coupling and keep controllers thin.
+                        </p>
 
-</details>
+                    </div>
 
-<details>
+                </details>
 
-<summary>5. Why Repository Pattern instead of Entity Framework directly?</summary>
+            </article>
 
-<p><strong>Issue:</strong> Business layer depends on EF Core.</p>
 
-<p><strong>Repository solves:</strong></p>
+            <!-- FAQ 5 -->
 
-<ul>
-<li>Loose coupling</li>
-<li>Easy Unit Testing</li>
-<li>Replace database easily</li>
-<li>Cleaner business logic</li>
-</ul>
+            <article class="faq" id="faq-5">
 
-</details>
+                <details>
 
-<details>
+                    <summary>
+                        5. Why Repository Pattern instead of EF Core directly?
+                    </summary>
 
-<summary>6. What problem does Saga Pattern solve?</summary>
+                    <div class="faq-content">
 
-<p><strong>Scenario</strong></p>
+                        <p>
+                            The Repository Pattern prevents application/domain
+                            logic from being tightly coupled to a specific
+                            persistence implementation.
+                        </p>
 
-<ol>
+                        <ul>
 
-<li>Create Order</li>
-<li>Reserve Inventory</li>
-<li>Process Payment</li>
-<li>Create Shipment</li>
+                            <li>Loose coupling</li>
 
-</ol>
+                            <li>Easy unit testing</li>
 
-<p>If Payment fails, Inventory Reservation should rollback.</p>
+                            <li>Database abstraction</li>
 
-<p><strong>Saga performs distributed transaction with compensation.</strong></p>
+                            <li>Cleaner business logic</li>
 
-</details>
+                        </ul>
 
-<details>
+                    </div>
 
-<summary>7. Why Outbox Pattern?</summary>
+                </details>
 
-<p><strong>Problem:</strong></p>
+            </article>
 
-<p>Database saved successfully but Kafka publish failed.</p>
 
-<p><strong>Solution:</strong></p>
+            <!-- FAQ 6 -->
 
-<ul>
+            <article class="faq" id="faq-6">
 
-<li>Save Order</li>
+                <details>
 
-<li>Save Event into Outbox table</li>
+                    <summary>
+                        6. What problem does Saga Pattern solve?
+                    </summary>
 
-<li>Background Worker publishes event later</li>
+                    <div class="faq-content">
 
-</ul>
+                        <p><strong>Order Processing Scenario</strong></p>
 
-<p>No event loss.</p>
+                        <div class="flow">
 
-</details>
+                            <div class="flow-step">
+                                Create Order
+                            </div>
 
-<details>
+                            <div class="flow-step">
+                                Reserve Inventory
+                            </div>
 
-<summary>8. Why Event-Driven Architecture?</summary>
+                            <div class="flow-step">
+                                Process Payment
+                            </div>
 
-<p><strong>Instead of</strong></p>
+                            <div class="flow-step">
+                                Create Shipment
+                            </div>
+
+                        </div>
+
+                        <p>
+                            If payment fails, the inventory reservation
+                            may need to be released.
+                        </p>
+
+                        <p>
+                            <strong>Answer:</strong>
+                            Saga manages a distributed business transaction
+                            through local transactions and compensating actions.
+                        </p>
+
+                    </div>
+
+                </details>
+
+            </article>
+
+
+            <!-- FAQ 7 -->
+
+            <article class="faq" id="faq-7">
+
+                <details>
+
+                    <summary>
+                        7. Why Outbox Pattern?
+                    </summary>
+
+                    <div class="faq-content">
+
+                        <div class="issue">
+
+                            <strong>Problem:</strong>
+
+                            <p>
+                                The database transaction succeeds but
+                                publishing the Kafka event fails.
+                            </p>
+
+                        </div>
+
+                        <div class="solution">
+
+                            <strong>Solution:</strong>
+
+                            <ol>
+
+                                <li>Save Order.</li>
+
+                                <li>Save Event into Outbox table.</li>
+
+                                <li>Commit database transaction.</li>
+
+                                <li>Background Worker publishes event.</li>
+
+                            </ol>
+
+                        </div>
+
+                        <p>
+                            This provides reliable event delivery,
+                            although consumers should still be designed
+                            for idempotency.
+                        </p>
+
+                    </div>
+
+                </details>
+
+            </article>
+
+
+            <!-- FAQ 8 -->
+
+            <article class="faq" id="faq-8">
+
+                <details>
+
+                    <summary>
+                        8. Why Event-Driven Architecture?
+                    </summary>
+
+                    <div class="faq-content">
 
 <pre>
 Order Service
       |
-Shipping Service
-</pre>
-
-<p><strong>Use</strong></p>
-
-<pre>
-Order Service
-      |
-Kafka
- |    |     |
+     Kafka
+   /   |    \
+  /    |     \
 Inventory Payment Shipping
 </pre>
 
-<p>All services become independent.</p>
+                        <p>
+                            Services communicate through events instead
+                            of being tightly coupled through synchronous
+                            calls for every business action.
+                        </p>
 
-</details>
+                        <ul>
 
-<details>
+                            <li>Loose coupling</li>
 
-<summary>9. Why Strategy Pattern?</summary>
+                            <li>Independent scalability</li>
 
-<p><strong>Issue:</strong> Shipping cost changes based on delivery type.</p>
+                            <li>Asynchronous processing</li>
 
-<table border="1">
+                            <li>Better resilience</li>
 
-<tr>
-<th>Strategy</th>
-<th>Example</th>
-</tr>
+                        </ul>
 
-<tr>
-<td>Standard</td>
-<td>₹50</td>
-</tr>
+                    </div>
 
-<tr>
-<td>Express</td>
-<td>₹150</td>
-</tr>
+                </details>
 
-<tr>
-<td>Overnight</td>
-<td>₹300</td>
-</tr>
+            </article>
 
-</table>
 
-<p>Runtime selects the correct algorithm.</p>
+            <!-- FAQ 9 -->
 
-</details>
+            <article class="faq" id="faq-9">
 
-<details>
+                <details>
 
-<summary>10. Why Factory Pattern?</summary>
+                    <summary>
+                        9. Why Strategy Pattern?
+                    </summary>
 
-<p>Create objects without exposing creation logic.</p>
+                    <div class="faq-content">
+
+                        <p>
+                            Strategy Pattern allows the application to
+                            select an algorithm at runtime.
+                        </p>
+
+                        <div class="table-wrapper">
+
+                            <table>
+
+                                <thead>
+
+                                    <tr>
+                                        <th>Strategy</th>
+                                        <th>Example</th>
+                                    </tr>
+
+                                </thead>
+
+                                <tbody>
+
+                                    <tr>
+                                        <td>Standard</td>
+                                        <td>₹50</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Express</td>
+                                        <td>₹150</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Overnight</td>
+                                        <td>₹300</td>
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                </details>
+
+            </article>
+
+
+            <!-- FAQ 10 -->
+
+            <article class="faq" id="faq-10">
+
+                <details>
+
+                    <summary>
+                        10. Why Factory Pattern?
+                    </summary>
+
+                    <div class="faq-content">
+
+                        <p>
+                            Factory hides object creation logic from
+                            the calling application.
+                        </p>
 
 <pre>
+ShippingFactory.Create("FedEx");
 
-ShippingFactory.Create("FedEx")
+ShippingFactory.Create("DHL");
 
-ShippingFactory.Create("DHL")
-
-ShippingFactory.Create("UPS")
-
+ShippingFactory.Create("UPS");
 </pre>
 
-</details>
+                    </div>
 
-<details>
+                </details>
 
-<summary>11. Why State Pattern?</summary>
+            </article>
 
-<p>Order moves through different states.</p>
+
+            <!-- FAQ 11 -->
+
+            <article class="faq" id="faq-11">
+
+                <details>
+
+                    <summary>
+                        11. Why State Pattern?
+                    </summary>
+
+                    <div class="faq-content">
+
+                        <p>
+                            State Pattern is useful when an entity's
+                            behavior changes based on its current state.
+                        </p>
 
 <pre>
-
 Pending
-
-↓
-
+   ↓
 Paid
-
-↓
-
+   ↓
 Packed
-
-↓
-
+   ↓
 Shipped
-
-↓
-
+   ↓
 Delivered
-
 </pre>
 
-<p>Each state controls allowed operations.</p>
+                        <p>
+                            Each state can control which operations
+                            are allowed.
+                        </p>
 
-</details>
+                    </div>
 
-<details>
+                </details>
 
-<summary>12. Why Specification Pattern?</summary>
+            </article>
 
-<p>Business rules become reusable.</p>
 
-<p><strong>Example</strong></p>
+            <!-- FAQ 12 -->
 
-<ul>
+            <article class="faq" id="faq-12">
 
-<li>Customer Active?</li>
+                <details>
 
-<li>Credit Available?</li>
+                    <summary>
+                        12. Why Specification Pattern?
+                    </summary>
 
-<li>Stock Available?</li>
+                    <div class="faq-content">
 
-<li>Address Valid?</li>
+                        <p>
+                            Specification encapsulates reusable business
+                            rules and allows them to be combined.
+                        </p>
 
-</ul>
+                        <ul>
 
-</details>
+                            <li>Customer Active?</li>
 
-<details>
+                            <li>Credit Available?</li>
 
-<summary>13. Why Adapter Pattern?</summary>
+                            <li>Stock Available?</li>
 
-<p>Different courier APIs have different request formats.</p>
+                            <li>Address Valid?</li>
 
-<table border="1">
+                        </ul>
 
-<tr>
-<th>Courier</th>
-<th>Adapter</th>
-</tr>
+                    </div>
 
-<tr>
-<td>FedEx</td>
-<td>FedExAdapter</td>
-</tr>
+                </details>
 
-<tr>
-<td>DHL</td>
-<td>DHLAdapter</td>
-</tr>
+            </article>
 
-<tr>
-<td>BlueDart</td>
-<td>BlueDartAdapter</td>
-</tr>
 
-</table>
+            <!-- FAQ 13 -->
 
-<p>Application uses one common interface.</p>
+            <article class="faq" id="faq-13">
 
-</details>
+                <details>
 
-<details>
+                    <summary>
+                        13. Why Adapter Pattern?
+                    </summary>
 
-<summary>14. Why Circuit Breaker?</summary>
+                    <div class="faq-content">
 
-<p><strong>Problem:</strong> Shipping API is down.</p>
+                        <p>
+                            Different courier providers may expose
+                            different APIs and request formats.
+                        </p>
 
-<p><strong>Circuit Breaker</strong></p>
+                        <div class="table-wrapper">
 
-<ul>
+                            <table>
 
-<li>Stops repeated API calls.</li>
+                                <thead>
 
-<li>Returns fallback response.</li>
+                                    <tr>
+                                        <th>Courier</th>
+                                        <th>Adapter</th>
+                                    </tr>
 
-<li>Protects the system.</li>
+                                </thead>
 
-</ul>
+                                <tbody>
 
-</details>
+                                    <tr>
+                                        <td>FedEx</td>
+                                        <td>FedExAdapter</td>
+                                    </tr>
 
-<details>
+                                    <tr>
+                                        <td>DHL</td>
+                                        <td>DHLAdapter</td>
+                                    </tr>
 
-<summary>15. Why Retry Pattern?</summary>
+                                    <tr>
+                                        <td>BlueDart</td>
+                                        <td>BlueDartAdapter</td>
+                                    </tr>
 
-<p>Handles temporary failures.</p>
+                                </tbody>
 
-<p><strong>Example</strong></p>
+                            </table>
 
-<ul>
+                        </div>
 
-<li>Retry 3 Times</li>
+                        <p>
+                            The application works with one common
+                            interface while adapters translate provider-specific
+                            requests.
+                        </p>
 
-<li>2 Seconds Delay</li>
+                    </div>
 
-<li>Then Fail</li>
+                </details>
 
-</ul>
+            </article>
 
-</details>
 
-<details>
+            <!-- FAQ 14 -->
 
-<summary>16. Why Cache Aside Pattern?</summary>
+            <article class="faq" id="faq-14">
 
-<p>Reduce database load.</p>
+                <details>
+
+                    <summary>
+                        14. Why Circuit Breaker?
+                    </summary>
+
+                    <div class="faq-content">
+
+                        <div class="issue">
+
+                            <strong>Problem:</strong>
+
+                            <p>
+                                Shipping API is continuously unavailable.
+                            </p>
+
+                        </div>
+
+                        <p>
+                            Circuit Breaker prevents repeated calls to
+                            an unhealthy dependency.
+                        </p>
+
+                        <ul>
+
+                            <li>Stops repeated calls.</li>
+
+                            <li>Allows the dependency time to recover.</li>
+
+                            <li>Can return fallback behavior.</li>
+
+                            <li>Protects system resources.</li>
+
+                        </ul>
+
+                    </div>
+
+                </details>
+
+            </article>
+
+
+            <!-- FAQ 15 -->
+
+            <article class="faq" id="faq-15">
+
+                <details>
+
+                    <summary>
+                        15. Why Retry Pattern?
+                    </summary>
+
+                    <div class="faq-content">
+
+                        <p>
+                            Retry handles transient failures such as
+                            temporary network errors or short-lived
+                            service unavailability.
+                        </p>
+
+                        <ul>
+
+                            <li>Retry up to 3 times.</li>
+
+                            <li>Use exponential backoff.</li>
+
+                            <li>Add jitter where appropriate.</li>
+
+                            <li>Stop retrying after the configured limit.</li>
+
+                        </ul>
+
+                    </div>
+
+                </details>
+
+            </article>
+
+
+            <!-- FAQ 16 -->
+
+            <article class="faq" id="faq-16">
+
+                <details>
+
+                    <summary>
+                        16. Why Cache-Aside Pattern?
+                    </summary>
+
+                    <div class="faq-content">
 
 <pre>
-
 Check Redis
-
-↓
-
-Found → Return
-
-↓
-
-Not Found
-
-↓
-
-Database
-
-↓
-
-Update Redis
-
+    |
+    +---- Found ------> Return
+    |
+    +---- Not Found
+             |
+         Database
+             |
+        Update Redis
+             |
+          Return
 </pre>
 
-</details>
+                        <p>
+                            Cache-Aside reduces database load and improves
+                            response time for frequently requested data.
+                        </p>
 
-<details>
+                    </div>
 
-<summary>17. Why Dependency Injection?</summary>
+                </details>
 
-<p>Objects should not create their dependencies.</p>
+            </article>
 
-<p><strong>Instead of</strong></p>
+
+            <!-- FAQ 17 -->
+
+            <article class="faq" id="faq-17">
+
+                <details>
+
+                    <summary>
+                        17. Why Dependency Injection?
+                    </summary>
+
+                    <div class="faq-content">
+
+                        <p>
+                            A class should depend on abstractions rather
+                            than creating its own concrete dependencies.
+                        </p>
 
 <pre>
+Instead of:
 
-new OrderRepository()
+new OrderRepository();
 
+Prefer:
+
+IOrderRepository repository;
 </pre>
 
-<p><strong>Use</strong></p>
+                        <p>
+                            This improves loose coupling, testing and
+                            maintainability.
+                        </p>
 
-<pre>
+                    </div>
 
-IOrderRepository repository
+                </details>
 
-</pre>
+            </article>
 
-<p>Improves testing and loose coupling.</p>
 
-</details>
+            <!-- FAQ 18 -->
 
-<details>
+            <article class="faq" id="faq-18">
 
-<summary>18. Explain complete Order → Shipping flow using Design Patterns.</summary>
+                <details>
 
-<ol>
+                    <summary>
+                        18. Explain complete Order → Shipping flow using Design Patterns.
+                    </summary>
 
-<li>Client → Order API (Facade)</li>
+                    <div class="faq-content">
 
-<li>Middleware validates request</li>
+                        <div class="flow">
 
-<li>Mediator sends CreateOrderCommand</li>
+                            <div class="flow-step">
+                                Client → Order API
+                            </div>
 
-<li>Handler executes CQRS</li>
+                            <div class="flow-step">
+                                Middleware validates request
+                            </div>
 
-<li>Factory creates Order Aggregate</li>
+                            <div class="flow-step">
+                                Mediator sends CreateOrderCommand
+                            </div>
 
-<li>Specification validates business rules</li>
+                            <div class="flow-step">
+                                Handler executes CQRS use case
+                            </div>
 
-<li>Repository saves data</li>
+                            <div class="flow-step">
+                                Factory creates domain object
+                            </div>
 
-<li>Unit of Work commits transaction</li>
+                            <div class="flow-step">
+                                Specification validates business rules
+                            </div>
 
-<li>Outbox stores event</li>
+                            <div class="flow-step">
+                                Repository persists order
+                            </div>
 
-<li>Kafka publishes OrderCreated</li>
+                            <div class="flow-step">
+                                Database transaction commits
+                            </div>
 
-<li>Inventory reserves stock</li>
+                            <div class="flow-step">
+                                Outbox stores OrderCreated event
+                            </div>
 
-<li>Saga manages transaction</li>
+                            <div class="flow-step">
+                                Worker publishes event to Kafka
+                            </div>
 
-<li>Shipping Factory selects courier</li>
+                            <div class="flow-step">
+                                Inventory reserves stock
+                            </div>
 
-<li>Adapter calls external API</li>
+                            <div class="flow-step">
+                                Saga coordinates business transaction
+                            </div>
 
-<li>Retry + Circuit Breaker handle failures</li>
+                            <div class="flow-step">
+                                Shipping Factory selects courier
+                            </div>
 
-<li>State changes Order to Shipped</li>
+                            <div class="flow-step">
+                                Adapter calls external courier API
+                            </div>
 
-</ol>
+                            <div class="flow-step">
+                                Retry + Circuit Breaker handle failures
+                            </div>
 
-</details>
+                            <div class="flow-step">
+                                Order State changes to Shipped
+                            </div>
 
-<details>
+                        </div>
 
-<summary>19. Which patterns belong to each Clean Architecture layer?</summary>
+                    </div>
 
-<table border="1">
+                </details>
 
-<tr>
-<th>Layer</th>
-<th>Patterns</th>
-</tr>
+            </article>
 
-<tr>
-<td>Presentation</td>
-<td>Facade, Adapter, Middleware</td>
-</tr>
 
-<tr>
-<td>Application</td>
-<td>CQRS, Mediator, Command, Saga</td>
-</tr>
+            <!-- FAQ 19 -->
 
-<tr>
-<td>Domain</td>
-<td>Factory, Strategy, State, Specification, Aggregate</td>
-</tr>
+            <article class="faq" id="faq-19">
 
-<tr>
-<td>Infrastructure</td>
-<td>Repository, Unit of Work, Adapter, Retry, Circuit Breaker, Outbox</td>
-</tr>
+                <details>
 
-<tr>
-<td>Messaging</td>
-<td>Publish-Subscribe, Event-Driven, DLQ, Idempotency</td>
-</tr>
+                    <summary>
+                        19. Which patterns belong to each Clean Architecture layer?
+                    </summary>
 
-</table>
+                    <div class="faq-content">
 
-</details>
+                        <div class="table-wrapper">
 
-<details>
+                            <table>
 
-<summary>20. What are the Top 10 design patterns every .NET Microservices Architect should know?</summary>
+                                <caption>
+                                    Pattern → Clean Architecture Mapping
+                                </caption>
 
-<ol>
+                                <thead>
 
-<li>CQRS</li>
+                                    <tr>
+                                        <th>Layer</th>
+                                        <th>Patterns / Concepts</th>
+                                    </tr>
 
-<li>Mediator</li>
+                                </thead>
 
-<li>Repository</li>
+                                <tbody>
 
-<li>Saga</li>
+                                    <tr>
+                                        <td>Presentation</td>
+                                        <td>
+                                            Facade, Middleware, API Adapter
+                                        </td>
+                                    </tr>
 
-<li>Outbox</li>
+                                    <tr>
+                                        <td>Application</td>
+                                        <td>
+                                            CQRS, Mediator, Commands,
+                                            Queries, Saga orchestration
+                                        </td>
+                                    </tr>
 
-<li>Publish-Subscribe</li>
+                                    <tr>
+                                        <td>Domain</td>
+                                        <td>
+                                            Factory, Strategy, State,
+                                            Specification, Aggregate
+                                        </td>
+                                    </tr>
 
-<li>Strategy</li>
+                                    <tr>
+                                        <td>Infrastructure</td>
+                                        <td>
+                                            Repository, Unit of Work,
+                                            Outbox, external adapters,
+                                            resilience policies
+                                        </td>
+                                    </tr>
 
-<li>Factory</li>
+                                    <tr>
+                                        <td>Messaging</td>
+                                        <td>
+                                            Publish-Subscribe, Events,
+                                            DLQ, Idempotency
+                                        </td>
+                                    </tr>
 
-<li>State</li>
+                                </tbody>
 
-<li>Circuit Breaker</li>
+                            </table>
 
-</ol>
+                        </div>
 
-<p><strong>Interview Tip:</strong> Explain each pattern using the Order → Payment → Inventory → Shipping scenario to demonstrate practical enterprise experience.</p>
+                    </div>
 
-</details>
+                </details>
 
-</article>
+            </article>
 
-</section>
+
+            <!-- FAQ 20 -->
+
+            <article class="faq" id="faq-20">
+
+                <details>
+
+                    <summary>
+                        20. What are the Top 10 patterns every .NET Microservices Architect should know?
+                    </summary>
+
+                    <div class="faq-content">
+
+                        <ol>
+
+                            <li>CQRS</li>
+
+                            <li>Mediator</li>
+
+                            <li>Repository</li>
+
+                            <li>Saga</li>
+
+                            <li>Outbox</li>
+
+                            <li>Publish-Subscribe</li>
+
+                            <li>Strategy</li>
+
+                            <li>Factory</li>
+
+                            <li>State</li>
+
+                            <li>Circuit Breaker</li>
+
+                        </ol>
+
+                    </div>
+
+                </details>
+
+            </article>
+
+
+            <!-- INTERVIEW TIP -->
+
+            <aside class="interview-tip">
+
+                <strong>🎯 Interview Tip</strong>
+
+                <p>
+                    Do not explain design patterns only with definitions.
+                    Pick one enterprise scenario such as
+                    <strong>Order → Payment → Inventory → Shipping</strong>
+                    and explain where each pattern is applied,
+                    what problem it solves, and what trade-off it introduces.
+                </p>
+
+                <p>
+                    A strong Architect-level answer follows:
+                </p>
+
+                <p>
+                    <strong>
+                        Problem → Pattern → Implementation → Benefit → Trade-off
+                    </strong>
+                </p>
+
+            </aside>
+
+        </section>
+
+    </div>
+
+</main>
+
+
+<footer class="site-footer">
+
+    <p>
+        Microservices Interview Preparation |
+        Clean Architecture |
+        .NET |
+        CQRS |
+        Saga |
+        Outbox |
+        Event-Driven Architecture
+    </p>
+
+</footer>
+
+</body>
+</html>
+ 
