@@ -1,0 +1,549 @@
+<article>
+  <header>
+    <h1>ASP.NET Core DI: Transient vs Scoped — Real-Time Project Usage</h1>
+    <p>
+      <strong>Interview goal:</strong> Understand not only the definitions, but
+      <em>where and why</em> Transient and Scoped services are used in a real
+      enterprise ASP.NET Core Web API.
+    </p>
+  </header>
+
+  <section>
+    <h2>1. First Understand the Problem</h2>
+
+```
+<p>
+  In ASP.NET Core, Dependency Injection (DI) creates and manages objects for
+  us. The important question is:
+</p>
+
+<blockquote>
+  <p><strong>"How long should this object live?"</strong></p>
+</blockquote>
+
+<table>
+  <thead>
+    <tr>
+      <th>Lifetime</th>
+      <th>Object Creation</th>
+      <th>Typical Usage</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Transient</strong></td>
+      <td>New instance every time requested</td>
+      <td>Stateless lightweight services</td>
+    </tr>
+    <tr>
+      <td><strong>Scoped</strong></td>
+      <td>One instance per HTTP request</td>
+      <td>DbContext, Unit of Work, request-level business services</td>
+    </tr>
+    <tr>
+      <td><strong>Singleton</strong></td>
+      <td>One instance for application lifetime</td>
+      <td>Shared/stateless application-wide services, caches, configuration</td>
+    </tr>
+  </tbody>
+</table>
+```
+
+  </section>
+
+  <section>
+    <h2>2. Transient Service</h2>
+
+```
+<p>
+  A Transient service gets a <strong>new object every time it is requested
+  from the DI container</strong>.
+</p>
+
+<pre><code>builder.Services.AddTransient&lt;IEmailService, EmailService&gt;();</code></pre>
+
+<h3>Real-Time Example: Email Formatter</h3>
+
+<p>
+  Imagine an Order API. After an order is created, we need to generate an
+  email message.
+</p>
+
+<pre><code>public interface IEmailTemplateService
+```
+
+{
+string CreateOrderConfirmation(int orderId, string customerName);
+}
+
+public class EmailTemplateService : IEmailTemplateService
+{
+public string CreateOrderConfirmation(
+int orderId,
+string customerName)
+{
+return $"Order {orderId} confirmed for {customerName}";
+}
+}</code></pre>
+
+```
+<p>Register it as:</p>
+
+<pre><code>builder.Services.AddTransient
+&lt;IEmailTemplateService, EmailTemplateService&gt;();</code></pre>
+
+<p>
+  Why Transient?
+</p>
+
+<ul>
+  <li>The service is stateless.</li>
+  <li>It does not own database state.</li>
+  <li>It does not need to survive the request.</li>
+  <li>Each operation can safely receive a fresh instance.</li>
+  <li>It is lightweight.</li>
+</ul>
+```
+
+  </section>
+
+  <section>
+    <h2>3. Scoped Service</h2>
+
+```
+<p>
+  A Scoped service is created <strong>once per HTTP request</strong>.
+  Every component requesting that service during the same request gets
+  the same instance.
+</p>
+
+<pre><code>builder.Services.AddScoped&lt;IOrderService, OrderService&gt;();</code></pre>
+
+<h3>Real-Time Example: Order Service</h3>
+
+<pre><code>public interface IOrderService
+```
+
+{
+Task CreateOrderAsync(Order order);
+}
+
+public class OrderService : IOrderService
+{
+private readonly AppDbContext _db;
+
+```
+public OrderService(AppDbContext db)
+{
+    _db = db;
+}
+
+public async Task CreateOrderAsync(Order order)
+{
+    _db.Orders.Add(order);
+
+    await _db.SaveChangesAsync();
+}
+```
+
+}</code></pre>
+
+```
+<p>Register:</p>
+
+<pre><code>builder.Services.AddScoped&lt;IOrderService, OrderService&gt;();
+```
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+{
+options.UseSqlServer(connectionString);
+});</code></pre>
+
+```
+<p>
+  <strong>DbContext is normally Scoped</strong> because it represents a
+  request-level unit of work and tracks entities during that request.
+</p>
+```
+
+  </section>
+
+  <section>
+    <h2>4. Real-Time Order Processing Flow</h2>
+
+```
+<pre><code>Client
+```
+
+|
+| POST /api/orders
+v
+OrderController
+|
+v
+IOrderService        (Scoped)
+|
+v
+IOrderRepository     (Scoped)
+|
+v
+AppDbContext         (Scoped)
+|
+v
+SQL Server
+|
+v
+EmailTemplateService (Transient)
+|
+v
+Email / Notification</code></pre>
+
+```
+<p>
+  Suppose one customer sends:
+</p>
+
+<pre><code>POST /api/orders</code></pre>
+
+<p>
+  ASP.NET Core creates a DI scope for that HTTP request.
+</p>
+
+<ol>
+  <li>Create <code>OrderController</code>.</li>
+  <li>Resolve <code>IOrderService</code>.</li>
+  <li>Create one <code>OrderService</code> for this request.</li>
+  <li>Resolve <code>AppDbContext</code>.</li>
+  <li>Use the same DbContext during the request.</li>
+  <li>Resolve the transient email service when needed.</li>
+  <li>Complete the request.</li>
+  <li>Dispose scoped objects.</li>
+</ol>
+```
+
+  </section>
+
+  <section>
+    <h2>5. Important Difference — Same Request</h2>
+
+```
+<p>Consider this:</p>
+
+<pre><code>public class OrderService
+```
+
+{
+private readonly IEmailTemplateService _email1;
+private readonly IEmailTemplateService _email2;
+
+```
+public OrderService(
+    IEmailTemplateService email1,
+    IEmailTemplateService email2)
+{
+    _email1 = email1;
+    _email2 = email2;
+}
+```
+
+}</code></pre>
+
+```
+<p>If registered as Transient:</p>
+
+<pre><code>AddTransient&lt;IEmailTemplateService, EmailTemplateService&gt;</code></pre>
+
+<p>Then:</p>
+
+<pre><code>_email1 != _email2</code></pre>
+
+<p>
+  They are normally two different instances.
+</p>
+
+<p>
+  If the same service is registered as Scoped:
+</p>
+
+<pre><code>AddScoped&lt;IEmailTemplateService, EmailTemplateService&gt;</code></pre>
+
+<p>Then within the same request:</p>
+
+<pre><code>_email1 == _email2</code></pre>
+
+<p>
+  The same instance is reused within that request scope.
+</p>
+```
+
+  </section>
+
+  <section>
+    <h2>6. Real Enterprise Example</h2>
+
+```
+<h3>Scenario: E-Commerce Order</h3>
+
+<p>
+  When a customer places an order, the application performs multiple
+  operations:
+</p>
+
+<pre><code>Order Request
+ |
+ +-- Validate Order
+ |
+ +-- Calculate Price
+ |
+ +-- Save Order
+ |
+ +-- Save Order Items
+ |
+ +-- Update Inventory
+ |
+ +-- Generate Notification
+ |
+ +-- Commit Transaction</code></pre>
+
+<table>
+  <thead>
+    <tr>
+      <th>Component</th>
+      <th>Recommended Lifetime</th>
+      <th>Reason</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>OrderController</td>
+      <td>Scoped by MVC/Web API activation</td>
+      <td>Request-oriented component</td>
+    </tr>
+    <tr>
+      <td>OrderService</td>
+      <td>Scoped</td>
+      <td>Business operation belongs to request</td>
+    </tr>
+    <tr>
+      <td>OrderRepository</td>
+      <td>Scoped</td>
+      <td>Works with request-level DbContext</td>
+    </tr>
+    <tr>
+      <td>AppDbContext</td>
+      <td>Scoped</td>
+      <td>Tracks entities within unit of work</td>
+    </tr>
+    <tr>
+      <td>PriceCalculator</td>
+      <td>Transient</td>
+      <td>Stateless calculation</td>
+    </tr>
+    <tr>
+      <td>EmailTemplateService</td>
+      <td>Transient</td>
+      <td>Stateless and lightweight</td>
+    </tr>
+    <tr>
+      <td>OrderValidator</td>
+      <td>Transient</td>
+      <td>Usually stateless validation logic</td>
+    </tr>
+    <tr>
+      <td>Configuration service</td>
+      <td>Singleton/Options</td>
+      <td>Application-wide configuration</td>
+    </tr>
+  </tbody>
+</table>
+```
+
+  </section>
+
+  <section>
+    <h2>7. Transient in a Real Project</h2>
+
+```
+<p>Typical examples:</p>
+
+<ul>
+  <li>Validators</li>
+  <li>DTO mappers</li>
+  <li>Formatters</li>
+  <li>Pure calculation services</li>
+  <li>Email template builders</li>
+  <li>Small stateless helper services</li>
+  <li>Request-independent transformation logic</li>
+</ul>
+
+<p>
+  Example:
+</p>
+
+<pre><code>builder.Services.AddTransient&lt;IPriceCalculator, PriceCalculator&gt;();
+```
+
+builder.Services.AddTransient<IOrderValidator, OrderValidator>();
+
+builder.Services.AddTransient<IEmailTemplateService,
+EmailTemplateService>();</code></pre>
+
+  </section>
+
+  <section>
+    <h2>8. Scoped in a Real Project</h2>
+
+```
+<p>Typical examples:</p>
+
+<ul>
+  <li>Entity Framework Core DbContext</li>
+  <li>Repository using DbContext</li>
+  <li>Unit of Work</li>
+  <li>Business service participating in a request transaction</li>
+  <li>Request-specific application service</li>
+</ul>
+
+<pre><code>builder.Services.AddScoped&lt;AppDbContext&gt;();
+```
+
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+
+builder.Services.AddScoped<IOrderService, OrderService>();
+
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();</code></pre>
+
+  </section>
+
+  <section>
+    <h2>9. The Most Important Rule</h2>
+
+```
+<aside>
+  <h3>Dependency Lifetime Rule</h3>
+
+  <p>
+    A service should generally not depend on a service with a
+    <strong>shorter lifetime</strong> in a way that causes the shorter-lived
+    service to be captured incorrectly.
+  </p>
+
+  <p>
+    The classic problem is:
+  </p>
+
+  <pre><code>Singleton
+|
++-- Scoped Service  ❌</code></pre>
+
+  <p>
+    A Singleton lives for the entire application lifetime, while a Scoped
+    service belongs to an individual request. Capturing the Scoped service
+    directly inside the Singleton creates a lifetime mismatch.
+  </p>
+
+  <p>
+    This is why you should understand the lifetime hierarchy before choosing
+    a DI lifetime.
+  </p>
+</aside>
+```
+
+  </section>
+
+  <section>
+    <h2>10. Interview Scenario</h2>
+
+```
+<h3>Question</h3>
+
+<p>
+  <strong>
+    "You have OrderService, Repository and DbContext. Which lifetime will
+    you choose?"
+  </strong>
+</p>
+
+<h3>Strong Interview Answer</h3>
+
+<blockquote>
+  <p>
+    "I would normally register the DbContext as Scoped because EF Core's
+    DbContext represents a request-level unit of work. The Repository and
+    OrderService that depend on that DbContext would also normally be
+    Scoped. For stateless lightweight services such as validators,
+    calculators or DTO transformation services, I would prefer Transient.
+    The decision is based on state ownership, request boundaries and
+    resource lifetime rather than simply choosing a lifetime by convention."
+  </p>
+</blockquote>
+```
+
+  </section>
+
+  <section>
+    <h2>11. Easy Memory Trick</h2>
+
+```
+<table>
+  <thead>
+    <tr>
+      <th>Think About</th>
+      <th>Lifetime</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>"Give me a fresh object every time."</td>
+      <td><strong>Transient</strong></td>
+    </tr>
+    <tr>
+      <td>"Give me one object for this HTTP request."</td>
+      <td><strong>Scoped</strong></td>
+    </tr>
+    <tr>
+      <td>"Give me one shared object for the application."</td>
+      <td><strong>Singleton</strong></td>
+    </tr>
+  </tbody>
+</table>
+```
+
+  </section>
+
+  <section>
+    <h2>12. 30-Second Interview Answer</h2>
+
+```
+<p>
+  <strong>Transient</strong> creates a new instance every time the service
+  is requested, so I use it mainly for lightweight, stateless services such
+  as validators, calculators and formatters.
+</p>
+
+<p>
+  <strong>Scoped</strong> creates one instance per HTTP request, so I use it
+  for request-level services such as DbContext, repositories, Unit of Work
+  and business services that participate in the same operation.
+</p>
+
+<p>
+  In a real Order Management API, OrderService, Repository and DbContext
+  would typically be Scoped, while PriceCalculator and
+  EmailTemplateService could be Transient.
+</p>
+```
+
+  </section>
+
+  <footer>
+    <h2>Key Takeaway</h2>
+    <p>
+      <strong>Transient = fresh instance.</strong>
+      <br />
+      <strong>Scoped = one instance per HTTP request.</strong>
+      <br />
+      <strong>Choose based on state, ownership and resource lifetime.</strong>
+    </p>
+  </footer>
+</article>
