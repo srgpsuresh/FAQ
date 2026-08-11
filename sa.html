@@ -1,0 +1,1929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="Senior Solution Architect 60-minute mock interview preparation covering Azure, Microservices, APIM, AKS, Service Bus, Security, Outbox, Saga, SQL and Resilience."
+    >
+
+    <title>Senior Solution Architect - 60 Minute Mock Interview</title>
+
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --secondary: #2563eb;
+            --accent: #0f766e;
+            --success: #166534;
+            --warning: #92400e;
+            --danger: #991b1b;
+            --dark: #172033;
+            --light: #f8fafc;
+            --border: #dbe3ef;
+            --text: #263244;
+            --muted: #64748b;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #eef2f7;
+            color: var(--text);
+            line-height: 1.65;
+        }
+
+        header {
+            background: linear-gradient(135deg, #172554, #1e40af);
+            color: white;
+            padding: 40px 20px;
+        }
+
+        header .container {
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        header h1 {
+            margin: 0 0 10px;
+            font-size: 36px;
+        }
+
+        header p {
+            margin: 5px 0;
+            font-size: 17px;
+            opacity: 0.95;
+        }
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: white;
+            border-bottom: 1px solid var(--border);
+            box-shadow: 0 2px 8px rgba(0,0,0,.06);
+        }
+
+        nav .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 12px 20px;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            padding: 7px 10px;
+            border-radius: 6px;
+        }
+
+        nav a:hover {
+            background: #eff6ff;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        section {
+            background: white;
+            margin-bottom: 28px;
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 15px rgba(15, 23, 42, .05);
+        }
+
+        section > h2 {
+            color: var(--primary);
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        article {
+            margin: 22px 0;
+        }
+
+        article h3 {
+            color: var(--dark);
+        }
+
+        details {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin: 12px 0;
+            background: #fff;
+            overflow: hidden;
+        }
+
+        summary {
+            cursor: pointer;
+            padding: 15px 18px;
+            font-weight: 700;
+            color: var(--primary);
+            background: #f8fafc;
+        }
+
+        details[open] summary {
+            border-bottom: 1px solid var(--border);
+        }
+
+        .answer {
+            padding: 18px;
+        }
+
+        .question {
+            color: var(--secondary);
+            font-weight: 700;
+        }
+
+        .strong {
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .tip {
+            padding: 15px 18px;
+            margin: 15px 0;
+            border-left: 5px solid var(--secondary);
+            background: #eff6ff;
+            border-radius: 6px;
+        }
+
+        .success {
+            padding: 15px 18px;
+            margin: 15px 0;
+            border-left: 5px solid var(--success);
+            background: #f0fdf4;
+            border-radius: 6px;
+        }
+
+        .warning {
+            padding: 15px 18px;
+            margin: 15px 0;
+            border-left: 5px solid var(--warning);
+            background: #fffbeb;
+            border-radius: 6px;
+        }
+
+        .danger {
+            padding: 15px 18px;
+            margin: 15px 0;
+            border-left: 5px solid var(--danger);
+            background: #fef2f2;
+            border-radius: 6px;
+        }
+
+        pre {
+            background: #0f172a;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 14px;
+            line-height: 1.55;
+        }
+
+        code {
+            font-family: Consolas, Monaco, monospace;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 18px 0;
+        }
+
+        th,
+        td {
+            border: 1px solid var(--border);
+            padding: 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background: #eff6ff;
+            color: var(--primary);
+        }
+
+        ul,
+        ol {
+            padding-left: 25px;
+        }
+
+        li {
+            margin: 6px 0;
+        }
+
+        .architecture-flow {
+            text-align: center;
+            font-weight: 700;
+            color: var(--primary);
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px dashed #94a3b8;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 9px;
+            border-radius: 15px;
+            background: #dbeafe;
+            color: #1e40af;
+            font-size: 12px;
+            font-weight: 700;
+            margin: 3px;
+        }
+
+        .priority-high {
+            color: #b91c1c;
+            font-weight: 700;
+        }
+
+        .score {
+            font-weight: 700;
+            color: var(--success);
+        }
+
+        footer {
+            background: #172033;
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        @media (max-width: 700px) {
+            header h1 {
+                font-size: 28px;
+            }
+
+            section {
+                padding: 20px;
+            }
+
+            table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="container">
+        <h1>Senior Solution Architect</h1>
+        <p>60-Minute Mock Interview & Architecture Preparation</p>
+        <p>
+            Azure • .NET • Microservices • APIM • AKS • Service Bus • Security • SQL
+        </p>
+    </div>
+</header>
+
+<nav aria-label="Main navigation">
+    <div class="container">
+        <a href="#introduction">Introduction</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#microservices">Microservices</a>
+        <a href="#apim">APIM</a>
+        <a href="#security">Security</a>
+        <a href="#aks">AKS</a>
+        <a href="#events">Events</a>
+        <a href="#outbox">Outbox</a>
+        <a href="#idempotency">Idempotency</a>
+        <a href="#saga">Saga</a>
+        <a href="#sql">SQL</a>
+        <a href="#mock">Mock Interview</a>
+        <a href="#cheatsheet">Cheat Sheet</a>
+    </div>
+</nav>
+
+<main>
+
+    <!-- INTRODUCTION -->
+
+    <section id="introduction">
+        <h2>1. Interview Introduction</h2>
+
+        <article>
+            <h3>Tell Me About Yourself</h3>
+
+            <div class="success">
+                <p>
+                    "I have extensive experience in .NET and cloud-based solution
+                    architecture, with strong experience in ASP.NET Core, microservices,
+                    Azure, API Management, AKS, messaging and SQL.
+                </p>
+
+                <p>
+                    My focus is designing scalable, secure and resilient distributed
+                    systems. I have worked with API gateways, event-driven architecture,
+                    Service Bus, Outbox and Saga patterns, Entra ID security,
+                    containerized workloads and Azure SQL.
+                </p>
+
+                <p>
+                    As an architect, I focus not only on technology selection but also
+                    on business requirements, non-functional requirements, security,
+                    operational complexity and cost."
+                </p>
+            </div>
+        </article>
+    </section>
+
+
+    <!-- ENTERPRISE ARCHITECTURE -->
+
+    <section id="architecture">
+        <h2>2. Enterprise Solution Architecture</h2>
+
+        <p>
+            <strong>Enterprise Solution Architecture</strong> covers the complete
+            business and technology ecosystem.
+        </p>
+
+        <div class="architecture-flow">
+            Business Requirements
+            ↓
+            NFRs
+            ↓
+            Domain / Bounded Context
+            ↓
+            Application Architecture
+            ↓
+            Integration
+            ↓
+            Data
+            ↓
+            Security
+            ↓
+            Cloud / Infrastructure
+            ↓
+            Observability
+            ↓
+            DR / Cost
+        </div>
+
+        <h3>Enterprise Architecture vs Microservices</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Enterprise Solution Architecture</th>
+                    <th>Microservices Architecture</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>Complete enterprise solution</td>
+                    <td>Application/service architecture</td>
+                </tr>
+
+                <tr>
+                    <td>Business, data, security, integration, cloud and operations</td>
+                    <td>Service boundaries, communication and deployment</td>
+                </tr>
+
+                <tr>
+                    <td>Broad architectural scope</td>
+                    <td>Focused application architecture</td>
+                </tr>
+
+                <tr>
+                    <td>Can include monolith, microservices, serverless and SaaS</td>
+                    <td>One architectural style</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="tip">
+            <strong>Interview statement:</strong>
+            Enterprise Solution Architecture defines the overall ecosystem,
+            while Microservices Architecture defines how an application can be
+            decomposed into independently deployable business services.
+        </div>
+    </section>
+
+
+    <!-- COMPLETE ARCHITECTURE -->
+
+    <section>
+        <h2>3. Complete Azure Architecture</h2>
+
+        <pre><code>
+Users / Clients
+       |
+       v
+Azure Front Door
+Global Routing / WAF / Edge
+       |
+       v
+Azure API Management
+API Gateway / Policies / Throttling
+       |
+       v
+Microsoft Entra ID
+OAuth2 / OIDC / JWT
+       |
+       v
+Azure Kubernetes Service
+       |
+       +----------------------------+
+       |             |              |
+       v             v              v
+Order Service   Payment Service   Shipment Service
+       |             |              |
+       +-------------+--------------+
+                     |
+              REST / Service Bus
+                     |
+             +-------+-------+
+             |               |
+             v               v
+        Azure SQL          Redis
+             |
+             v
+        Outbox / Data
+             |
+             v
+Azure Monitor / Application Insights
+
+        DR / Backup / RPO / RTO
+        </code></pre>
+    </section>
+
+
+    <!-- MICROSERVICES -->
+
+    <section id="microservices">
+        <h2>4. Microservices Architecture</h2>
+
+        <article>
+            <h3>Why Microservices?</h3>
+
+            <div class="success">
+                <p>
+                    "Instead of building one large monolithic application,
+                    I would decompose the system based on business capabilities
+                    into smaller, independently deployable services.
+                </p>
+
+                <p>
+                    This enables independent development, deployment, scaling
+                    and fault isolation.
+                </p>
+
+                <p>
+                    However, I would not choose microservices by default.
+                    I would first evaluate business boundaries, scalability,
+                    deployment independence and operational complexity."
+                </p>
+            </div>
+        </article>
+
+        <article>
+            <h3>How Do You Define Microservice Boundaries?</h3>
+
+            <div class="tip">
+                <strong>Business Capability → Bounded Context → Service Boundary → Data Ownership</strong>
+            </div>
+
+            <p>
+                Example:
+            </p>
+
+            <pre><code>
+E-Commerce
+    |
+    +-- Customer Service
+    |
+    +-- Product Service
+    |
+    +-- Order Service
+    |
+    +-- Payment Service
+    |
+    +-- Inventory Service
+            </code></pre>
+
+            <p>
+                Boundaries should be based on business responsibilities,
+                not technical layers such as Controller Service Repository.
+            </p>
+        </article>
+
+        <article>
+            <h3>When Should You NOT Use Microservices?</h3>
+
+            <p>
+                If the system is small, has limited scalability requirements,
+                requires simple transactions and is managed by a small team,
+                a modular monolith may be a better choice.
+            </p>
+        </article>
+    </section>
+
+
+    <!-- APIM -->
+
+    <section id="apim">
+        <h2>5. Azure Front Door & API Management</h2>
+
+        <article>
+            <h3>Front Door vs APIM</h3>
+
+            <pre><code>
+Global User
+    |
+    v
+Azure Front Door
+"Where should traffic go?"
+    |
+    v
+Azure API Management
+"Is this API request allowed?"
+    |
+    v
+AKS
+"Where does the application run?"
+            </code></pre>
+        </article>
+
+        <article>
+            <h3>Why API Management?</h3>
+
+            <ul>
+                <li>API Gateway</li>
+                <li>Authentication policies</li>
+                <li>Authorization policies</li>
+                <li>Rate limiting</li>
+                <li>Throttling</li>
+                <li>API versioning</li>
+                <li>Request/response transformation</li>
+                <li>API governance</li>
+                <li>Monitoring</li>
+            </ul>
+        </article>
+
+        <article>
+            <h3>Should APIM Contain Business Logic?</h3>
+
+            <p>
+                No. APIM should handle gateway and policy concerns.
+                Business logic belongs inside the appropriate microservice.
+            </p>
+        </article>
+    </section>
+
+
+    <!-- SECURITY -->
+
+    <section id="security">
+        <h2>6. API Security</h2>
+
+        <pre><code>
+Client
+  |
+  v
+Microsoft Entra ID
+  |
+  | OAuth2 / OIDC
+  v
+JWT Access Token
+  |
+  v
+Azure APIM
+  |
+  +-- Signature validation
+  +-- Issuer validation
+  +-- Audience validation
+  +-- Expiry validation
+  +-- Scope / Role
+  |
+  v
+AKS Microservice
+        </code></pre>
+
+        <article>
+            <h3>Authentication vs Authorization</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Concept</th>
+                        <th>Question</th>
+                        <th>Example</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>Authentication</td>
+                        <td>Who are you?</td>
+                        <td>Entra ID / JWT</td>
+                    </tr>
+
+                    <tr>
+                        <td>Authorization</td>
+                        <td>What are you allowed to do?</td>
+                        <td>Roles / Scopes / RBAC</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="tip">
+                <strong>401</strong> = Authentication failure
+                <br>
+                <strong>403</strong> = Authorization failure
+            </div>
+        </article>
+
+        <article>
+            <h3>Service-to-Service Security</h3>
+
+            <ul>
+                <li>Managed Identity / Workload Identity</li>
+                <li>OAuth2</li>
+                <li>TLS / mTLS where required</li>
+                <li>Azure Key Vault</li>
+                <li>Least-privilege RBAC</li>
+                <li>Network policies</li>
+            </ul>
+        </article>
+    </section>
+
+
+    <!-- AKS -->
+
+    <section id="aks">
+        <h2>7. AKS & Kubernetes</h2>
+
+        <article>
+            <h3>Why AKS Instead of App Service?</h3>
+
+            <p>
+                AKS is appropriate when we need Kubernetes orchestration,
+                container-level control, workload isolation, complex deployment
+                strategies or advanced scaling.
+            </p>
+
+            <p>
+                If those capabilities are unnecessary, App Service can be
+                simpler and reduce operational overhead.
+            </p>
+        </article>
+
+        <article>
+            <h3>Traffic Spike</h3>
+
+            <pre><code>
+Traffic Spike
+     |
+     v
+APIM Throttling
+     |
+     v
+AKS HPA
+     |
+     v
+More Pods
+     |
+     v
+Cluster Autoscaler
+     |
+     v
+More Nodes
+     |
+     +----> Redis reduces read load
+     |
+     +----> Service Bus absorbs async work
+     |
+     +----> SQL must also be monitored
+            </code></pre>
+        </article>
+
+        <article>
+            <h3>Service Mesh</h3>
+
+            <p>
+                Introduce a service mesh when service-to-service traffic
+                management, mTLS, observability, retries or advanced routing
+                justify the additional operational complexity.
+            </p>
+        </article>
+    </section>
+
+
+    <!-- EVENT DRIVEN -->
+
+    <section id="events">
+        <h2>8. Event-Driven Architecture</h2>
+
+        <article>
+            <h3>Synchronous vs Asynchronous</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Synchronous</th>
+                        <th>Asynchronous</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>REST / HTTP</td>
+                        <td>Azure Service Bus</td>
+                    </tr>
+
+                    <tr>
+                        <td>Immediate response required</td>
+                        <td>Immediate response not required</td>
+                    </tr>
+
+                    <tr>
+                        <td>Tighter temporal coupling</td>
+                        <td>Loose coupling</td>
+                    </tr>
+
+                    <tr>
+                        <td>Simple request/response</td>
+                        <td>Long-running workflows</td>
+                    </tr>
+                </tbody>
+            </table>
+        </article>
+
+        <article>
+            <h3>Queue vs Topic</h3>
+
+            <ul>
+                <li>
+                    <strong>Queue:</strong>
+                    Competing consumers; typically one consumer processes a message.
+                </li>
+
+                <li>
+                    <strong>Topic:</strong>
+                    Publish/subscribe; multiple subscriptions can independently consume events.
+                </li>
+            </ul>
+        </article>
+
+        <article>
+            <h3>Example</h3>
+
+            <pre><code>
+Order Service
+      |
+      | OrderCreated
+      v
+Azure Service Bus Topic
+      |
+      +------> Payment Service
+      |
+      +------> Inventory Service
+      |
+      +------> Notification Service
+            </code></pre>
+        </article>
+    </section>
+
+
+    <!-- OUTBOX -->
+
+    <section id="outbox">
+        <h2>9. Outbox Pattern</h2>
+
+        <article>
+            <h3>The Problem</h3>
+
+            <pre><code>
+Order DB
+   |
+   +-- Save Order       SUCCESS
+   |
+   +-- Publish Event    FAILURE
+            </code></pre>
+
+            <p>
+                The database transaction succeeds but the event is lost.
+            </p>
+        </article>
+
+        <article>
+            <h3>The Solution</h3>
+
+            <pre><code>
+Order API
+   |
+   v
+SQL Transaction
+   |
+   +-- Order
+   |
+   +-- OutboxEvent
+   |
+   v
+COMMIT
+   |
+   v
+Outbox Worker
+   |
+   v
+Azure Service Bus
+            </code></pre>
+
+            <div class="success">
+                <strong>Interview Answer:</strong>
+                The Order and Outbox event are committed atomically.
+                A background worker publishes pending events.
+                Failed publishing can be retried.
+            </div>
+        </article>
+    </section>
+
+
+    <!-- IDEMPOTENCY -->
+
+    <section id="idempotency">
+        <h2>10. Idempotency & Duplicate Messages</h2>
+
+        <article>
+            <h3>Duplicate Event Scenario</h3>
+
+            <pre><code>
+Outbox Worker
+     |
+     v
+Publish OrderCreated
+     |
+     v
+Worker crashes
+     |
+     v
+Same event published again
+     |
+     v
+Payment Service receives duplicate
+            </code></pre>
+        </article>
+
+        <article>
+            <h3>Solution</h3>
+
+            <p>
+                Use a stable EventId or IdempotencyKey and persist processed
+                event information with a unique constraint.
+            </p>
+
+            <pre><code>
+OrderCreated
+EventId = ABC123
+       |
+       v
+Payment Service
+       |
+       v
+Check processed-event store
+       |
+   +---+---+
+   |       |
+ New    Existing
+   |       |
+ Charge   Skip
+   |       |
+   +---+---+
+       |
+       v
+Store EventId
+            </code></pre>
+
+            <div class="tip">
+                <strong>Remember:</strong>
+                Outbox prevents event loss.
+                Idempotency prevents duplicate business processing.
+            </div>
+        </article>
+
+        <article>
+            <h3>Payment Provider Idempotency</h3>
+
+            <p>
+                Local idempotency is not enough when an external payment
+                provider is involved.
+            </p>
+
+            <p>
+                Use a stable payment idempotency key supported by the
+                payment provider.
+            </p>
+
+            <pre><code>
+Payment Service
+      |
+      | PaymentId = ORDER-123
+      v
+Payment Provider
+      |
+      | Same Idempotency Key
+      v
+Same Payment Result
+            </code></pre>
+
+            <p>
+                Webhooks and reconciliation can recover uncertain payment states.
+            </p>
+        </article>
+    </section>
+
+
+    <!-- SAGA -->
+
+    <section id="saga">
+        <h2>11. Saga Pattern</h2>
+
+        <article>
+            <h3>Why Saga?</h3>
+
+            <p>
+                Saga manages distributed business transactions without
+                requiring a distributed ACID transaction.
+            </p>
+
+            <pre><code>
+Order
+  |
+  v
+Payment
+  |
+  v
+Inventory
+  |
+  v
+Shipping
+            </code></pre>
+        </article>
+
+        <article>
+            <h3>Payment Succeeds but Order Update Fails</h3>
+
+            <pre><code>
+Order Created
+     |
+     v
+Payment SUCCESS
+     |
+     v
+Order Update FAILED
+     |
+     v
+Retry
+     |
+     v
+Permanent failure
+     |
+     v
+Compensation
+     |
+     v
+Refund / Void Payment
+            </code></pre>
+        </article>
+
+        <article>
+            <h3>Orchestration vs Choreography</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Orchestration</th>
+                        <th>Choreography</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>Central orchestrator</td>
+                        <td>No central coordinator</td>
+                    </tr>
+
+                    <tr>
+                        <td>Explicit workflow</td>
+                        <td>Event-driven workflow</td>
+                    </tr>
+
+                    <tr>
+                        <td>Good for complex workflows</td>
+                        <td>Good for simple event flows</td>
+                    </tr>
+
+                    <tr>
+                        <td>Easier monitoring</td>
+                        <td>Can become difficult with many services</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="success">
+                For a complex Order → Payment → Inventory → Shipping workflow,
+                Saga Orchestration is often easier to control and monitor.
+            </div>
+        </article>
+    </section>
+
+
+    <!-- RESILIENCE -->
+
+    <section>
+        <h2>12. Resilience & Fault Tolerance</h2>
+
+        <article>
+            <h3>Downstream Service Failure</h3>
+
+            <pre><code>
+Order Service
+      |
+      v
+   Timeout
+      |
+      v
+Bounded Retry
+      |
+      v
+Payment Service
+      |
+      X
+    DOWN
+      |
+      v
+Circuit Breaker OPEN
+      |
+      v
+Stop repeated calls
+            </code></pre>
+        </article>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Pattern</th>
+                    <th>Purpose</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>Timeout</td>
+                    <td>Don't wait indefinitely</td>
+                </tr>
+
+                <tr>
+                    <td>Retry</td>
+                    <td>Handle transient failures</td>
+                </tr>
+
+                <tr>
+                    <td>Circuit Breaker</td>
+                    <td>Prevent cascading failures</td>
+                </tr>
+
+                <tr>
+                    <td>Bulkhead</td>
+                    <td>Isolate resources/failures</td>
+                </tr>
+
+                <tr>
+                    <td>Fallback</td>
+                    <td>Graceful degradation</td>
+                </tr>
+
+                <tr>
+                    <td>Idempotency</td>
+                    <td>Safely handle retries/duplicates</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="warning">
+            Never blindly retry every failure.
+            Use bounded retries, exponential backoff and jitter for appropriate
+            transient failures.
+        </div>
+    </section>
+
+
+    <!-- SQL -->
+
+    <section id="sql">
+        <h2>13. SQL / Azure SQL Architecture</h2>
+
+        <article>
+            <h3>Database Per Service</h3>
+
+            <pre><code>
+Order Service       → Order DB
+
+Payment Service     → Payment DB
+
+Shipment Service    → Shipment DB
+
+Customer Service    → Customer DB
+            </code></pre>
+        </article>
+
+        <article>
+            <h3>Slow Query Investigation</h3>
+
+            <ol>
+                <li>Execution plan</li>
+                <li>Indexes</li>
+                <li>Statistics</li>
+                <li>Logical reads</li>
+                <li>Blocking</li>
+                <li>Deadlocks</li>
+                <li>Parameter sensitivity</li>
+                <li>Query design</li>
+                <li>Database capacity</li>
+            </ol>
+
+            <div class="tip">
+                Measure first. Optimize second. Scale infrastructure only
+                after understanding the bottleneck.
+            </div>
+        </article>
+
+        <article>
+            <h3>N+1 Query Problem</h3>
+
+            <p>
+                Avoid repeated database calls by using appropriate joins,
+                projections, eager loading or batching depending on the
+                use case and ORM.
+            </p>
+        </article>
+    </section>
+
+
+    <!-- REDIS -->
+
+    <section>
+        <h2>14. Redis / Caching</h2>
+
+        <pre><code>
+Client
+  |
+  v
+Order Service
+  |
+  +---- Redis Cache ----> Cache Hit
+  |
+  +---- Azure SQL ------> Cache Miss
+  </code></pre>
+
+        <p>Good candidates:</p>
+
+        <ul>
+            <li>Frequently accessed reference data</li>
+            <li>Product/catalog data</li>
+            <li>Configuration</li>
+            <li>Suitable transient state</li>
+        </ul>
+
+        <p>
+            Always consider TTL, invalidation strategy and stale-data risk.
+        </p>
+    </section>
+
+
+    <!-- OBSERVABILITY -->
+
+    <section>
+        <h2>15. Observability</h2>
+
+        <pre><code>
+Microservices
+     |
+     +---- Logs
+     |
+     +---- Metrics
+     |
+     +---- Traces
+             |
+             v
+      Azure Monitor
+             |
+             v
+   Application Insights
+             |
+             v
+       Log Analytics
+        </code></pre>
+
+        <ul>
+            <li>Correlation ID</li>
+            <li>Distributed tracing</li>
+            <li>Application logs</li>
+            <li>Infrastructure metrics</li>
+            <li>Dependency tracking</li>
+            <li>Alerts</li>
+            <li>SLA / SLO monitoring</li>
+        </ul>
+    </section>
+
+
+    <!-- DR -->
+
+    <section>
+        <h2>16. Disaster Recovery</h2>
+
+        <pre><code>
+Primary Region
+     |
+     +-- AKS
+     |
+     +-- Azure SQL
+     |
+     +-- Service Bus
+     |
+     v
+Replication / Backup
+     |
+     v
+DR Region
+        </code></pre>
+
+        <article>
+            <h3>RPO</h3>
+
+            <p>
+                Recovery Point Objective defines how much data loss the business
+                can tolerate.
+            </p>
+        </article>
+
+        <article>
+            <h3>RTO</h3>
+
+            <p>
+                Recovery Time Objective defines how quickly the system must
+                be restored.
+            </p>
+        </article>
+
+        <div class="tip">
+            Start DR architecture from business-defined RPO/RTO rather than
+            choosing technologies first.
+        </div>
+    </section>
+
+
+    <!-- 60 MIN MOCK -->
+
+    <section id="mock">
+        <h2>17. 60-Minute Mock Interview — Complete Sequence</h2>
+
+        <p>
+            Practice these questions in this order. Answer each in
+            approximately 30–60 seconds.
+        </p>
+
+        <details open>
+            <summary>Question 1 — Tell me about yourself.</summary>
+
+            <div class="answer">
+                <p class="question">
+                    "Tell me about yourself and your architecture experience."
+                </p>
+
+                <p>
+                    Focus on .NET, Azure, Microservices, API, Messaging,
+                    Security, Data and Architecture leadership.
+                </p>
+            </div>
+        </details>
+
+
+        <details>
+            <summary>Question 2 — Walk me through your architecture.</summary>
+
+            <div class="answer">
+
+                <p>
+                    Start:
+                    <strong>Business → NFR → Front Door → APIM → Entra ID → AKS
+                    → Microservices → Service Bus → SQL/Redis → Observability → DR.</strong>
+                </p>
+
+            </div>
+        </details>
+
+
+        <details>
+            <summary>Question 3 — Why Microservices?</summary>
+
+            <div class="answer">
+
+                <p>
+                    Independent deployment, scaling, fault isolation and
+                    team autonomy — but only when the business requirements
+                    justify the complexity.
+                </p>
+
+            </div>
+        </details>
+
+
+        <details>
+            <summary>Question 4 — How do you define service boundaries?</summary>
+
+            <div class="answer">
+
+                <p>
+                    Business capability + bounded context + data ownership.
+                </p>
+
+            </div>
+        </details>
+
+
+        <details>
+            <summary>Question 5 — Why database per service?</summary>
+
+            <div class="answer">
+
+                <p>
+                    Independent data ownership and reduced schema coupling.
+                </p>
+
+            </div>
+        </details>
+
+
+        <details>
+            <summary>Question 6 — Why APIM?</summary>
+
+            <div class="answer">
+
+                <p>
+                    Centralized API security, throttling, rate limiting,
+                    versioning, policies and governance.
+                </p>
+
+            </div>
+        </details>
+
+
+        <details>
+            <summary>Question 7 — Front Door vs APIM?</summary>
+
+            <div class="answer">
+
+                <p>
+                    Front Door = global edge and routing.
+                    APIM = API management and policy enforcement.
+                </p>
+
+            </div>
+        </details>
+
+
+        <details>
+            <summary>Question 8 — How does JWT validation work?</summary>
+
+            <div class="answer">
+
+                <p>
+                    Entra ID issues the token. APIM validates signature,
+                    issuer, audience, expiry and required claims/scopes.
+                </p>
+
+            </div>
+        </details>
+
+
+        <details>
+            <summary>Question 9 — REST vs Service Bus?</summary>
+
+            <div class="answer">
+
+                <p>
+                    REST for immediate response.
+                    Service Bus for asynchronous, decoupled workflows.
+                </p>
+
+            </div>
+        </details>
+
+
+        <details>
+            <summary>Question 10 — Queue vs Topic?</summary>
+
+            <div class="answer">
+
+                <p>
+                    Queue = competing consumers.
+                    Topic = publish/subscribe.
+                </p>
+
+            </div>
+        </details>
+
+
+        <details>
+            <summary>Question 11 — Explain Outbox Pattern.</summary>
+
+            <div class="answer">
+
+                <p>
+                    Store business data and event in the same transaction,
+                    then asynchronously publish the event.
+                </p>
+
+            </div>
+        </details>
+
+
+        <details>
+            <summary>Question 12 — Duplicate messages?</summary>
+
+            <div class="answer">
+
+                <p>
+                    Idempotent consumer using EventId/IdempotencyKey and
+                    durable processing state.
+                </p>
+
+            </div>
+        </details>
+
+
+        <details>
+            <summary>Question 13 — Payment provider double charge?</summary>
+
+            <div class="answer">
+
+                <p>
+                    Use a stable provider-supported idempotency key,
+                    payment state persistence, webhooks and reconciliation.
+                </p>
+
+            </div>
+        </details>
+
+
+        <details>
+            <summary>Question 14 — Payment succeeds but Order update fails?</summary>
+
+            <div class="answer">
+
+                <p>
+                    Saga with retries and compensating action such as refund
+                    or payment reversal.
+                </p>
+
+            </div>
+        </details>
+
+
+        <details>
+            <summary>Question 15 — Orchestration vs Choreography?</summary>
+
+            <div class="answer">
+
+                <p>
+                    Orchestration is preferred for complex multi-step
+                    workflows requiring centralized state, retry and compensation.
+                </p>
+
+            </div>
+        </details>
+
+
+        <details>
+            <summary>Question 16 — Why AKS?</summary>
+
+            <div class="answer">
+
+                <p>
+                    Kubernetes orchestration, containers, workload isolation,
+                    advanced scaling and deployment capabilities.
+                </p>
+
+            </div>
+        </details>
+
+
+        <details>
+            <summary>Question 17 — Traffic increases 10x?</summary>
+
+            <div class="answer">
+
+                <p>
+                    Identify bottleneck → APIM throttling → HPA → cluster
+                    autoscaling → Redis → Service Bus → database/downstream
+                    dependency analysis.
+                </p>
+
+            </div>
+        </details>
+
+
+        <details>
+            <summary>Question 18 — One service is down?</summary>
+
+            <div class="answer">
+
+                <p>
+                    Timeout + bounded retry + circuit breaker + fallback or
+                    asynchronous processing where appropriate.
+                </p>
+
+            </div>
+        </details>
+
+
+        <details>
+            <summary>Question 19 — How do you avoid cascading failures?</summary>
+
+            <div class="answer">
+
+                <p>
+                    Timeout, retry, circuit breaker, bulkhead, rate limiting,
+                    asynchronous communication and graceful degradation.
+                </p>
+
+            </div>
+        </details>
+
+
+        <details>
+            <summary>Question 20 — Slow SQL query?</summary>
+
+            <div class="answer">
+
+                <p>
+                    Execution plan, indexes, statistics, blocking, deadlocks,
+                    query design and database capacity.
+                </p>
+
+            </div>
+        </details>
+
+
+        <details>
+            <summary>Question 21 — N+1 query?</summary>
+
+            <div class="answer">
+
+                <p>
+                    Detect repeated database calls and use appropriate
+                    projection, joins, eager loading or batching.
+                </p>
+
+            </div>
+        </details>
+
+
+        <details>
+            <summary>Question 22 — Why Redis?</summary>
+
+            <div class="answer">
+
+                <p>
+                    Frequently accessed data where caching improves latency
+                    and reduces database pressure.
+                </p>
+
+            </div>
+        </details>
+
+
+        <details>
+            <summary>Question 23 — How do you trace a request across microservices?</summary>
+
+            <div class="answer">
+
+                <p>
+                    Correlation/trace IDs and distributed tracing through
+                    Application Insights/OpenTelemetry-compatible instrumentation.
+                </p>
+
+            </div>
+        </details>
+
+
+        <details>
+            <summary>Question 24 — How do you design DR?</summary>
+
+            <div class="answer">
+
+                <p>
+                    Start with RPO/RTO, then design backup, replication,
+                    regional recovery and regular DR testing.
+                </p>
+
+            </div>
+        </details>
+
+
+        <details>
+            <summary>Question 25 — Why should we hire you as an architect?</summary>
+
+            <div class="answer">
+
+                <div class="success">
+
+                    <p>
+                        "I don't approach architecture as simply selecting
+                        technologies. I start with business requirements and
+                        NFRs, evaluate alternatives and trade-offs, and then
+                        design for scalability, security, resilience,
+                        observability and cost.
+                    </p>
+
+                    <p>
+                        I can connect business requirements to implementation
+                        across .NET, Azure, microservices, APIs, messaging,
+                        Kubernetes and data architecture, while also considering
+                        operational and failure scenarios."
+                    </p>
+
+                </div>
+
+            </div>
+        </details>
+
+    </section>
+
+
+    <!-- HIGH PRIORITY -->
+
+    <section>
+        <h2>18. Top 15 — Must Master Before Interview</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Priority</th>
+                    <th>Question</th>
+                    <th>Key Concept</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td class="priority-high">1</td>
+                    <td>Why Microservices?</td>
+                    <td>Business capability / trade-offs</td>
+                </tr>
+
+                <tr>
+                    <td class="priority-high">2</td>
+                    <td>How do you define boundaries?</td>
+                    <td>Bounded Context</td>
+                </tr>
+
+                <tr>
+                    <td class="priority-high">3</td>
+                    <td>Why database per service?</td>
+                    <td>Data ownership</td>
+                </tr>
+
+                <tr>
+                    <td class="priority-high">4</td>
+                    <td>Why APIM?</td>
+                    <td>API Gateway</td>
+                </tr>
+
+                <tr>
+                    <td class="priority-high">5</td>
+                    <td>Front Door vs APIM?</td>
+                    <td>Edge vs API</td>
+                </tr>
+
+                <tr>
+                    <td class="priority-high">6</td>
+                    <td>REST vs Service Bus?</td>
+                    <td>Sync vs Async</td>
+                </tr>
+
+                <tr>
+                    <td class="priority-high">7</td>
+                    <td>Queue vs Topic?</td>
+                    <td>Messaging</td>
+                </tr>
+
+                <tr>
+                    <td class="priority-high">8</td>
+                    <td>Duplicate messages?</td>
+                    <td>Idempotency</td>
+                </tr>
+
+                <tr>
+                    <td class="priority-high">9</td>
+                    <td>Outbox?</td>
+                    <td>Dual-write problem</td>
+                </tr>
+
+                <tr>
+                    <td class="priority-high">10</td>
+                    <td>Payment failure?</td>
+                    <td>Provider idempotency</td>
+                </tr>
+
+                <tr>
+                    <td class="priority-high">11</td>
+                    <td>Distributed transaction?</td>
+                    <td>Saga</td>
+                </tr>
+
+                <tr>
+                    <td class="priority-high">12</td>
+                    <td>AKS vs App Service?</td>
+                    <td>Trade-offs</td>
+                </tr>
+
+                <tr>
+                    <td class="priority-high">13</td>
+                    <td>Traffic spike?</td>
+                    <td>HPA / Throttling / Cache</td>
+                </tr>
+
+                <tr>
+                    <td class="priority-high">14</td>
+                    <td>JWT validation?</td>
+                    <td>Entra ID / APIM</td>
+                </tr>
+
+                <tr>
+                    <td class="priority-high">15</td>
+                    <td>Service failure?</td>
+                    <td>Timeout / Retry / Circuit Breaker</td>
+                </tr>
+
+            </tbody>
+        </table>
+    </section>
+
+
+    <!-- CHEAT SHEET -->
+
+    <section id="cheatsheet">
+        <h2>19. Final Architect Cheat Sheet</h2>
+
+        <div class="architecture-flow">
+
+            BUSINESS REQUIREMENTS
+            <br>↓<br>
+
+            NFRs
+            <br>↓<br>
+
+            BOUNDED CONTEXT
+            <br>↓<br>
+
+            MICROSERVICES
+            <br>↓<br>
+
+            API MANAGEMENT
+            <br>↓<br>
+
+            ENTRA ID / JWT
+            <br>↓<br>
+
+            AKS
+            <br>↓<br>
+
+            REST / EVENTS
+            <br>↓<br>
+
+            AZURE SERVICE BUS
+            <br>↓<br>
+
+            OUTBOX / SAGA
+            <br>↓<br>
+
+            DATABASE PER SERVICE
+            <br>↓<br>
+
+            REDIS
+            <br>↓<br>
+
+            RESILIENCE
+            <br>↓<br>
+
+            OBSERVABILITY
+            <br>↓<br>
+
+            DR / RPO / RTO
+            <br>↓<br>
+
+            COST
+        </div>
+
+
+        <article>
+            <h3>Golden Interview Formula</h3>
+
+            <div class="success">
+
+                <p>
+                    <strong>Requirement → Decision → Why → Trade-off → Failure Handling</strong>
+                </p>
+
+                <p>
+                    Example:
+                </p>
+
+                <p>
+                    "I would use Service Bus because the workflow does not require
+                    an immediate response and we need loose coupling. The trade-off
+                    is eventual consistency. To handle failures, I use bounded retry,
+                    dead-letter handling and idempotent consumers."
+                </p>
+
+            </div>
+        </article>
+
+
+        <article>
+            <h3>Architect Mindset</h3>
+
+            <ul>
+                <li>Do not start with technology.</li>
+                <li>Start with business capability.</li>
+                <li>Identify NFRs.</li>
+                <li>Define bounded contexts.</li>
+                <li>Choose synchronous vs asynchronous communication.</li>
+                <li>Define data ownership.</li>
+                <li>Design security.</li>
+                <li>Design failure handling.</li>
+                <li>Design observability.</li>
+                <li>Define DR based on RPO/RTO.</li>
+                <li>Consider cost and operational complexity.</li>
+                <li>Always explain trade-offs.</li>
+            </ul>
+        </article>
+
+        <div class="warning">
+
+            <h3>Final Rule for the Interview</h3>
+
+            <p>
+                Don't answer:
+                <strong>"We use Azure Service Bus because it is scalable."</strong>
+            </p>
+
+            <p>
+                Instead answer:
+                <strong>
+                    "The requirement is asynchronous processing and loose coupling,
+                    so I use Service Bus. The trade-off is eventual consistency,
+                    which I address with idempotency, retries and appropriate
+                    monitoring."
+                </strong>
+            </p>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer>
+    <p>
+        Senior Solution Architect Interview Preparation
+    </p>
+
+    <p>
+        Enterprise Architecture • Microservices • Azure • .NET • Security • Messaging • Data
+    </p>
+</footer>
+
+</body>
+</html>
