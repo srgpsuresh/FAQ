@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API Gateway — 20 Interview & Real-Project Points</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --card: #ffffff;
+      --text: #172033;
+      --muted: #5d687d;
+      --accent: #315efb;
+      --accent-soft: #eaf0ff;
+      --border: #dfe5ef;
+      --good: #087443;
+    }
+
+```
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+header {
+  background: var(--text);
+  color: white;
+  padding: 42px 20px;
+}
+
+header .container,
+main {
+  max-width: 1100px;
+  margin: auto;
+}
+
+header h1 {
+  margin: 0 0 10px;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+}
+
+header p {
+  margin: 0;
+  max-width: 850px;
+  color: #dce3f2;
+  font-size: 1.05rem;
+}
+
+.flow {
+  margin-top: 28px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  align-items: center;
+}
+
+.flow span {
+  background: #26334e;
+  border: 1px solid #43506a;
+  border-radius: 10px;
+  padding: 12px;
+  text-align: center;
+  font-size: .9rem;
+}
+
+main {
+  padding: 30px 20px 60px;
+}
+
+.intro {
+  background: var(--accent-soft);
+  border-left: 5px solid var(--accent);
+  padding: 18px 20px;
+  margin-bottom: 28px;
+  border-radius: 8px;
+}
+
+.points {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+article {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 22px;
+  box-shadow: 0 4px 15px rgba(20, 35, 70, .05);
+}
+
+article h2 {
+  margin-top: 0;
+  font-size: 1.15rem;
+}
+
+.number {
+  display: inline-grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  margin-right: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: white;
+  font-weight: 700;
+}
+
+.why {
+  color: var(--muted);
+}
+
+.interview {
+  margin-top: 10px;
+  padding: 10px 12px;
+  background: #f8fafc;
+  border-radius: 8px;
+  border-left: 3px solid var(--good);
+}
+
+code {
+  background: #eef1f6;
+  padding: 2px 5px;
+  border-radius: 4px;
+}
+
+.summary {
+  margin-top: 30px;
+  background: var(--text);
+  color: white;
+  padding: 26px;
+  border-radius: 14px;
+}
+
+.summary strong {
+  color: #aebfff;
+}
+
+@media (max-width: 750px) {
+  .points { grid-template-columns: 1fr; }
+  .flow { grid-template-columns: 1fr; }
+}
+```
+
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="container">
+    <h1>API Gateway</h1>
+    <p>
+      20 practical points covering <strong>purpose → request flow → security →
+      traffic management → resilience → observability → interview scenarios</strong>.
+    </p>
+
+```
+<div class="flow" aria-label="API Gateway request flow">
+  <span>Client</span>
+  <span>API Gateway</span>
+  <span>Security / Policies</span>
+  <span>Microservice</span>
+  <span>Response</span>
+</div>
+```
+
+  </div>
+</header>
+
+<main>
+
+  <section class="intro">
+    <strong>One-line interview definition:</strong>
+    API Gateway is the single entry point between clients and backend services.
+    It centralizes cross-cutting concerns such as routing, authentication,
+    authorization, rate limiting, transformation, resilience and observability.
+  </section>
+
+  <section class="points">
+
+```
+<article>
+  <h2><span class="number">1</span>What is API Gateway?</h2>
+  <p>
+    An API Gateway sits between external clients and backend APIs/services.
+    Instead of exposing every microservice directly, clients call the gateway.
+  </p>
+  <p class="why">
+    <strong>Why?</strong> One controlled entry point instead of exposing
+    multiple internal services.
+  </p>
+  <div class="interview">
+    <strong>Interview:</strong> "Gateway hides internal service topology from clients."
+  </div>
+</article>
+
+<article>
+  <h2><span class="number">2</span>Why do we need it?</h2>
+  <p>
+    Without a gateway, a mobile/web client may need to know the URLs of
+    Customer, Order, Payment and Product services individually.
+  </p>
+  <p class="why">
+    Gateway gives the client one endpoint and centralizes common policies.
+  </p>
+</article>
+
+<article>
+  <h2><span class="number">3</span>Single Entry Point</h2>
+  <p>
+    Example:
+    <code>https://api.company.com</code>
+  </p>
+  <p>
+    Internally the gateway can route requests to:
+    <code>/orders</code>,
+    <code>/customers</code>,
+    <code>/payments</code>.
+  </p>
+  <p class="why">
+    Clients do not need to understand the internal microservice network.
+  </p>
+</article>
+
+<article>
+  <h2><span class="number">4</span>Request Routing</h2>
+  <p>
+    The gateway examines the incoming path, method, host or other routing
+    information and forwards the request to the appropriate backend.
+  </p>
+
+  <pre><code>GET /api/orders/100
+    ↓
+```
+
+API Gateway
+↓
+Order Service</code></pre>
+
+```
+  <p class="why">
+    <strong>Purpose:</strong> Centralize service discovery and routing rules.
+  </p>
+</article>
+
+<article>
+  <h2><span class="number">5</span>Authentication</h2>
+  <p>
+    The gateway can validate credentials such as JWT/OAuth tokens or API keys
+    before forwarding a request.
+  </p>
+  <p class="why">
+    Invalid requests can be rejected at the edge instead of consuming backend
+    resources.
+  </p>
+  <div class="interview">
+    <strong>Typical answer:</strong> "Authenticate as early as possible."
+  </div>
+</article>
+
+<article>
+  <h2><span class="number">6</span>Authorization</h2>
+  <p>
+    Authentication answers <strong>"Who are you?"</strong>.
+    Authorization answers <strong>"What are you allowed to do?"</strong>.
+  </p>
+
+  <pre><code>JWT
+```
+
+↓
+Validate user
+↓
+Read role/scope
+↓
+Allow / Reject request</code></pre>
+
+```
+  <p>
+    Fine-grained authorization can be applied according to route, method,
+    caller or scope.
+  </p>
+</article>
+
+<article>
+  <h2><span class="number">7</span>Rate Limiting</h2>
+  <p>
+    Rate limiting controls how many requests a client can make in a period.
+  </p>
+
+  <pre><code>Client
+```
+
+↓
+100 requests/sec allowed
+↓
+Gateway
+↓
+Extra requests → 429 Too Many Requests</code></pre>
+
+```
+  <p class="why">
+    Protects backend services from accidental overload, abusive clients and
+    traffic spikes.
+  </p>
+</article>
+
+<article>
+  <h2><span class="number">8</span>Throttling & Quotas</h2>
+  <p>
+    <strong>Rate limit</strong> controls request rate.
+    <strong>Quota</strong> controls allowed usage over a larger period.
+  </p>
+
+  <p>
+    Example:
+    <code>100 requests/sec</code> plus
+    <code>1 million requests/month</code>.
+  </p>
+
+  <div class="interview">
+    <strong>Scenario:</strong> Premium customers can receive higher limits
+    than standard customers.
+  </div>
+</article>
+
+<article>
+  <h2><span class="number">9</span>Load Balancing</h2>
+  <p>
+    If multiple instances of a service exist, the gateway can distribute
+    traffic among available instances.
+  </p>
+
+  <pre><code>Gateway
+```
+
+├── Order-1
+├── Order-2
+└── Order-3</code></pre>
+
+```
+  <p class="why">
+    Improves scalability and availability.
+  </p>
+</article>
+
+<article>
+  <h2><span class="number">10</span>Request Transformation</h2>
+  <p>
+    The gateway can modify headers, paths, query parameters or payload
+    formats before sending a request downstream.
+  </p>
+
+  <p>
+    Example:
+    <code>/v1/customer</code> → internal
+    <code>/customer-service/api/customer</code>
+  </p>
+
+  <p class="why">
+    Useful when external and internal API contracts are different.
+  </p>
+</article>
+
+<article>
+  <h2><span class="number">11</span>Response Transformation</h2>
+  <p>
+    The gateway can transform backend responses before returning them to
+    the client.
+  </p>
+
+  <p>
+    Example: hide internal fields, normalize headers or adapt response
+    formats.
+  </p>
+
+  <p class="why">
+    Prevents internal implementation details from leaking outside.
+  </p>
+</article>
+
+<article>
+  <h2><span class="number">12</span>Caching</h2>
+  <p>
+    Frequently requested, relatively stable data can sometimes be cached
+    at the gateway or edge.
+  </p>
+
+  <pre><code>Client
+```
+
+↓
+Gateway
+↓
+Cache HIT → Response
+
+Cache MISS
+↓
+Backend
+↓
+Cache + Response</code></pre>
+
+```
+  <p class="why">
+    Reduces backend calls and improves response time.
+  </p>
+</article>
+
+<article>
+  <h2><span class="number">13</span>Circuit Breaker</h2>
+  <p>
+    If a backend repeatedly fails, the gateway/resilience layer can stop
+    sending requests temporarily.
+  </p>
+
+  <pre><code>Order Service failing
+    ↓
+```
+
+Circuit OPEN
+↓
+Do not continuously call service
+↓
+Return controlled failure / fallback</code></pre>
+
+```
+  <p class="why">
+    Prevents repeated calls from creating cascading failures.
+  </p>
+</article>
+
+<article>
+  <h2><span class="number">14</span>Timeout & Retry</h2>
+  <p>
+    The gateway can enforce reasonable upstream timeouts and, where safe,
+    retry transient failures.
+  </p>
+
+  <p>
+    <strong>Important:</strong> Do not blindly retry every operation.
+    Retrying a non-idempotent payment request can create duplicate business
+    effects.
+  </p>
+
+  <div class="interview">
+    <strong>Good answer:</strong> "Retry only transient failures and only
+    where the operation is safe or idempotency is guaranteed."
+  </div>
+</article>
+
+<article>
+  <h2><span class="number">15</span>Observability</h2>
+  <p>
+    Gateway is an excellent point to capture common telemetry:
+  </p>
+
+  <ul>
+    <li>Request/response metrics</li>
+    <li>Latency</li>
+    <li>Status codes</li>
+    <li>Correlation/trace IDs</li>
+    <li>Access logs</li>
+    <li>Error rates</li>
+  </ul>
+
+  <p class="why">
+    It provides a centralized view of API traffic.
+  </p>
+</article>
+
+<article>
+  <h2><span class="number">16</span>Security at the Edge</h2>
+  <p>
+    Gateway can be combined with TLS, WAF, IP restrictions, mTLS and other
+    security controls.
+  </p>
+
+  <pre><code>Internet
+```
+
+↓
+WAF / DDoS protection
+↓
+API Gateway
+↓
+Authentication
+↓
+Microservices</code></pre>
+
+```
+  <p class="why">
+    Reject malicious or invalid traffic before it reaches business services.
+  </p>
+</article>
+
+<article>
+  <h2><span class="number">17</span>API Versioning</h2>
+  <p>
+    The gateway can expose multiple API versions while routing them to
+    different backend implementations.
+  </p>
+
+  <pre><code>/api/v1/orders → Order Service V1
+```
+
+/api/v2/orders → Order Service V2</code></pre>
+
+```
+  <p class="why">
+    Allows gradual migration without immediately breaking existing clients.
+  </p>
+</article>
+
+<article>
+  <h2><span class="number">18</span>BFF / Aggregation</h2>
+  <p>
+    A Backend-for-Frontend can tailor APIs for different clients such as
+    Web, Mobile or Partner applications.
+  </p>
+
+  <pre><code>Mobile
+```
+
+↓
+Mobile BFF
+├── Customer
+├── Orders
+└── Payments
+↓
+Combined response</code></pre>
+
+```
+  <p class="why">
+    Reduces chatty client-to-service communication and allows client-specific
+    API contracts.
+  </p>
+</article>
+
+<article>
+  <h2><span class="number">19</span>API Gateway Failure Scenario</h2>
+  <p>
+    Because the gateway becomes a central entry point, its availability is
+    critical.
+  </p>
+
+  <p>
+    Production design should avoid a single gateway instance. Use a highly
+    available deployment, health checks, scaling and appropriate regional/
+    multi-zone architecture.
+  </p>
+
+  <div class="interview">
+    <strong>Interviewer:</strong> "What happens if the API Gateway goes down?"
+    <br>
+    <strong>Answer:</strong> "It can become a single point of failure, so I
+    deploy it redundantly with health monitoring and automatic failover."
+  </div>
+</article>
+
+<article>
+  <h2><span class="number">20</span>Real Project Request Lifecycle</h2>
+
+  <pre><code>
+```
+
+Client
+↓
+DNS / Load Balancer
+↓
+WAF
+↓
+API Gateway
+↓
+
+1. Route
+   ↓
+2. TLS / Security checks
+   ↓
+3. JWT / API Key validation
+   ↓
+4. Authorization
+   ↓
+5. Rate limit / quota
+   ↓
+6. Request transformation
+   ↓
+7. Load balancing
+   ↓
+8. Timeout / resilience policies
+   ↓
+   Microservice
+   ↓
+   Database / Cache / Message Broker
+   ↓
+   Microservice Response
+   ↓
+   Gateway
+   ↓
+   Logging / Metrics / Trace
+   ↓
+   Client </code></pre>
+
+      <p class="why">
+        This is the complete mental model to remember for interviews:
+        <strong>Receive → Protect → Control → Route → Resilient Call → Observe → Respond.</strong>
+      </p>
+    </article>
+
+  </section>
+
+  <section class="summary">
+    <h2>Interview Memory Chain</h2>
+
+```
+<p>
+  Remember API Gateway using this sequence:
+</p>
+
+<p>
+  <strong>ENTRY → SECURITY → CONTROL → ROUTING → RESILIENCE → OBSERVABILITY</strong>
+</p>
+
+<ol>
+  <li><strong>ENTRY:</strong> Single entry point</li>
+  <li><strong>SECURITY:</strong> Authentication + Authorization + WAF/TLS</li>
+  <li><strong>CONTROL:</strong> Rate limiting + Throttling + Quotas</li>
+  <li><strong>ROUTING:</strong> Route + Load Balance + Transform + Version</li>
+  <li><strong>RESILIENCE:</strong> Timeout + Retry + Circuit Breaker + Cache</li>
+  <li><strong>OBSERVABILITY:</strong> Logs + Metrics + Traces + Correlation ID</li>
+</ol>
+
+<p>
+  <strong>30-second interview answer:</strong><br>
+  "In our microservices architecture, API Gateway is the single entry point
+  for clients. It handles routing to the appropriate service and centralizes
+  cross-cutting concerns such as JWT authentication, authorization, rate
+  limiting, throttling, request transformation and observability. For
+  resilience we apply timeout, controlled retry and circuit-breaker patterns.
+  It also supports versioning, caching and, where appropriate, BFF/aggregation.
+  This keeps the microservices focused on business logic while the gateway
+  manages common API concerns."
+</p>
+```
+
+  </section>
+
+</main>
+
+</body>
+</html>
