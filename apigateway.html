@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="API Gateway - 20 Important Interview Questions, Why and Real-Time Scenarios">
+
+    <title>API Gateway - Top 20 Interview FAQs</title>
+
+    <!-- Reuse common CSS -->
+    <link rel="stylesheet" href="../../css/style1.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>API Gateway</h1>
+        <p>Top 20 Interview FAQs | Why | Real-Time Scenarios</p>
+    </header>
+
+
+    <main>
+
+        <section>
+
+            <h2>API Gateway - 20 Important Interview Points</h2>
+
+            <article>
+
+                <!-- 1 -->
+                <details open>
+                    <summary>1. What is an API Gateway?</summary>
+
+                    <dl>
+                        <dt>Answer</dt>
+                        <dd>
+                            API Gateway is the single entry point between clients
+                            and backend microservices.
+                        </dd>
+
+                        <dt>Why?</dt>
+                        <dd>
+                            It centralizes routing, security, throttling,
+                            authentication and monitoring.
+                        </dd>
+
+                        <dt>Real-Time Scenario</dt>
+                        <dd>
+                            Angular calls <code>/api/orders</code>; Gateway
+                            routes the request to Order Service.
+                        </dd>
+                    </dl>
+                </details>
+
+
+                <!-- 2 -->
+                <details>
+                    <summary>2. Why do we need an API Gateway?</summary>
+
+                    <dl>
+                        <dt>Answer</dt>
+                        <dd>
+                            To avoid exposing every microservice directly to clients.
+                        </dd>
+
+                        <dt>Why?</dt>
+                        <dd>
+                            It provides centralized security and simplifies
+                            client communication.
+                        </dd>
+
+                        <dt>Scenario</dt>
+                        <dd>
+                            Client calls one Gateway instead of directly calling
+                            Order, Payment and Customer services.
+                        </dd>
+                    </dl>
+                </details>
+
+
+                <!-- 3 -->
+                <details>
+                    <summary>3. How does API Gateway route requests?</summary>
+
+                    <dl>
+                        <dt>Answer</dt>
+                        <dd>
+                            Gateway matches the incoming URL and forwards it
+                            to the configured backend service.
+                        </dd>
+
+                        <dt>Scenario</dt>
+                        <dd>
+                            <code>/orders/*</code> → Order Service,
+                            <code>/payments/*</code> → Payment Service.
+                        </dd>
+                    </dl>
+                </details>
+
+
+                <!-- 4 -->
+                <details>
+                    <summary>4. How does API Gateway handle authentication?</summary>
+
+                    <dl>
+                        <dt>Answer</dt>
+                        <dd>
+                            Gateway validates the JWT token before forwarding
+                            the request.
+                        </dd>
+
+                        <dt>Why?</dt>
+                        <dd>
+                            Invalid or missing tokens can be rejected at the
+                            edge before reaching services.
+                        </dd>
+
+                        <dt>Scenario</dt>
+                        <dd>
+                            Invalid JWT → <code>401 Unauthorized</code>.
+                        </dd>
+                    </dl>
+                </details>
+
+
+                <!-- 5 -->
+                <details>
+                    <summary>5. What is Authorization at Gateway?</summary>
+
+                    <dl>
+                        <dt>Answer</dt>
+                        <dd>
+                            Authorization determines whether the authenticated
+                            user can access a particular API.
+                        </dd>
+
+                        <dt>Scenario</dt>
+                        <dd>
+                            Admin can call <code>/api/users/delete</code>,
+                            while a normal user cannot.
+                        </dd>
+                    </dl>
+                </details>
+
+
+                <!-- 6 -->
+                <details>
+                    <summary>6. What is Rate Limiting?</summary>
+
+                    <dl>
+                        <dt>Answer</dt>
+                        <dd>
+                            Rate limiting restricts the number of requests
+                            allowed from a client within a time period.
+                        </dd>
+
+                        <dt>Why?</dt>
+                        <dd>
+                            Prevents abuse and protects backend services.
+                        </dd>
+
+                        <dt>Scenario</dt>
+                        <dd>
+                            Allow 100 requests per minute per customer.
+                        </dd>
+                    </dl>
+                </details>
+
+
+                <!-- 7 -->
+                <details>
+                    <summary>7. What is Throttling?</summary>
+
+                    <dl>
+                        <dt>Answer</dt>
+                        <dd>
+                            Throttling controls traffic when the system is
+                            overloaded.
+                        </dd>
+
+                        <dt>Scenario</dt>
+                        <dd>
+                            During a flash sale, Gateway limits excessive
+                            requests reaching Order Service.
+                        </dd>
+                    </dl>
+                </details>
+
+
+                <!-- 8 -->
+                <details>
+                    <summary>8. How does Gateway improve security?</summary>
+
+                    <dl>
+                        <dt>Answer</dt>
+                        <dd>
+                            Gateway provides a controlled public entry point
+                            instead of exposing internal services.
+                        </dd>
+
+                        <dt>Why?</dt>
+                        <dd>
+                            Reduces the attack surface of the microservices.
+                        </dd>
+
+                        <dt>Scenario</dt>
+                        <dd>
+                            Payment Service remains private inside the network.
+                        </dd>
+                    </dl>
+                </details>
+
+
+                <!-- 9 -->
+                <details>
+                    <summary>9. What is SSL/TLS termination?</summary>
+
+                    <dl>
+                        <dt>Answer</dt>
+                        <dd>
+                            Gateway terminates HTTPS connections and securely
+                            communicates with backend services.
+                        </dd>
+
+                        <dt>Why?</dt>
+                        <dd>
+                            Centralizes certificate management.
+                        </dd>
+                    </dl>
+                </details>
+
+
+                <!-- 10 -->
+                <details>
+                    <summary>10. What is Request Transformation?</summary>
+
+                    <dl>
+                        <dt>Answer</dt>
+                        <dd>
+                            Gateway can modify headers, URLs or request data
+                            before forwarding the request.
+                        </dd>
+
+                        <dt>Scenario</dt>
+                        <dd>
+                            Add correlation ID and tenant ID to every request.
+                        </dd>
+                    </dl>
+                </details>
+
+
+                <!-- 11 -->
+                <details>
+                    <summary>11. What is Response Transformation?</summary>
+
+                    <dl>
+                        <dt>Answer</dt>
+                        <dd>
+                            Gateway can modify or combine backend responses
+                            before returning them to the client.
+                        </dd>
+
+                        <dt>Scenario</dt>
+                        <dd>
+                            Hide internal service fields before returning
+                            customer data.
+                        </dd>
+                    </dl>
+                </details>
+
+
+                <!-- 12 -->
+                <details>
+                    <summary>12. What is Aggregation in API Gateway?</summary>
+
+                    <dl>
+                        <dt>Answer</dt>
+                        <dd>
+                            Gateway combines responses from multiple services
+                            into a single client response.
+                        </dd>
+
+                        <dt>Why?</dt>
+                        <dd>
+                            Reduces multiple network calls from the client.
+                        </dd>
+
+                        <dt>Scenario</dt>
+                        <dd>
+                            Dashboard request → Customer + Orders + Payment
+                            services → one response.
+                        </dd>
+                    </dl>
+                </details>
+
+
+                <!-- 13 -->
+                <details>
+                    <summary>13. How does Gateway handle service failure?</summary>
+
+                    <dl>
+                        <dt>Answer</dt>
+                        <dd>
+                            Gateway can use timeout, retry and circuit breaker
+                            policies.
+                        </dd>
+
+                        <dt>Scenario</dt>
+                        <dd>
+                            Payment Service is unavailable → Gateway stops
+                            repeatedly calling it after failures.
+                        </dd>
+                    </dl>
+                </details>
+
+
+                <!-- 14 -->
+                <details>
+                    <summary>14. What is Load Balancing?</summary>
+
+                    <dl>
+                        <dt>Answer</dt>
+                        <dd>
+                            Gateway distributes requests across multiple
+                            healthy instances of a service.
+                        </dd>
+
+                        <dt>Scenario</dt>
+                        <dd>
+                            Order Service has 5 instances; Gateway distributes
+                            traffic among them.
+                        </dd>
+                    </dl>
+                </details>
+
+
+                <!-- 15 -->
+                <details>
+                    <summary>15. What is API Versioning at Gateway?</summary>
+
+                    <dl>
+                        <dt>Answer</dt>
+                        <dd>
+                            Gateway routes different API versions to the
+                            appropriate backend implementation.
+                        </dd>
+
+                        <dt>Scenario</dt>
+                        <dd>
+                            <code>/api/v1/orders</code> → old service,
+                            <code>/api/v2/orders</code> → new service.
+                        </dd>
+                    </dl>
+                </details>
+
+
+                <!-- 16 -->
+                <details>
+                    <summary>16. How does Gateway handle CORS?</summary>
+
+                    <dl>
+                        <dt>Answer</dt>
+                        <dd>
+                            Gateway can enforce which frontend applications
+                            are allowed to call APIs.
+                        </dd>
+
+                        <dt>Scenario</dt>
+                        <dd>
+                            Allow only the company's Angular application
+                            origin.
+                        </dd>
+                    </dl>
+                </details>
+
+
+                <!-- 17 -->
+                <details>
+                    <summary>17. How does Gateway support Logging and Monitoring?</summary>
+
+                    <dl>
+                        <dt>Answer</dt>
+                        <dd>
+                            Gateway records request, response, latency,
+                            errors and correlation information.
+                        </dd>
+
+                        <dt>Why?</dt>
+                        <dd>
+                            Helps trace and troubleshoot distributed requests.
+                        </dd>
+
+                        <dt>Scenario</dt>
+                        <dd>
+                            Track one <code>CorrelationId</code> across
+                            Gateway → Order → Payment.
+                        </dd>
+                    </dl>
+                </details>
+
+
+                <!-- 18 -->
+                <details>
+                    <summary>18. What is Caching at API Gateway?</summary>
+
+                    <dl>
+                        <dt>Answer</dt>
+                        <dd>
+                            Gateway temporarily stores frequently requested
+                            responses.
+                        </dd>
+
+                        <dt>Why?</dt>
+                        <dd>
+                            Reduces backend load and improves response time.
+                        </dd>
+
+                        <dt>Scenario</dt>
+                        <dd>
+                            Product catalog can be cached instead of querying
+                            Product Service every time.
+                        </dd>
+                    </dl>
+                </details>
+
+
+                <!-- 19 -->
+                <details>
+                    <summary>19. What happens when Gateway itself fails?</summary>
+
+                    <dl>
+                        <dt>Answer</dt>
+                        <dd>
+                            Deploy multiple Gateway instances behind a load
+                            balancer for high availability.
+                        </dd>
+
+                        <dt>Why?</dt>
+                        <dd>
+                            Avoids a single point of failure.
+                        </dd>
+
+                        <dt>Scenario</dt>
+                        <dd>
+                            Gateway Instance 1 fails → traffic moves to
+                            Gateway Instance 2.
+                        </dd>
+                    </dl>
+                </details>
+
+
+                <!-- 20 -->
+                <details>
+                    <summary>20. Explain the complete API Gateway flow.</summary>
+
+                    <dl>
+                        <dt>Interview Answer</dt>
+                        <dd>
+                            Client → Gateway → Authentication → Authorization
+                            → Rate Limit → Routing → Service → Response.
+                        </dd>
+
+                        <dt>Real-Time Scenario</dt>
+                        <dd>
+                            Angular → Azure APIM → JWT validation → Order API
+                            → Database → Response.
+                        </dd>
+
+                        <dt>Why?</dt>
+                        <dd>
+                            Gateway provides one controlled entry point for
+                            security, traffic management, routing and
+                            observability.
+                        </dd>
+                    </dl>
+                </details>
+
+            </article>
+
+        </section>
+
+
+        <section>
+
+            <h2>Quick Memory Chain</h2>
+
+            <p>
+                <strong>
+                    Client → Gateway → Auth → Authorization → Rate Limit
+                    → Route → Service → Response
+                </strong>
+            </p>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+        <p>ASP.NET Core | Microservices | API Gateway Interview Preparation</p>
+    </footer>
+
+</body>
+
+</html>
