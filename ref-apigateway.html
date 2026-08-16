@@ -17,7 +17,7 @@
       --good: #087443;
     }
 
-```
+   
 * { box-sizing: border-box; }
 
 body {
@@ -146,7 +146,7 @@ code {
   .points { grid-template-columns: 1fr; }
   .flow { grid-template-columns: 1fr; }
 }
-```
+   
 
   </style>
 </head>
@@ -161,7 +161,7 @@ code {
       traffic management → resilience → observability → interview scenarios</strong>.
     </p>
 
-```
+   
 <div class="flow" aria-label="API Gateway request flow">
   <span>Client</span>
   <span>API Gateway</span>
@@ -169,7 +169,7 @@ code {
   <span>Microservice</span>
   <span>Response</span>
 </div>
-```
+   
 
   </div>
 </header>
@@ -185,7 +185,7 @@ code {
 
   <section class="points">
 
-```
+   
 <article>
   <h2><span class="number">1</span>What is API Gateway?</h2>
   <p>
@@ -238,13 +238,13 @@ code {
 
   <pre><code>GET /api/orders/100
     ↓
-```
+   
 
 API Gateway
 ↓
 Order Service</code></pre>
 
-```
+   
   <p class="why">
     <strong>Purpose:</strong> Centralize service discovery and routing rules.
   </p>
@@ -273,7 +273,7 @@ Order Service</code></pre>
   </p>
 
   <pre><code>JWT
-```
+   
 
 ↓
 Validate user
@@ -282,7 +282,7 @@ Read role/scope
 ↓
 Allow / Reject request</code></pre>
 
-```
+   
   <p>
     Fine-grained authorization can be applied according to route, method,
     caller or scope.
@@ -296,7 +296,7 @@ Allow / Reject request</code></pre>
   </p>
 
   <pre><code>Client
-```
+   
 
 ↓
 100 requests/sec allowed
@@ -305,7 +305,7 @@ Gateway
 ↓
 Extra requests → 429 Too Many Requests</code></pre>
 
-```
+   
   <p class="why">
     Protects backend services from accidental overload, abusive clients and
     traffic spikes.
@@ -339,13 +339,13 @@ Extra requests → 429 Too Many Requests</code></pre>
   </p>
 
   <pre><code>Gateway
-```
+   
 
 ├── Order-1
 ├── Order-2
 └── Order-3</code></pre>
 
-```
+   
   <p class="why">
     Improves scalability and availability.
   </p>
@@ -394,7 +394,7 @@ Extra requests → 429 Too Many Requests</code></pre>
   </p>
 
   <pre><code>Client
-```
+   
 
 ↓
 Gateway
@@ -407,7 +407,7 @@ Backend
 ↓
 Cache + Response</code></pre>
 
-```
+   
   <p class="why">
     Reduces backend calls and improves response time.
   </p>
@@ -422,7 +422,7 @@ Cache + Response</code></pre>
 
   <pre><code>Order Service failing
     ↓
-```
+   
 
 Circuit OPEN
 ↓
@@ -430,7 +430,7 @@ Do not continuously call service
 ↓
 Return controlled failure / fallback</code></pre>
 
-```
+   
   <p class="why">
     Prevents repeated calls from creating cascading failures.
   </p>
@@ -483,7 +483,7 @@ Return controlled failure / fallback</code></pre>
   </p>
 
   <pre><code>Internet
-```
+   
 
 ↓
 WAF / DDoS protection
@@ -494,7 +494,7 @@ Authentication
 ↓
 Microservices</code></pre>
 
-```
+   
   <p class="why">
     Reject malicious or invalid traffic before it reaches business services.
   </p>
@@ -508,11 +508,11 @@ Microservices</code></pre>
   </p>
 
   <pre><code>/api/v1/orders → Order Service V1
-```
+   
 
 /api/v2/orders → Order Service V2</code></pre>
 
-```
+   
   <p class="why">
     Allows gradual migration without immediately breaking existing clients.
   </p>
@@ -526,7 +526,7 @@ Microservices</code></pre>
   </p>
 
   <pre><code>Mobile
-```
+   
 
 ↓
 Mobile BFF
@@ -536,7 +536,7 @@ Mobile BFF
 ↓
 Combined response</code></pre>
 
-```
+   
   <p class="why">
     Reduces chatty client-to-service communication and allows client-specific
     API contracts.
@@ -568,7 +568,7 @@ Combined response</code></pre>
   <h2><span class="number">20</span>Real Project Request Lifecycle</h2>
 
   <pre><code>
-```
+   
 
 Client
 ↓
@@ -618,7 +618,7 @@ API Gateway
   <section class="summary">
     <h2>Interview Memory Chain</h2>
 
-```
+   
 <p>
   Remember API Gateway using this sequence:
 </p>
@@ -647,7 +647,7 @@ API Gateway
   This keeps the microservices focused on business logic while the gateway
   manages common API concerns."
 </p>
-```
+   
 
   </section>
 
