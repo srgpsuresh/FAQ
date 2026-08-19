@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>.NET Full Stack Interview - Quick Revision</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.5;
+      margin: 0;
+      background: #f5f6f8;
+      color: #222;
+    }
+
+    header {
+      background: #1f2937;
+      color: white;
+      padding: 24px;
+      text-align: center;
+    }
+
+    nav {
+      background: white;
+      padding: 12px;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      border-bottom: 1px solid #ddd;
+    }
+
+    nav a {
+      margin: 0 8px;
+      text-decoration: none;
+      color: #2563eb;
+      font-weight: bold;
+    }
+
+    main {
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    section {
+      background: white;
+      margin-bottom: 20px;
+      padding: 20px;
+      border-radius: 8px;
+    }
+
+    h2 {
+      border-bottom: 2px solid #ddd;
+      padding-bottom: 8px;
+    }
+
+    article {
+      margin: 12px 0;
+      padding: 10px;
+      border-left: 4px solid #2563eb;
+      background: #f9fafb;
+    }
+
+    article strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    code {
+      background: #eee;
+      padding: 2px 5px;
+      border-radius: 3px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #1f2937;
+      color: white;
+    }
+
+    @media (max-width: 700px) {
+      nav a {
+        display: inline-block;
+        margin: 5px;
+      }
+
+      main {
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>.NET Full Stack Interview Quick Revision</h1>
+    <p>OOPs • C# • ASP.NET MVC • REST API • Angular</p>
+    <p><strong>One-Line Answers</strong></p>
+  </header>
+
+  <nav aria-label="Main navigation">
+    <a href="#oops">OOPs</a>
+    <a href="#csharp">C#</a>
+    <a href="#mvc">MVC</a>
+    <a href="#api">Web API</a>
+    <a href="#angular">Angular</a>
+  </nav>
+
+  <main>
+
+    <!-- OOPS -->
+    <section id="oops">
+      <h2>1. OOPs — Core Interview Questions</h2>
+
+      <article>
+        <strong>What is OOP?</strong>
+        OOP organizes software around objects containing data and behavior.
+      </article>
+
+      <article>
+        <strong>What are the 4 pillars?</strong>
+        Encapsulation, Abstraction, Inheritance and Polymorphism.
+      </article>
+
+      <article>
+        <strong>What is Encapsulation?</strong>
+        Bundling data and behavior together while controlling access to internal state.
+      </article>
+
+      <article>
+        <strong>What is Abstraction?</strong>
+        Hiding implementation details and exposing only essential functionality.
+      </article>
+
+      <article>
+        <strong>What is Inheritance?</strong>
+        A derived class reuses and extends functionality of a base class.
+      </article>
+
+      <article>
+        <strong>What is Polymorphism?</strong>
+        The same interface or method call can behave differently for different objects.
+      </article>
+
+      <article>
+        <strong>Overloading vs Overriding?</strong>
+        Overloading is compile-time polymorphism; overriding is runtime polymorphism.
+      </article>
+
+      <article>
+        <strong>Interface vs Abstract Class?</strong>
+        An interface defines a contract, while an abstract class can provide both state and implementation.
+      </article>
+
+      <article>
+        <strong>Composition vs Inheritance?</strong>
+        Inheritance represents "is-a"; composition represents "has-a".
+      </article>
+
+      <article>
+        <strong>What is SOLID?</strong>
+        Five principles for building maintainable, flexible and loosely coupled software.
+      </article>
+    </section>
+
+
+    <!-- C# -->
+    <section id="csharp">
+      <h2>2. C# — Core Interview Questions</h2>
+
+      <article>
+        <strong>What is C#?</strong>
+        A strongly typed, object-oriented language used mainly for .NET application development.
+      </article>
+
+      <article>
+        <strong>Value Type vs Reference Type?</strong>
+        Value types contain the value; reference types contain a reference to an object.
+      </article>
+
+      <article>
+        <strong>Boxing vs Unboxing?</strong>
+        Boxing converts a value type to object; unboxing extracts the value type from the object.
+      </article>
+
+      <article>
+        <strong>var vs dynamic?</strong>
+        <code>var</code> is resolved at compile time; <code>dynamic</code> is resolved at runtime.
+      </article>
+
+      <article>
+        <strong>const vs readonly?</strong>
+        <code>const</code> is compile-time constant; <code>readonly</code> can be assigned during declaration or constructor execution.
+      </article>
+
+      <article>
+        <strong>ref vs out?</strong>
+        <code>ref</code> requires initialization before passing; <code>out</code> does not.
+      </article>
+
+      <article>
+        <strong>String vs StringBuilder?</strong>
+        String is immutable; StringBuilder is mutable and better for repeated modifications.
+      </article>
+
+      <article>
+        <strong>What is async/await?</strong>
+        It enables asynchronous programming without unnecessarily blocking the calling thread during I/O waits.
+      </article>
+
+      <article>
+        <strong>Task vs Thread?</strong>
+        Thread represents execution; Task represents an asynchronous unit of work.
+      </article>
+
+      <article>
+        <strong>IEnumerable vs IQueryable?</strong>
+        IEnumerable generally works in memory; IQueryable can translate queries to the underlying data source.
+      </article>
+
+      <article>
+        <strong>What is LINQ?</strong>
+        LINQ provides a consistent way to query collections and other data sources.
+      </article>
+
+      <article>
+        <strong>What is a Delegate?</strong>
+        A type-safe reference to a method with a compatible signature.
+      </article>
+
+      <article>
+        <strong>What is Dependency Injection?</strong>
+        Dependencies are supplied from outside instead of being created directly by the class.
+      </article>
+
+      <article>
+        <strong>What is Garbage Collection?</strong>
+        .NET automatically releases managed objects that are no longer reachable.
+      </article>
+
+      <article>
+        <strong>What is IDisposable?</strong>
+        It provides a standard mechanism for explicitly releasing disposable resources.
+      </article>
+    </section>
+
+
+    <!-- MVC -->
+    <section id="mvc">
+      <h2>3. ASP.NET MVC — Core Interview Questions</h2>
+
+      <article>
+        <strong>What is MVC?</strong>
+        MVC separates an application into Model, View and Controller for better separation of concerns.
+      </article>
+
+      <article>
+        <strong>What is a Controller?</strong>
+        It receives requests, coordinates application logic and returns a response.
+      </article>
+
+      <article>
+        <strong>What is an Action Method?</strong>
+        A controller method that handles a particular request.
+      </article>
+
+      <article>
+        <strong>What is Routing?</strong>
+        Routing maps an incoming URL to the appropriate controller and action.
+      </article>
+
+      <article>
+        <strong>What is Model Binding?</strong>
+        It maps HTTP request data to action parameters or model objects.
+      </article>
+
+      <article>
+        <strong>ViewBag vs ViewData vs TempData?</strong>
+        ViewBag and ViewData pass data during the request; TempData can survive a redirect.
+      </article>
+
+      <article>
+        <strong>What is a ViewModel?</strong>
+        A UI-specific object containing only the data required by a particular View.
+      </article>
+
+      <article>
+        <strong>Why use ViewModel?</strong>
+        It prevents exposing database entities directly and allows UI-specific validation and shaping.
+      </article>
+
+      <article>
+        <strong>What are MVC Filters?</strong>
+        Filters provide reusable logic for authorization, action processing and exception handling.
+      </article>
+
+      <article>
+        <strong>Authentication vs Authorization?</strong>
+        Authentication verifies identity; authorization determines access permissions.
+      </article>
+
+      <article>
+        <strong>What is Dependency Injection?</strong>
+        Required services are supplied to controllers instead of controllers creating them.
+      </article>
+
+      <article>
+        <strong>MVC Request Flow?</strong>
+        Browser → Routing → Controller → Action → Service → Model → View → HTML Response.
+      </article>
+    </section>
+
+
+    <!-- WEB API -->
+    <section id="api">
+      <h2>4. Web API / REST API — Core Interview Questions</h2>
+
+      <article>
+        <strong>What is REST API?</strong>
+        An HTTP-based API style that exposes resources through URLs and standard HTTP methods.
+      </article>
+
+      <article>
+        <strong>GET?</strong>
+        Retrieves resources and should not modify server state.
+      </article>
+
+      <article>
+        <strong>POST?</strong>
+        Usually creates a new resource or triggers a server-side operation.
+      </article>
+
+      <article>
+        <strong>PUT?</strong>
+        Completely replaces a resource and is generally idempotent.
+      </article>
+
+      <article>
+        <strong>PATCH?</strong>
+        Partially updates an existing resource.
+      </article>
+
+      <article>
+        <strong>DELETE?</strong>
+        Deletes a resource and is generally idempotent.
+      </article>
+
+      <article>
+        <strong>PUT vs PATCH?</strong>
+        PUT means complete replacement; PATCH means partial modification.
+      </article>
+
+      <article>
+        <strong>What is Statelessness?</strong>
+        Each request contains the information required to process it without relying on previous requests.
+      </article>
+
+      <article>
+        <strong>200 vs 201 vs 204?</strong>
+        200 = success, 201 = resource created, 204 = success with no response body.
+      </article>
+
+      <article>
+        <strong>400 vs 401 vs 403?</strong>
+        400 = bad request, 401 = unauthenticated, 403 = authenticated but not authorized.
+      </article>
+
+      <article>
+        <strong>What is JWT?</strong>
+        A signed token commonly used to carry authentication claims between client and API.
+      </article>
+
+      <article>
+        <strong>What is Middleware?</strong>
+        A component in the HTTP pipeline that can inspect, modify or short-circuit requests and responses.
+      </article>
+
+      <article>
+        <strong>What is DTO?</strong>
+        A Data Transfer Object controls the data contract exchanged between client and API.
+      </article>
+
+      <article>
+        <strong>What is API Gateway?</strong>
+        A single entry point that can handle routing, authentication, rate limiting and other cross-cutting concerns.
+      </article>
+
+      <article>
+        <strong>How do you handle exceptions?</strong>
+        Use centralized exception-handling middleware with consistent error responses such as ProblemDetails.
+      </article>
+
+      <article>
+        <strong>How do you improve API performance?</strong>
+        Use async I/O, caching, pagination, efficient database queries and proper indexing.
+      </article>
+    </section>
+
+
+    <!-- ANGULAR -->
+    <section id="angular">
+      <h2>5. Angular — Core Interview Questions</h2>
+
+      <article>
+        <strong>What is Angular?</strong>
+        A TypeScript-based framework for building single-page and enterprise web applications.
+      </article>
+
+      <article>
+        <strong>What is a Component?</strong>
+        A component combines TypeScript logic, HTML template and styling to represent part of the UI.
+      </article>
+
+      <article>
+        <strong>What is a Standalone Component?</strong>
+        A component that can directly declare its dependencies without requiring an NgModule.
+      </article>
+
+      <article>
+        <strong>What is Data Binding?</strong>
+        It connects component data and behavior with the HTML template.
+      </article>
+
+      <article>
+        <strong>Types of Data Binding?</strong>
+        Interpolation, property binding, event binding and two-way binding.
+      </article>
+
+      <article>
+        <strong>What is a Service?</strong>
+        A reusable class containing shared business, data-access or application functionality.
+      </article>
+
+      <article>
+        <strong>What is Dependency Injection?</strong>
+        Angular automatically provides required service instances to components and other classes.
+      </article>
+
+      <article>
+        <strong>What is Observable?</strong>
+        An Observable represents a stream of asynchronous values that consumers can subscribe to.
+      </article>
+
+      <article>
+        <strong>What is RxJS?</strong>
+        A reactive programming library providing Observables and operators used extensively in Angular.
+      </article>
+
+      <article>
+        <strong>What is HttpClient?</strong>
+        Angular's service for making HTTP requests to backend APIs.
+      </article>
+
+      <article>
+        <strong>What is an HTTP Interceptor?</strong>
+        It can inspect or modify HTTP requests and responses, commonly for JWT, logging and error handling.
+      </article>
+
+      <article>
+        <strong>What is Routing?</strong>
+        Angular Router maps URLs to components and enables client-side navigation.
+      </article>
+
+      <article>
+        <strong>What is a Route Guard?</strong>
+        It controls whether navigation is allowed, redirected or blocked.
+      </article>
+
+      <article>
+        <strong>What is Lazy Loading?</strong>
+        It loads features only when required, reducing the initial application bundle.
+      </article>
+
+      <article>
+        <strong>Reactive vs Template-driven Forms?</strong>
+        Reactive Forms are programmatically controlled in TypeScript; Template-driven Forms are primarily configured in HTML.
+      </article>
+
+      <article>
+        <strong>What is Change Detection?</strong>
+        Angular checks component state and updates the DOM when required.
+      </article>
+
+      <article>
+        <strong>What is OnPush?</strong>
+        OnPush reduces unnecessary change detection by checking components primarily when relevant inputs or reactive state changes.
+      </article>
+
+      <article>
+        <strong>What is Signal?</strong>
+        A reactive primitive used to hold state and efficiently notify consumers when the state changes.
+      </article>
+
+      <article>
+        <strong>Parent → Child communication?</strong>
+        Use Input to pass data from parent to child.
+      </article>
+
+      <article>
+        <strong>Child → Parent communication?</strong>
+        Use Output/EventEmitter to send events from child to parent.
+      </article>
+    </section>
+
+
+    <!-- ARCHITECTURE -->
+    <section>
+      <h2>6. Full-Stack Architecture — Remember This Flow</h2>
+
+      <article>
+        <strong>Frontend</strong>
+        Angular Component → Service → HttpClient → REST API
+      </article>
+
+      <article>
+        <strong>Backend</strong>
+        API Gateway → Middleware → Authentication → Controller → Service → Repository → Database
+      </article>
+
+      <article>
+        <strong>Response</strong>
+        Database → Repository → Service → DTO → Controller → JSON → Angular Service → Component → UI
+      </article>
+
+      <article>
+        <strong>Interview Architecture Statement</strong>
+        Keep Controllers thin, put business logic in Services, abstract data access, use DTOs, dependency injection, centralized exception handling, logging, authentication and authorization.
+      </article>
+    </section>
+
+  </main>
+
+
+  <footer>
+    <p>.NET Full Stack Interview Quick Revision</p>
+    <p>OOPs • C# • ASP.NET MVC • REST API • Angular</p>
+  </footer>
+
+</body>
+</html>
